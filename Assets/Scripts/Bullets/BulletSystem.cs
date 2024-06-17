@@ -5,67 +5,49 @@ namespace ShootEmUp
 {
     public sealed class BulletSystem : MonoBehaviour
     {
-        [SerializeField]
-        private int initialCount = 50;
-        
-        [SerializeField] private Transform container;
-        [SerializeField] private Bullet prefab;
-        [SerializeField] private Transform worldTransform;
-        [SerializeField] private LevelBounds levelBounds;
-
-        private readonly Queue<Bullet> m_bulletPool = new();
-        private readonly HashSet<Bullet> m_activeBullets = new();
-        private readonly List<Bullet> m_cache = new();
-        
-        private void Awake()
-        {
-            for (var i = 0; i < this.initialCount; i++)
-            {
-                var bullet = Instantiate(this.prefab, this.container);
-                this.m_bulletPool.Enqueue(bullet);
-            }
-        }
+        [SerializeField] private Transform _worldTransform;
+        [SerializeField] private LevelBounds _levelBounds;
+        [SerializeField] private BulletSpawner _bulletSpawner;
+        private readonly List<Bullet> _activeBullets = new();
         
         private void FixedUpdate()
         {
-            this.m_cache.Clear();
-            this.m_cache.AddRange(this.m_activeBullets);
-
-            for (int i = 0, count = this.m_cache.Count; i < count; i++)
+            for (int i = 0, count = _activeBullets.Count; i < count; i++)
             {
-                var bullet = this.m_cache[i];
-                if (!this.levelBounds.InBounds(bullet.transform.position))
+                var bullet = _activeBullets[i];
+                if (!_levelBounds.InBounds(bullet.Position))
                 {
-                    this.RemoveBullet(bullet);
+                    RemoveBullet(bullet);
+                    count--;
                 }
             }
         }
 
-        public void FlyBulletByArgs(Args args)
+        public void Shoot(GameObject shooter, Vector2? direction = null)
         {
-            if (this.m_bulletPool.TryDequeue(out var bullet))
+            BulletConfig bulletConfig = shooter.GetComponent<WeaponComponent>().GetBulletConfig();
+            WeaponComponent weaponComponent = shooter.GetComponent<WeaponComponent>();
+            TeamComponent teamComponent = shooter.GetComponent<TeamComponent>();
+            if (direction != null)
             {
-                bullet.transform.SetParent(this.worldTransform);
+                Vector2 velocity = direction.Value;
             }
-            else
+            Args bulletArgs = new Args
             {
-                bullet = Instantiate(this.prefab, this.worldTransform);
-            }
-
-            bullet.SetPosition(args.position);
-            bullet.SetColor(args.color);
-            bullet.SetPhysicsLayer(args.physicsLayer);
-            bullet.damage = args.damage;
-            bullet.isPlayer = args.isPlayer;
-            bullet.SetVelocity(args.velocity);
-            
-            if (this.m_activeBullets.Add(bullet))
-            {
-                bullet.OnCollisionEntered += this.OnBulletCollision;
-            }
+                isPlayer = teamComponent.IsPlayer,
+                physicsLayer = (int)bulletConfig.physicsLayer,
+                color = bulletConfig.color,
+                damage = bulletConfig.damage,
+                position = weaponComponent.Position,
+                velocity = direction == null ? 
+                    Vector3.up * bulletConfig.speed : direction.Value * bulletConfig.speed
+            };
+            Bullet newBullet = _bulletSpawner.Spawn(_worldTransform, bulletArgs);
+            newBullet.OnCollisionEntered += Bullet_OnCollisionEntered;
+            _activeBullets.Add(newBullet);
         }
-        
-        private void OnBulletCollision(Bullet bullet, Collision2D collision)
+
+        private void Bullet_OnCollisionEntered(Bullet bullet, Collision2D collision)
         {
             BulletUtils.DealDamage(bullet, collision.gameObject);
             this.RemoveBullet(bullet);
@@ -73,12 +55,9 @@ namespace ShootEmUp
 
         private void RemoveBullet(Bullet bullet)
         {
-            if (this.m_activeBullets.Remove(bullet))
-            {
-                bullet.OnCollisionEntered -= this.OnBulletCollision;
-                bullet.transform.SetParent(this.container);
-                this.m_bulletPool.Enqueue(bullet);
-            }
+            _bulletSpawner.Unspawn(bullet);
+            bullet.OnCollisionEntered -= this.Bullet_OnCollisionEntered;
+            _activeBullets.Remove(bullet);
         }
         
         public struct Args
