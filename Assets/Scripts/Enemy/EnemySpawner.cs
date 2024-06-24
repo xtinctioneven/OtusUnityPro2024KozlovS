@@ -2,21 +2,50 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace ShootEmUp
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [Header("Spawn")]
+        [Header("Spawner settings")]
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private Transform _poolContainer;
         [SerializeField] private int _poolSize;
+        [SerializeField] private float _spawnInterval;
+        [Header("Enemy data")]
         [SerializeField] private EnemyPositions _enemyPositions;
+        [SerializeField] private Transform _worldTransform;
+        [SerializeField] private EnemyManager _enemyManager;
+        private Timer _spawnTimer;
         private Pool _enemyPool;
 
         private void Awake()
         {
             _enemyPool = new Pool(_poolContainer, _enemyPrefab, _poolSize);
+            _spawnTimer = new Timer(_spawnInterval);
+        }
+
+        private void Update()
+        {
+            if (_spawnTimer.Tick(Time.deltaTime))
+            {
+                Vector3 spawnPosition = _enemyPositions.GetSpawnPosition();
+                GameObject newEnemy = Spawn(_worldTransform, spawnPosition);
+                if (newEnemy != null)
+                {
+                    HitPointsComponent enemyHitPointsComponent = newEnemy.GetComponent<HitPointsComponent>();
+                    enemyHitPointsComponent.OnHpEmpty += EnemySpawner_OnEnemyDestroyed;
+                    enemyHitPointsComponent.Reset();
+                    _enemyManager.EnemySpawnCallback(newEnemy);
+                }
+            }
+        }
+
+        private void EnemySpawner_OnEnemyDestroyed(GameObject destroyedEnemy)
+        {
+            destroyedEnemy.GetComponent<HitPointsComponent>().OnHpEmpty -= EnemySpawner_OnEnemyDestroyed;
+            _enemyPool.Unspawn(destroyedEnemy);
         }
 
         public GameObject Spawn(Transform newParent, Vector3 spawnPosition)

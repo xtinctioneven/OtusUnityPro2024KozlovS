@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce88fee201654f6e8064002ed15de594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody2D: {fileID: 659620479434099170}
+  _rigidbody2D: {fileID: 659620479434099170}
   speed: 7
 --- !u!114 &5568771391735819373
 MonoBehaviour:
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5daa1be9cc40a78a2f07cd53e5b47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 3
+  _maxHitPoints: 3
 --- !u!114 &5568771391735819374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,8 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponComponent: {fileID: 5568771391735819374}
   _moveAgent: {fileID: 8186052948131603766}
-  _countdown: 1
-  _attackTarget: {fileID: 0}
+  _attackTime: 1
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0

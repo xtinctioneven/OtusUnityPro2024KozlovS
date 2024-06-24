@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [Serializable]
     public class BulletSpawner :MonoBehaviour
     {
         [SerializeField] private Bullet _bulletPrefab;
@@ -22,14 +21,15 @@ namespace ShootEmUp
             _bulletPool = new Pool(_poolContainer, _bulletPrefab.gameObject, _initialPoolSize, _isFlexible);
         }
 
-        public Bullet Spawn(Transform newParent, BulletSystem.Args args)
+        public Bullet Spawn(Transform newParent, BulletManager.BulletData bulletData)
         {
-            Bullet newBullet = _bulletPool.Spawn(newParent, args.position).GetComponent<Bullet>();
-            newBullet.SetColor(args.color);
-            newBullet.SetPhysicsLayer(args.physicsLayer);
-            newBullet.SetDamage(args.damage);
-            newBullet.SetTeam(args.isPlayer);
-            newBullet.SetVelocity(args.velocity);
+            Bullet newBullet = _bulletPool.Spawn(newParent, bulletData.position).GetComponent<Bullet>();
+            newBullet.SetColor(bulletData.color);
+            newBullet.SetPhysicsLayer(bulletData.physicsLayer);
+            newBullet.SetDamage(bulletData.damage);
+            newBullet.SetTeam(bulletData.isPlayer);
+            newBullet.SetVelocity(bulletData.velocity);
+            newBullet.SetBulletManager(bulletData.bulletManager);
             return newBullet;
         }
 

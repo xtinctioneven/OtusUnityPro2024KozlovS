@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(SpriteRenderer))]
     public sealed class Bullet : MonoBehaviour
     {
         public int Damage
@@ -20,18 +18,11 @@ namespace ShootEmUp
             get { return this.transform.position; }
         }
 
-        public event Action<Bullet, Collision2D> OnCollisionEntered;
-
-        private bool _isPlayer;
-        private int _damage;
-
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private SpriteRenderer _spriteRenderer;
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            OnCollisionEntered?.Invoke(this, collision);
-        }
+        private BulletManager _bulletManager;
+        private bool _isPlayer;
+        private int _damage;
 
         public void SetVelocity(Vector2 velocity)
         {
@@ -61,6 +52,16 @@ namespace ShootEmUp
         public void SetDamage(int damage)
         {
             _damage = damage;
+        }
+
+        public void SetBulletManager(BulletManager bulletManager)
+        {
+            _bulletManager = bulletManager;
+        }
+
+        public void BulletCollision()
+        {
+            _bulletManager.BulletCollisionCallback(this);
         }
     }
 }

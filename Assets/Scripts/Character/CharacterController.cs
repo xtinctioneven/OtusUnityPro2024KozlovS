@@ -5,18 +5,20 @@ namespace ShootEmUp
     public sealed class CharacterController : MonoBehaviour
     {
         [SerializeField] private GameObject _character;
-        [SerializeField] private BulletSystem _bulletSystem;
-        [SerializeField] private BulletConfig _bulletConfig;
+        [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private InputManager _inputManager;
-        private MoveComponent _moveComponent;
-        private WeaponComponent _weaponComponent;
+        [SerializeField] private MoveComponent _moveComponent;
 
-        private void Start()
+        private void OnEnable()
         {
-            _character.TryGetComponent<MoveComponent>(out _moveComponent);
-            _character.TryGetComponent<WeaponComponent>(out _weaponComponent);
             _inputManager.OnHorizontalMoveButtonPressed += InputManager_OnHorizontalMoveButtonPressed;
             _inputManager.OnShootButtonPressed += InputManager_OnShootButtonPressed;
+        }
+
+        private void OnDisable()
+        {
+            _inputManager.OnHorizontalMoveButtonPressed -= InputManager_OnHorizontalMoveButtonPressed;
+            _inputManager.OnShootButtonPressed -= InputManager_OnShootButtonPressed;
         }
 
         private void InputManager_OnHorizontalMoveButtonPressed(float horizontalDirection)
@@ -27,10 +29,7 @@ namespace ShootEmUp
 
         private void InputManager_OnShootButtonPressed()
         {
-            if (_weaponComponent != null)
-            {
-                _bulletSystem.Shoot(_character);
-            }
+            _bulletManager.Shoot(_character, Vector2.up);
         }
     }
 }

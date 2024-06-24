@@ -1,29 +1,24 @@
+using System;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
-        public delegate void FireHandler(GameObject enemy, Vector2 direction);
-
-        public event FireHandler OnAttack;
-
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private EnemyMoveAgent _moveAgent;
-        [SerializeField] private float _countdown;
-        [SerializeField] private GameObject _attackTarget;
+        [SerializeField] private float _attackTime;
 
         private GameObject _target;
-        private float _currentTime;
+        private HitPointsComponent _targetHitPoints;
+        private Timer _attackTimer;
+        private BulletManager _bulletManager;
 
-        public void SetTarget(GameObject target)
+        private void Awake()
         {
-            _target = target;
-        }
-
-        public void Reset()
-        {
-            _currentTime = _countdown;
+            _attackTimer = new Timer(_attackTime);
         }
 
         private void FixedUpdate()
@@ -33,17 +28,25 @@ namespace ShootEmUp
                 return;
             }
             
-            if (!_target.GetComponent<HitPointsComponent>().IsHitPointsExists())
+            if (!_targetHitPoints.IsHitPointsExists())
             {
                 return;
             }
 
-            _currentTime -= Time.fixedDeltaTime;
-            if (_currentTime <= 0)
+            if (_attackTimer.Tick(Time.fixedDeltaTime))
             {
                 Attack();
-                _currentTime += _countdown;
             }
+        }
+
+        public void SetTarget(GameObject target)
+        {
+            _target = target;
+            _targetHitPoints = target.GetComponent<HitPointsComponent>();
+        }
+        public void SetBulletManager(BulletManager bulletManager)
+        {
+            _bulletManager = bulletManager;
         }
 
         private void Attack()
@@ -51,7 +54,7 @@ namespace ShootEmUp
             var startPosition = _weaponComponent.Position;
             var vector = (Vector2) _target.transform.position - startPosition;
             var direction = vector.normalized;
-            OnAttack?.Invoke(this.gameObject, direction);
+            _bulletManager.Shoot(this.gameObject, direction);
         }
     }
 }
