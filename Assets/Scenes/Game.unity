@@ -596,7 +596,7 @@ MonoBehaviour:
   _startButton: {fileID: 1367183710}
   _backgroundFade: {fileID: 1995086061}
   _startCountdownText: {fileID: 1942440723}
-  _fadeInAlphaStep: 0.001
+  _fadeInAlphaStep: 0.01
   _countdownTime: 3
   _TextStartRotation: -25
   _TextEndRotation: 10
@@ -774,7 +774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &787058069
 RectTransform:
   m_ObjectHideFlags: 0
