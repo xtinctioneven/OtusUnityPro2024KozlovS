@@ -3,12 +3,17 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class InputManager : MonoBehaviour, IGameUpdateListener
     {
         public event Action OnShootButtonPressed;
         public event Action<float> OnHorizontalMoveButtonPressed;
 
-        private void Update()
+        public void Start()
+        {
+            IGameListener.Register(this);
+        }
+
+        public void OnGameUpdate(float deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

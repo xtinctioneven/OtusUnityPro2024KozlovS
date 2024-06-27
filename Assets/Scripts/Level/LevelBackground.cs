@@ -3,63 +3,71 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class LevelBackground : MonoBehaviour
+    public sealed class LevelBackground : MonoBehaviour, IGameFixedUpdateListener, IGamePauseListener, IGameFinishListener, IGamePlayListener
     {
-        private float startPositionY;
-
-        private float endPositionY;
-
-        private float movingSpeedY;
-
-        private float positionX;
-
-        private float positionZ;
-
-        private Transform myTransform;
-
-        [SerializeField]
-        private Params m_params;
+        [SerializeField] private LevelBackgroundParams _backgroudnParams;
+        private float _startPositionY;
+        private float _endPositionY;
+        private float _movingSpeedY;
+        private float _positionX;
+        private float _positionZ;
+        private Transform _selfTransform;
 
         private void Awake()
         {
-            this.startPositionY = this.m_params.m_startPositionY;
-            this.endPositionY = this.m_params.m_endPositionY;
-            this.movingSpeedY = this.m_params.m_movingSpeedY;
-            this.myTransform = this.transform;
-            var position = this.myTransform.position;
-            this.positionX = position.x;
-            this.positionZ = position.z;
+            _startPositionY = _backgroudnParams._startPositionY;
+            _endPositionY = _backgroudnParams._endPositionY;
+            _movingSpeedY = _backgroudnParams._movingSpeedY;
+            _selfTransform = transform;
+            var position = _selfTransform.position;
+            _positionX = position.x;
+            _positionZ = position.z;
         }
 
-        private void FixedUpdate()
+        private void Start()
         {
-            if (this.myTransform.position.y <= this.endPositionY)
+            IGameListener.Register(this);
+        }
+
+        public void OnGamePause()
+        {
+            enabled = false;
+        }
+
+        public void OnGamePlay()
+        {
+            enabled = true;
+        }
+
+        public void OnGameFinish()
+        {
+            enabled = false;
+        }
+
+        public void OnGameFixedUpdate(float fixedDeltaTime)
+        {
+            if (_selfTransform.position.y <= _endPositionY)
             {
-                this.myTransform.position = new Vector3(
-                    this.positionX,
-                    this.startPositionY,
-                    this.positionZ
+                _selfTransform.position = new Vector3(
+                    _positionX,
+                    _startPositionY,
+                    _positionZ
                 );
             }
 
-            this.myTransform.position -= new Vector3(
-                this.positionX,
-                this.movingSpeedY * Time.fixedDeltaTime,
-                this.positionZ
+            _selfTransform.position -= new Vector3(
+                _positionX,
+                _movingSpeedY * fixedDeltaTime,
+                _positionZ
             );
         }
 
         [Serializable]
-        public sealed class Params
+        public sealed class LevelBackgroundParams
         {
-            [SerializeField]
-            public float m_startPositionY;
-
-            [SerializeField]
-            public float m_endPositionY;
-
-            [SerializeField]
-            public float m_movingSpeedY;
+            [SerializeField]public float _startPositionY;
+            [SerializeField] public float _endPositionY;
+            [SerializeField] public float _movingSpeedY;
         }
     }
 }

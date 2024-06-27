@@ -5,7 +5,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
+        //, IGamePlayListener, IGamePauseListener, IGameFinishListener
     {
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private EnemyMoveAgent _moveAgent;
@@ -21,19 +22,29 @@ namespace ShootEmUp
             _attackTimer = new Timer(_attackTime);
         }
 
-        private void FixedUpdate()
+        public void Start()
+        {
+            IGameListener.Register(this);
+        }
+
+        //public void OnGamePlay()
+        //{
+        //    enabled = true;
+        //}
+
+        public void OnGameFixedUpdate(float fixedDeltaTime)
         {
             if (!_moveAgent.IsReached)
             {
                 return;
             }
-            
+
             if (!_targetHitPoints.IsHitPointsExists())
             {
                 return;
             }
 
-            if (_attackTimer.Tick(Time.fixedDeltaTime))
+            if (_attackTimer.Tick(fixedDeltaTime))
             {
                 Attack();
             }
@@ -44,6 +55,7 @@ namespace ShootEmUp
             _target = target;
             _targetHitPoints = target.GetComponent<HitPointsComponent>();
         }
+
         public void SetBulletManager(BulletManager bulletManager)
         {
             _bulletManager = bulletManager;

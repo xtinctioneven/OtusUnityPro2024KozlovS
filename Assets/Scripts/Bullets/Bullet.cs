@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Bullet : MonoBehaviour
+    public sealed class Bullet : MonoBehaviour, IGamePauseListener, IGamePlayListener, IGameFinishListener
     {
         public int Damage
         {
@@ -23,6 +23,28 @@ namespace ShootEmUp
         private BulletManager _bulletManager;
         private bool _isPlayer;
         private int _damage;
+        private Vector2 _cachedVelocity;
+
+        private void Start()
+        {
+            IGameListener.Register(this);
+        }
+
+        public void OnGamePause()
+        {
+            _cachedVelocity = _rigidbody2D.velocity;
+            _rigidbody2D.velocity = Vector2.zero;
+        }
+
+        public void OnGamePlay()
+        {
+            _rigidbody2D.velocity = _cachedVelocity;
+        }
+
+        public void OnGameFinish()
+        {
+            _rigidbody2D.velocity = Vector2.zero;
+        }
 
         public void SetVelocity(Vector2 velocity)
         {

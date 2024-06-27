@@ -6,7 +6,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 namespace ShootEmUp
 {
-    public class EnemySpawner : MonoBehaviour
+    public class EnemySpawner : MonoBehaviour, IGameUpdateListener
     {
         [Header("Spawner settings")]
         [SerializeField] private GameObject _enemyPrefab;
@@ -26,9 +26,14 @@ namespace ShootEmUp
             _spawnTimer = new Timer(_spawnInterval);
         }
 
-        private void Update()
+        public void Start()
         {
-            if (_spawnTimer.Tick(Time.deltaTime))
+            IGameListener.Register(this);
+        }
+
+        public void OnGameUpdate(float deltaTime)
+        {
+            if (_spawnTimer.Tick(deltaTime))
             {
                 Vector3 spawnPosition = _enemyPositions.GetSpawnPosition();
                 GameObject newEnemy = Spawn(_worldTransform, spawnPosition);

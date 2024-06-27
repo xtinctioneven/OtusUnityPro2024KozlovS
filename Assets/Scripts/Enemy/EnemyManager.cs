@@ -11,6 +11,7 @@ namespace ShootEmUp
         [SerializeField] private EnemyPositions _enemyPositions;
         [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private GameObject _targetCharacter;
+        [SerializeField] private LevelBounds _levelBounds;
 
         public void EnemySpawnCallback(GameObject newEnemy)
         {
@@ -19,6 +20,7 @@ namespace ShootEmUp
             enemyAttackAgent.SetTarget(_targetCharacter);
             enemyAttackAgent.SetBulletManager(_bulletManager);
             newEnemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition);
+            newEnemy.GetComponent<MoveComponent>().SetLevelBounds(_levelBounds);
         }
     }
 
