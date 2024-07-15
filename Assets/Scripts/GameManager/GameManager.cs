@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class GameManager : MonoBehaviour
+    public sealed class GameManager: IInitializable, ITickable, IFixedTickable, ILateTickable, IDisposable
     {
 
         private enum State
@@ -22,45 +24,49 @@ namespace ShootEmUp
 
         [SerializeField] State _state = State.Idle;
 
-        private void Awake()
+        public void Initialize()
         {
             IGameListener.OnRegister += IGameListener_OnRegister;
+            IGameListener.OnDeregister += IGameListener_OnDeregister;
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             IGameListener.OnRegister -= IGameListener_OnRegister;
+            IGameListener.OnDeregister -= IGameListener_OnDeregister;
         }
 
-        private void Update()
+        public void Tick()
         {
-            if (_state != State.Play)
+            
+            if (_state != State.Play && _state != State.Start)
             {
                 return;
             }
 
             float deltaTime = Time.deltaTime;
-            for (int i = 0; i < _updateListeners.Count; i++)
+
+            if (_state == State.Start)
             {
-                _updateListeners[i].OnGameUpdate(deltaTime);
+                for (int i = 0; i < _updateListeners.Count; i++)
+                {
+                    if (_updateListeners[i] is IGameStartListener)
+                    {
+                        _updateListeners[i].OnGameUpdate(deltaTime);
+                    }
+                }
             }
+            else
+            {
+                for (int i = 0; i < _updateListeners.Count; i++)
+                {
+                    _updateListeners[i].OnGameUpdate(deltaTime);
+                }
+            }
+
         }
 
-        private void LateUpdate()
-        {
-            if (_state != State.Play || _state != State.Start)
-            {
-                return;
-            }
-
-            float deltaTime = Time.deltaTime;
-            for (int i = 0; i < _lateUpdateListeners.Count; i++)
-            {
-                _lateUpdateListeners[i].OnGameLateUpdate(deltaTime);
-            }
-        }
-
-        private void FixedUpdate()
+        public void FixedTick()
         {
             if (_state != State.Play)
             {
@@ -74,6 +80,20 @@ namespace ShootEmUp
             }
         }
 
+        public void LateTick()
+        {
+            if (_state != State.Play)
+            {
+                return;
+            }
+
+            float deltaTime = Time.deltaTime;
+            for (int i = 0; i < _lateUpdateListeners.Count; i++)
+            {
+                _lateUpdateListeners[i].OnGameLateUpdate(deltaTime);
+            }
+        }
+
         private void IGameListener_OnRegister(IGameListener registeredListener)
         {
             AddListener(registeredListener);
@@ -83,39 +103,44 @@ namespace ShootEmUp
         {
             _listeners.Add(newListener);
 
-            if (newListener is IGameUpdateListener)
+            if (newListener is IGameUpdateListener updateListener)
             {
-                _updateListeners.Add(newListener as IGameUpdateListener);
+                _updateListeners.Add(updateListener);
             }
 
-            if (newListener is IGameLateUpdateListener)
+            if (newListener is IGameLateUpdateListener lateUpdateListener)
             {
-                _lateUpdateListeners.Add(newListener as IGameLateUpdateListener);
+                _lateUpdateListeners.Add(lateUpdateListener);
             }
 
-            if (newListener is IGameFixedUpdateListener)
+            if (newListener is IGameFixedUpdateListener fixedUpdateListener)
             {
-                _fixedUpdateListeners.Add(newListener as IGameFixedUpdateListener);
+                _fixedUpdateListeners.Add(fixedUpdateListener);
             }
+        }
+
+        private void IGameListener_OnDeregister(IGameListener deregisteredListener)
+        {
+            RemoveListener(deregisteredListener);
         }
 
         public void RemoveListener(IGameListener removedListener)
         {
             _listeners.Remove(removedListener);
 
-            if (removedListener is IGameUpdateListener)
+            if (removedListener is IGameUpdateListener updateListener)
             {
-                _updateListeners.Remove(removedListener as IGameUpdateListener);
+                _updateListeners.Remove(updateListener);
             }
 
-            if (removedListener is IGameLateUpdateListener)
+            if (removedListener is IGameLateUpdateListener lateUpdateListener)
             {
-                _lateUpdateListeners.Remove(removedListener as IGameLateUpdateListener);
+                _lateUpdateListeners.Remove(lateUpdateListener);
             }
 
-            if (removedListener is IGameFixedUpdateListener)
+            if (removedListener is IGameFixedUpdateListener fixedUpdateListener)
             {
-                _fixedUpdateListeners.Remove(removedListener as IGameFixedUpdateListener);
+                _fixedUpdateListeners.Remove(fixedUpdateListener);
             }
         }
 
@@ -170,6 +195,7 @@ namespace ShootEmUp
         public void FinishGame()
         {
             _state = State.Finish;
+            Debug.Log("Game Over!");
             foreach (IGameListener listener in _listeners)
             {
                 if (listener is IGameFinishListener)

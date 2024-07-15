@@ -1,12 +1,20 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public class EnemyPositions : MonoBehaviour
+    public class EnemyPositions
     {
-        [SerializeField] private Transform[] _spawnPositions;
-        [SerializeField] private Transform[] _attackPositions;
+        private Transform[] _spawnPositions;
+        private Transform[] _attackPositions;
+
+        [Inject]
+        public void Construct(EnemyPositionsSettings settings)
+        {
+            _spawnPositions = settings.SpawnPositions;
+            _attackPositions = settings.AttackPositions;
+        }
 
         public Vector3 GetSpawnPosition()
         {
@@ -20,8 +28,15 @@ namespace ShootEmUp
 
         private Transform RandomTransform(Transform[] transforms)
         {
-            var index = Random.Range(0, transforms.Length);
+            var index = UnityEngine.Random.Range(0, transforms.Length);
             return transforms[index];
         }
+    }
+
+    [Serializable]
+    public struct EnemyPositionsSettings
+    {
+        public Transform[] SpawnPositions;
+        public Transform[] AttackPositions;
     }
 }

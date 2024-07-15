@@ -1,17 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace ShootEmUp
 {
     public interface IGameListener
     {
         public static event Action<IGameListener> OnRegister;
+        public static event Action<IGameListener> OnDeregister;
 
         public static void Register(IGameListener gameListener)
         {
             OnRegister?.Invoke(gameListener);
+        }
+
+        public static void Deregister(IGameListener gameListener)
+        {
+            OnDeregister?.Invoke(gameListener);
         }
     }
 

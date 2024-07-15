@@ -1,18 +1,22 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class HitPointsComponent : MonoBehaviour
+    [Serializable]
+    public sealed class HitPointsComponent : UnitComponent
     {
-        public event Action<GameObject> OnHpEmpty;
+        public event Action<Unit> OnHpEmpty;
         
-        [SerializeField] private int _maxHitPoints;
+        private int _maxHitPoints;
         private int _currentHitPoints;
 
-        private void Awake()
+        [Inject]
+        private void Construct(int maxHitPoints)
         {
-            _currentHitPoints = _maxHitPoints;
+            _maxHitPoints = maxHitPoints;
+            _currentHitPoints = maxHitPoints;
         }
 
         public bool IsHitPointsExists() {
@@ -24,7 +28,7 @@ namespace ShootEmUp
             _currentHitPoints -= damage;
             if (_currentHitPoints <= 0)
             {
-                OnHpEmpty?.Invoke(this.gameObject);
+                OnHpEmpty?.Invoke(_componentOwner);
             }
         }
 

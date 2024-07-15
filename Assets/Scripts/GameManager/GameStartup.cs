@@ -1,103 +1,164 @@
-using ShootEmUp;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-public class GameStartup : MonoBehaviour, IGameStartListener
+namespace ShootEmUp
 {
-    [Header("References")]
-    [SerializeField] private GameManager _gameManager;
-    [SerializeField] private Button _startButton;
-    [SerializeField] private Image _backgroundFade;
-    [SerializeField] private TextMeshProUGUI _startCountdownText;
-    [Header("Countdown Settings")]
-    [SerializeField] private float _fadeInAlphaStep;
-    [SerializeField] private int _countdownTime;
-    [SerializeField] private float _TextStartRotation;
-    [SerializeField] private float _TextEndRotation;
-    [SerializeField] private float _TextStartScale;
-    [SerializeField] private float _TextEndScale;
-    private Timer _countdownTimer;
-
-    private void Awake()
+    public class GameStartup : IGameStartListener, IGameUpdateListener, IInitializable, IDisposable
     {
-        UpdateCountdownText();
-    }
+        //Countdown initital settings
+        private float _fadeInAlphaStep;
+        private int _countdownTime;
+        private float _TextStartRotation;
+        private float _TextEndRotation;
+        private float _TextStartScale;
+        private float _TextEndScale;
+        
+        //Countdown derivative settings
+        private Timer _countdownTimer;
+        private Timer _fadeTimer;
+        private float _fadeInStepTime;
+        private float _textRotationStep;
+        private float _textScaleStep;
+        private float _fadeAlpha = 1f;
 
-    private void Start()
-    {
-        IGameListener.Register(this);
-    }
+        //References
+        private GameManager _gameManager;
+        private Button _startButton;
+        private Image _backgroundFade;
+        private TextMeshProUGUI _countdownText;
 
-    public void StartGame()
-    {
-        _gameManager.StartGame();
-    }
-
-    public void OnGameStart()
-    {
-        _countdownTimer = new Timer(1f);
-        StartCoroutine(StartCountdown());
-    }
-
-    private IEnumerator StartCountdown()
-    {
-        _startButton.gameObject.SetActive(false);
-        _startCountdownText.gameObject.SetActive(true);
-        float fadeInStepTime = _countdownTime / (1f/_fadeInAlphaStep);
-        float textRotationStep = ( _TextEndRotation - _TextStartRotation) / (1f/fadeInStepTime);
-        float textScaleStep = ( _TextEndScale - _TextStartScale) / (1f / fadeInStepTime);
-        ResetCountdownTextTransform();
-        for (float fadeAlpha = 1f; fadeAlpha > 0; fadeAlpha -= _fadeInAlphaStep)
+        [Inject]
+        private void Construct(
+            GameManager gameManager, 
+            Button startButton, 
+            Image backgroundFade, 
+            TextMeshProUGUI countdownText,
+            GameStartupSettings gameStartupSettings
+            )
         {
-            Color fadeColor = _backgroundFade.color;
-            fadeColor.a = fadeAlpha;
-            _backgroundFade.color = fadeColor;
-            yield return new WaitForSeconds(fadeInStepTime);
+            _gameManager = gameManager;
+            _startButton = startButton;
+            _backgroundFade = backgroundFade;
+            _countdownText = countdownText;
 
-            UpdateCountdownTextTransform(textRotationStep, textScaleStep);
+            _fadeInAlphaStep = gameStartupSettings.FadeInAlphaStep;
+            _countdownTime = gameStartupSettings.CountdownTime;
+            _TextStartRotation = gameStartupSettings.TextStartRotation;
+            _TextEndRotation = gameStartupSettings.TextEndRotation;
+            _TextStartScale = gameStartupSettings.TextStartScale;
+            _TextEndScale = gameStartupSettings.TextEndScale;
+        }
 
-            if (_countdownTimer.Tick(fadeInStepTime))
+        public void Initialize()
+        {
+            UpdateCountdownText();
+            IGameListener.Register(this);
+            _startButton.onClick.AddListener(StartGame);
+        }
+
+        public void StartGame()
+        {
+            _gameManager.StartGame();
+        }
+
+        public void OnGameStart()
+        {
+            StartCountdown();
+        }
+
+        public void OnGameUpdate(float deltaTime)
+        {
+            if (_fadeTimer.Tick(Time.deltaTime))
+            {
+                Color fadeColor = _backgroundFade.color;
+                _fadeAlpha -= _fadeInAlphaStep;
+                fadeColor.a = _fadeAlpha;
+                _backgroundFade.color = fadeColor;
+                UpdateCountdownTextTransform(_textRotationStep, _textScaleStep);
+            }
+
+            if (_countdownTimer.Tick(Time.deltaTime))
             {
                 ResetCountdownTextTransform();
                 _countdownTime--;
-                UpdateCountdownText();
+                if (_countdownTime <= 0)
+                {
+                    FinishCountdown();
+                }
+                else
+                {
+                    UpdateCountdownText();
+                }
             }
         }
-        _backgroundFade.gameObject.SetActive(false);
-        _startCountdownText.gameObject.SetActive(false);
-        _gameManager.PlayGame();
+
+        private void StartCountdown()
+        {
+            _startButton.gameObject.SetActive(false);
+            _countdownText.gameObject.SetActive(true);
+            _fadeInStepTime = _countdownTime / (1f / _fadeInAlphaStep);
+            _textRotationStep = (_TextEndRotation - _TextStartRotation) / (1f / _fadeInStepTime);
+            _textScaleStep = (_TextEndScale - _TextStartScale) / (1f / _fadeInStepTime);
+            _countdownTimer = new Timer(1f);
+            _fadeTimer = new Timer(_fadeInStepTime);
+            ResetCountdownTextTransform();
+            _fadeAlpha = 1f;
+        }
+
+        private void FinishCountdown()
+        {
+            _backgroundFade.gameObject.SetActive(false);
+            _countdownText.gameObject.SetActive(false);
+            _gameManager.PlayGame();
+            Dispose();
+        }
+
+        private void UpdateCountdownTextTransform(float textRotationStep, float textScaleStep)
+        {
+            Transform transform = _countdownText.transform;
+            Vector3 rotation = transform.rotation.eulerAngles;
+            rotation.z += textRotationStep;
+            Vector3 scale = transform.localScale;
+            scale.x += textScaleStep;
+            scale.y += textScaleStep;
+            transform.eulerAngles = rotation;
+            transform.localScale = scale;
+        }
+
+        private void ResetCountdownTextTransform()
+        {
+            Transform transform = _countdownText.transform;
+            Vector3 rotation = transform.rotation.eulerAngles;
+            rotation.z = _TextStartRotation;
+            Vector3 scale = transform.localScale;
+            scale.x = _TextStartScale;
+            scale.y = _TextStartScale;
+            transform.eulerAngles = rotation;
+            transform.localScale = scale;
+        }
+
+        private void UpdateCountdownText()
+        {
+            _countdownText.text = _countdownTime.ToString() + "!";
+        }
+
+        public void Dispose()
+        {
+            IGameListener.Deregister(this);
+        }
     }
 
-    private void UpdateCountdownTextTransform(float textRotationStep, float textScaleStep)
+    [Serializable]
+    public struct GameStartupSettings
     {
-        Transform transform = _startCountdownText.transform;
-        Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.z += textRotationStep;
-        Vector3 scale = transform.localScale;
-        scale.x += textScaleStep;
-        scale.y += textScaleStep;
-        transform.eulerAngles = rotation;
-        transform.localScale = scale;
-    }
-
-    private void ResetCountdownTextTransform()
-    {
-        Transform transform = _startCountdownText.transform;
-        Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.z = _TextStartRotation;
-        Vector3 scale = transform.localScale;
-        scale.x = _TextStartScale;
-        scale.y = _TextStartScale;
-        transform.eulerAngles = rotation;
-        transform.localScale = scale;
-    }
-
-    private void UpdateCountdownText()
-    {
-        _startCountdownText.text = _countdownTime.ToString() + "!";
+        public float FadeInAlphaStep;
+        public int CountdownTime;
+        public float TextStartRotation;
+        public float TextEndRotation;
+        public float TextStartScale;
+        public float TextEndScale;
     }
 }

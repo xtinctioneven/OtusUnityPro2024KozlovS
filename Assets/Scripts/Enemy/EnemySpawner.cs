@@ -1,33 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public class EnemySpawner : MonoBehaviour, IGameUpdateListener
+    public class EnemySpawner : IInitializable, IGameUpdateListener
     {
-        [Header("Spawner settings")]
-        [SerializeField] private GameObject _enemyPrefab;
-        [SerializeField] private Transform _poolContainer;
-        [SerializeField] private int _poolSize;
-        [SerializeField] private float _spawnInterval;
-        [Header("Enemy data")]
-        [SerializeField] private EnemyPositions _enemyPositions;
-        [SerializeField] private Transform _worldTransform;
-        [SerializeField] private EnemyManager _enemyManager;
+        private float _spawnInterval;
+        private EnemyPositions _enemyPositions;
+        private Transform _worldTransform;
+        private EnemyManager _enemyManager;
         private Timer _spawnTimer;
         private Pool _enemyPool;
 
-        private void Awake()
+        [Inject]
+        private void Construct(
+            EnemyPositions enemyPositions,
+            [Inject(Id = SceneInstaller.WORLD_TRANSFORM)] Transform worldTransform,
+            EnemyManager enemyManager,
+            [Inject(Id = SceneInstaller.ENEMY_POOL)] Pool enemyPool,
+            float spawnInterval
+            )
         {
-            _enemyPool = new Pool(_poolContainer, _enemyPrefab, _poolSize);
-            _spawnTimer = new Timer(_spawnInterval);
+            _enemyPositions = enemyPositions;
+            _worldTransform = worldTransform;
+            _enemyManager = enemyManager;
+            _enemyPool = enemyPool;
+            _spawnInterval = spawnInterval;
         }
 
-        public void Start()
+        public void Initialize()
         {
+            _spawnTimer = new Timer(_spawnInterval);
             IGameListener.Register(this);
         }
 
@@ -39,18 +42,17 @@ namespace ShootEmUp
                 GameObject newEnemy = Spawn(_worldTransform, spawnPosition);
                 if (newEnemy != null)
                 {
-                    HitPointsComponent enemyHitPointsComponent = newEnemy.GetComponent<HitPointsComponent>();
+                    HitPointsComponent enemyHitPointsComponent = newEnemy.GetComponent<Enemy>().HitPointsComponent;
                     enemyHitPointsComponent.OnHpEmpty += EnemySpawner_OnEnemyDestroyed;
                     enemyHitPointsComponent.Reset();
                     _enemyManager.EnemySpawnCallback(newEnemy);
                 }
             }
         }
-
-        private void EnemySpawner_OnEnemyDestroyed(GameObject destroyedEnemy)
+        private void EnemySpawner_OnEnemyDestroyed(Unit destroyedEnemy)
         {
-            destroyedEnemy.GetComponent<HitPointsComponent>().OnHpEmpty -= EnemySpawner_OnEnemyDestroyed;
-            _enemyPool.Unspawn(destroyedEnemy);
+            destroyedEnemy.HitPointsComponent.OnHpEmpty -= EnemySpawner_OnEnemyDestroyed;
+            Unspawn(destroyedEnemy.gameObject);
         }
 
         public GameObject Spawn(Transform newParent, Vector3 spawnPosition)

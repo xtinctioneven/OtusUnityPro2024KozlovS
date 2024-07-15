@@ -1,15 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterDeathObserver : MonoBehaviour, IGameStartListener, IGameFinishListener
+    public sealed class CharacterDeathObserver : IGameStartListener, IGameFinishListener, IInitializable
     {
-        [SerializeField] HitPointsComponent _characterHitPoints;
-        [SerializeField] GameManager _gameManager;
+        HitPointsComponent _characterHitPoints;
+        GameManager _gameManager;
 
-        private void Start()
+        [Inject]
+        private void Construct(HitPointsComponent hitPointsComponent, GameManager gameManager)
+        {
+            _characterHitPoints = hitPointsComponent;
+            _gameManager = gameManager;
+        }
+
+        public void Initialize()
         {
             IGameListener.Register(this);
         }
@@ -24,7 +30,7 @@ namespace ShootEmUp
             _characterHitPoints.OnHpEmpty -= CharacterDeathObserver_OnDeath;
         }
 
-        private void CharacterDeathObserver_OnDeath(GameObject obj)
+        private void CharacterDeathObserver_OnDeath(Unit obj)
         {
             _gameManager.FinishGame();
         }

@@ -1,31 +1,30 @@
-using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class Bullet : MonoBehaviour, IGamePauseListener, IGamePlayListener, IGameFinishListener
+    public sealed class Bullet : MonoBehaviour, IInitializable, IGamePauseListener, IGamePlayListener, IGameFinishListener
     {
-        public int Damage
-        {
-            get { return _damage; }
-        }
-        public bool IsPlayer
-        {
-            get { return _isPlayer; }
-        }
-        public Vector3 Position
-        {
-            get { return this.transform.position; }
-        }
+        public int Damage { get { return _damage; } }
+        public bool IsPlayer { get { return _isPlayer; } }
+        public Vector3 Position { get { return this.transform.position; } }
 
-        [SerializeField] private Rigidbody2D _rigidbody2D;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        private Rigidbody2D _rigidbody2D;
+        private SpriteRenderer _spriteRenderer;
         private BulletManager _bulletManager;
         private bool _isPlayer;
         private int _damage;
         private Vector2 _cachedVelocity;
 
-        private void Start()
+        [Inject]
+        private void Construct(Rigidbody2D rigidbody2D, SpriteRenderer spriteRenderer, BulletManager bulletManager)
+        {
+            _rigidbody2D = rigidbody2D;
+            _spriteRenderer = spriteRenderer;
+            _bulletManager = bulletManager;
+        }
+
+        public void Initialize()
         {
             IGameListener.Register(this);
         }
@@ -46,39 +45,13 @@ namespace ShootEmUp
             _rigidbody2D.velocity = Vector2.zero;
         }
 
-        public void SetVelocity(Vector2 velocity)
+        public void Setup(Vector2 velocity, int physicsLayer, Color color, bool isPlayer, int damage)
         {
             _rigidbody2D.velocity = velocity;
-        }
-
-        public void SetPhysicsLayer(int physicsLayer)
-        {
             this.gameObject.layer = physicsLayer;
-        }
-
-        public void SetPosition(Vector3 position)
-        {
-            this.transform.position = position;
-        }
-
-        public void SetColor(Color color)
-        {
             _spriteRenderer.color = color;
-        }
-
-        public void SetTeam(bool isPlayer)
-        {
             _isPlayer = isPlayer;
-        }
-
-        public void SetDamage(int damage)
-        {
             _damage = damage;
-        }
-
-        public void SetBulletManager(BulletManager bulletManager)
-        {
-            _bulletManager = bulletManager;
         }
 
         public void BulletCollision()

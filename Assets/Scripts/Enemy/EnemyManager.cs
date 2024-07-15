@@ -2,25 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemyManager
     {
-        [SerializeField] private EnemyPositions _enemyPositions;
-        [SerializeField] private BulletManager _bulletManager;
-        [SerializeField] private GameObject _targetCharacter;
-        [SerializeField] private LevelBounds _levelBounds;
+        private EnemyPositions _enemyPositions;
+        private GameObject _targetCharacter;
 
-        public void EnemySpawnCallback(GameObject newEnemy)
+        [Inject]
+        private void Construct(EnemyPositions enemyPositions, [Inject(Id = SceneInstaller.CHARACTER_ID)]GameObject targetCharacter)
+        {
+            _enemyPositions = enemyPositions;
+            _targetCharacter = targetCharacter;
+        }
+
+        public void EnemySpawnCallback(GameObject newEnemyGO)
         {
             Vector3 attackPosition = _enemyPositions.GetAttackPosition();
-            EnemyAttackAgent enemyAttackAgent = newEnemy.GetComponent<EnemyAttackAgent>();
-            enemyAttackAgent.SetTarget(_targetCharacter);
-            enemyAttackAgent.SetBulletManager(_bulletManager);
-            newEnemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition);
-            newEnemy.GetComponent<MoveComponent>().SetLevelBounds(_levelBounds);
+            Enemy newEnemy = newEnemyGO.GetComponent<Enemy>();
+            newEnemy.EnemyAttackAgent.SetTarget(_targetCharacter);
+            newEnemy.EnemyMoveAgent.SetDestination(attackPosition);
         }
     }
 

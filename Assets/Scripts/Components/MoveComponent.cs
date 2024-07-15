@@ -1,26 +1,32 @@
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class MoveComponent : MonoBehaviour
+    [Serializable]
+    public sealed class MoveComponent: UnitComponent
     {
-        [SerializeField] private Rigidbody2D _rigidbody2D;
-        [SerializeField] private float speed = 5.0f;
-        [SerializeField] LevelBounds _levelBounds;
+        private float _speed = 5.0f;
+        private Rigidbody2D _rigidbody2D;
+        private LevelBounds _levelBounds;
+
+        [Inject]
+        public void Construct (Rigidbody2D rigidbody2D, LevelBounds levelBounds, float speed)
+        {
+            _rigidbody2D = rigidbody2D;
+            _levelBounds = levelBounds;
+            _speed = speed;
+        }
         
         public void MoveInDirection(Vector2 vector)
         {
-            var nextPosition = this._rigidbody2D.position + vector * this.speed;
+            var nextPosition = _rigidbody2D.position + vector * _speed;
             if (!_levelBounds.InBounds(nextPosition))
             {
                 return;
             }
             _rigidbody2D.MovePosition(nextPosition);
-        }
-
-        public void SetLevelBounds(LevelBounds levelBounds)
-        {
-            _levelBounds = levelBounds;
         }
     }
 }

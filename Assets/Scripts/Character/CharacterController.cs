@@ -1,39 +1,59 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterController : MonoBehaviour, IGameStartListener, IGamePlayListener, IGameFinishListener, IGamePauseListener
+    public sealed class CharacterController : IGamePlayListener, IGameFinishListener, IGamePauseListener, IInitializable
     {
-        [SerializeField] private GameObject _character;
-        [SerializeField] private BulletManager _bulletManager;
-        [SerializeField] private InputManager _inputManager;
-        [SerializeField] private MoveComponent _moveComponent;
+        private GameObject _character;
+        private BulletManager _bulletManager;
+        private InputManager _inputManager;
+        private MoveComponent _moveComponent;
 
-        private void Start()
+        [Inject]
+        private void Construct(
+            [Inject(Id = SceneInstaller.CHARACTER_ID)] GameObject character,
+            BulletManager bulletManager,
+            InputManager inputManager,
+            MoveComponent moveComponent
+            )
+        {
+            _character = character;
+            _bulletManager = bulletManager;
+            _inputManager = inputManager;
+            _moveComponent = moveComponent;
+        }
+
+        public void Initialize()
         {
             IGameListener.Register(this);
         }
 
-        public void OnGameStart()
+        public void OnGameFinish()
+        {
+            Unscribe();
+        }
+
+        public void OnGamePause()
+        {
+            Unscribe();
+        }
+
+        public void OnGamePlay()
+        {
+            Subscribe();
+        }
+
+        private void Subscribe()
         {
             _inputManager.OnHorizontalMoveButtonPressed += InputManager_OnHorizontalMoveButtonPressed;
             _inputManager.OnShootButtonPressed += InputManager_OnShootButtonPressed;
         }
 
-        public void OnGameFinish()
+        private void Unscribe()
         {
-            _inputManager.OnHorizontalMoveButtonPressed -= InputManager_OnHorizontalMoveButtonPressed;
-            _inputManager.OnShootButtonPressed -= InputManager_OnShootButtonPressed;
-        }
-
-        public void OnGamePause()
-        {
-            enabled = false;
-        }
-
-        public void OnGamePlay()
-        {
-            enabled = true;
+            _inputManager.OnHorizontalMoveButtonPressed += InputManager_OnHorizontalMoveButtonPressed;
+            _inputManager.OnShootButtonPressed += InputManager_OnShootButtonPressed;
         }
 
         private void InputManager_OnHorizontalMoveButtonPressed(float horizontalDirection)
@@ -44,7 +64,7 @@ namespace ShootEmUp
 
         private void InputManager_OnShootButtonPressed()
         {
-            _bulletManager.Shoot(_character, Vector2.up);
+            _bulletManager.Shoot(_character.GetComponent<Unit>(), Vector2.up);
         }
     }
 }

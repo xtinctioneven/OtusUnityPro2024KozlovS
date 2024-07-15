@@ -1,38 +1,40 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    [Serializable]
-    public class Pool
+   public class Pool
     {
         private Transform _container;
         private GameObject _itemPrefab;
-        private readonly Queue<GameObject> _poolItems;
+        private Queue<GameObject> _poolItems;
         private bool _isFlexible = false;
+        [Inject] DiContainer _diContainer;
 
-        public Pool(Transform container, GameObject itemPrefab, int initialSize, bool isFlexible = false)
+        [Inject]
+        private void Construct(PoolSettings poolSettings)
         {
-            _container = container;
-            _itemPrefab = itemPrefab;
-            _poolItems = new Queue<GameObject>(initialSize);
-            for (int i = 0; i < initialSize; i++)
+            _container = poolSettings.Container;
+            _itemPrefab = poolSettings.Prefab;
+            _isFlexible = poolSettings.IsFlexible;
+            _poolItems = new Queue<GameObject>(poolSettings.PoolSize);
+            for (int i = 0; i < poolSettings.PoolSize; i++)
             {
-                GameObject item = GameObject.Instantiate(_itemPrefab, _container);
-                item.name = itemPrefab.name + " " + i;
+                GameObject item = _diContainer.InstantiatePrefab(_itemPrefab, _container);
+                item.name = _itemPrefab.name + " " + i;
                 _poolItems.Enqueue(item);
             }
-            _isFlexible = isFlexible; 
         }
-
+        
         public GameObject Spawn(Transform parentTransform, Vector3 spawnPosition)
         {
             if (!_poolItems.TryDequeue(out GameObject item))
             {
                 if (_isFlexible)
                 {
-                    item = GameObject.Instantiate(_itemPrefab);
+                    item = _diContainer.InstantiatePrefab(_itemPrefab);
                 }
                 else
                 {
@@ -55,5 +57,14 @@ namespace ShootEmUp
         {
             return _poolItems.Count;
         }
+    }
+
+    [Serializable]
+    public struct PoolSettings
+    {
+        public Transform Container;
+        public GameObject Prefab;
+        public int PoolSize;
+        public bool IsFlexible;
     }
 }

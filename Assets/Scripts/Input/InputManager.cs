@@ -1,14 +1,15 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class InputManager : MonoBehaviour, IGameUpdateListener
+    public sealed class InputManager : IGameUpdateListener, IInitializable
     {
         public event Action OnShootButtonPressed;
         public event Action<float> OnHorizontalMoveButtonPressed;
 
-        public void Start()
+        public void Initialize()
         {
             IGameListener.Register(this);
         }

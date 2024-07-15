@@ -1,45 +1,52 @@
-using ShootEmUp;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-public class GamePauseManager : MonoBehaviour, IGamePlayListener, 
-    IGamePauseListener, IGameFinishListener
+namespace ShootEmUp
 {
-    public delegate void TogglePauseDelegate();
-    public TogglePauseDelegate TogglePause;
-    [SerializeField] private GameManager _gameManager;
-    [SerializeField] private Image _playButtonVisual;
-
-
-    private void Start()
+    public class GamePauseManager : IInitializable, IGamePlayListener,
+    IGamePauseListener, IGameFinishListener
     {
-        IGameListener.Register(this);
+        public delegate void TogglePauseDelegate();
+        public TogglePauseDelegate TogglePause;
+        private GameManager _gameManager;
+        private Image _playButtonVisual;
+        private Button _pauseButton;
+
+        [Inject]
+        private void Construct(GameManager gameManager, Image playButtonVisual, Button pauseButton)
+        {
+            _gameManager = gameManager;
+            _playButtonVisual = playButtonVisual;
+            _pauseButton = pauseButton;
+        }
+
+        public void Initialize()
+        {
+            IGameListener.Register(this);
+            _pauseButton.onClick.AddListener(TogglePauseClick);
+        }
+
+        public void OnGamePause()
+        {
+            TogglePause = _gameManager.PlayGame;
+            _playButtonVisual.gameObject.SetActive(true);
+        }
+
+        public void OnGamePlay()
+        {
+            TogglePause = _gameManager.PauseGame;
+            _playButtonVisual.gameObject.SetActive(false);
+        }
+
+        public void OnGameFinish()
+        {
+            _pauseButton.gameObject.SetActive(false);
+        }
+
+        public void TogglePauseClick()
+        {
+            TogglePause?.Invoke();
+        }
     }
-
-    public void OnGamePause()
-    {
-        TogglePause = _gameManager.PlayGame;
-        _playButtonVisual.gameObject.SetActive(true);
-    }
-
-    public void OnGamePlay()
-    {
-        TogglePause = _gameManager.PauseGame;
-        _playButtonVisual.gameObject.SetActive(false);
-    }
-
-    public void OnGameFinish()
-    {
-        enabled = false;
-    }
-
-    public void ButtonClick()
-    {
-        TogglePause?.Invoke();
-    }
-
-
 }

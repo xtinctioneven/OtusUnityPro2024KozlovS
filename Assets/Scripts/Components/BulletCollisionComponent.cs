@@ -1,29 +1,31 @@
-using ShootEmUp;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class BulletCollisionComponent : MonoBehaviour
+namespace ShootEmUp
 {
-    [SerializeField] private Bullet _bullet;
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    public class BulletCollisionComponent : MonoBehaviour
     {
-        _bullet.BulletCollision();
-        if (!collision.gameObject.TryGetComponent(out TeamComponent team))
+        private Bullet _bullet;
+        [Inject]
+        private void Constuct(Bullet bullet)
         {
-            return;
+            _bullet = bullet;
         }
 
-        if (_bullet.IsPlayer == team.IsPlayer)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            return;
-        }
+            _bullet.BulletCollision();
+            if (!collision.gameObject.TryGetComponent(out Unit unit))
+            {
+                return;
+            }
 
-        if (collision.gameObject.TryGetComponent(out HitPointsComponent hitPoints))
-        {
-            hitPoints.TakeDamage(_bullet.Damage);
+            if (_bullet.IsPlayer == unit.TeamComponent.IsPlayer)
+            {
+                return;
+            }
+
+            unit.HitPointsComponent.TakeDamage(_bullet.Damage);
         }
     }
 }

@@ -1,22 +1,27 @@
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener
+    [Serializable]
+    public sealed class EnemyMoveAgent : UnitComponent, IGameFixedUpdateListener, IInitializable
     {
-        public bool IsReached
-        {
-            get { return _isReached; }
-        }
-
-        [SerializeField] private MoveComponent _moveComponent;
-
+        private MoveComponent _moveComponent;
         private Vector2 _destination;
         private bool _isReached;
+        private Transform _thisTransform;
 
-        public void Start()
+        [Inject]
+        private void Construct(MoveComponent moveComponent)
+        {
+            _moveComponent = moveComponent;
+        }
+
+        public void Initialize()
         {
             IGameListener.Register(this);
+            _thisTransform = _componentOwner.gameObject.transform;
         }
 
         public void SetDestination(Vector2 endPoint)
@@ -32,7 +37,7 @@ namespace ShootEmUp
                 return;
             }
 
-            var vector = _destination - (Vector2)transform.position;
+            var vector = _destination - (Vector2)_thisTransform.position;
             if (vector.magnitude <= 0.25f)
             {
                 _isReached = true;
@@ -41,6 +46,11 @@ namespace ShootEmUp
 
             var direction = vector.normalized * fixedDeltaTime;
             _moveComponent.MoveInDirection(direction);
+        }
+
+        public bool IsReached()
+        {
+            return _isReached; 
         }
     }
 }

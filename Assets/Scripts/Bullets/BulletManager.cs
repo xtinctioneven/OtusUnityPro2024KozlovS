@@ -1,28 +1,39 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class BulletManager : MonoBehaviour
+    public sealed class BulletManager
     {
-        [SerializeField] private Transform _worldTransform;
-        [SerializeField] private BulletSpawner _bulletSpawner;
-        [SerializeField] private BulletTracker _bulletTracker;
-        
-        public void Shoot(GameObject shooter, Vector2 direction)
+        private Transform _worldTransform;
+        private BulletSpawner _bulletSpawner;
+        private BulletTracker _bulletTracker;
+
+        [Inject]
+        private void Construct(
+            [Inject(Id = SceneInstaller.WORLD_TRANSFORM)] Transform worldTransform, 
+            BulletSpawner bulletSpawner, 
+            BulletTracker bulletTracker
+            )
         {
-            BulletConfig bulletConfig = shooter.GetComponent<WeaponComponent>().GetBulletConfig();
-            WeaponComponent weaponComponent = shooter.GetComponent<WeaponComponent>();
-            TeamComponent teamComponent = shooter.GetComponent<TeamComponent>();
+            _worldTransform = worldTransform;
+            _bulletSpawner = bulletSpawner;
+            _bulletTracker = bulletTracker;
+        }
+
+        public void Shoot(Unit shooter, Vector2 direction)
+        {
+            WeaponComponent weaponComponent = shooter.WeaponComponent;
+            BulletConfig bulletConfig = weaponComponent.GetBulletConfig();
+            TeamComponent teamComponent = shooter.TeamComponent;
             BulletData bulletData = new BulletData
             {
                 isPlayer = teamComponent.IsPlayer,
-                physicsLayer = (int)bulletConfig.physicsLayer,
-                color = bulletConfig.color,
-                damage = bulletConfig.damage,
+                physicsLayer = (int)bulletConfig.PhysicsLayer,
+                color = bulletConfig.Color,
+                damage = bulletConfig.Damage,
                 position = weaponComponent.Position,
-                velocity = direction * bulletConfig.speed,
+                velocity = direction * bulletConfig.Speed,
                 bulletManager = this
             };
             Bullet newBullet = _bulletSpawner.Spawn(_worldTransform, bulletData);
