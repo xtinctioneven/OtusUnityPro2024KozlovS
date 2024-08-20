@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d6c9a40fcbbb847993baef3a16b426, type: 3}
+  m_Name: WarriorConfig
+  m_EditorClassIdentifier: 
+  _userConfig:
+    Name: Garrosh
+    Description: Dreadful Warleader
+    Icon: {fileID: 21300000, guid: 7c0892898786946a98a1057c9873611a, type: 3}
+  _statsConfigs:
+  - Name: Health
+    Value: 800
+    IncreaseOnLevelUp: 150
+  - Name: Strength
+    Value: 70
+    IncreaseOnLevelUp: 10
+  - Name: Mana
+    Value: 360
+    IncreaseOnLevelUp: 30
+  - Name: Intelligence
+    Value: 36
+    IncreaseOnLevelUp: 3
+  - Name: Speed
+    Value: 320
+    IncreaseOnLevelUp: 0
+  - Name: Agility
+    Value: 52
+    IncreaseOnLevelUp: 6
+  _levelConfig:
+    Level: 3
+    Experience: 300

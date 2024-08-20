@@ -1,41 +1,37 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using UniRx;
 
 namespace Lessons.Architecture.PM
 {
+    [Serializable]
     public sealed class CharacterInfo
     {
-        public event Action<CharacterStat> OnStatAdded;
-        public event Action<CharacterStat> OnStatRemoved;
-    
         [ShowInInspector]
-        private readonly HashSet<CharacterStat> stats = new();
+        public IReadOnlyReactiveCollection<CharacterStat> CharacterStats => _characterStats;
+        private ReactiveCollection<CharacterStat> _characterStats = new();
 
         [Button]
         public void AddStat(CharacterStat stat)
         {
-            if (this.stats.Add(stat))
+            if (!_characterStats.Contains(stat))
             {
-                this.OnStatAdded?.Invoke(stat);
+                _characterStats.Add(stat);
             }
         }
 
         [Button]
         public void RemoveStat(CharacterStat stat)
         {
-            if (this.stats.Remove(stat))
-            {
-                this.OnStatRemoved?.Invoke(stat);
-            }
+            _characterStats.Remove(stat);
         }
 
         public CharacterStat GetStat(string name)
         {
-            foreach (var stat in this.stats)
+            foreach (var stat in _characterStats)
             {
-                if (stat.Name == name)
+                if (stat.Name.Value == name)
                 {
                     return stat;
                 }
@@ -46,7 +42,7 @@ namespace Lessons.Architecture.PM
 
         public CharacterStat[] GetStats()
         {
-            return this.stats.ToArray();
+            return _characterStats.ToArray();
         }
     }
 }

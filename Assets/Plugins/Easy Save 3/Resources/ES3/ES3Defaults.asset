@@ -29,11 +29,14 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
+    - Zenject
     - UniTask
+    - UniRx
     - ES3
     - Tween
     - UniTask.Linq
     - Atomic
+    - Zenject-IntegrationTests
     - Assembly-CSharp
     - UniTask.DOTween
     - Sirenix.OdinInspector.CompatibilityLayer
@@ -42,6 +45,7 @@ MonoBehaviour:
     - UniTask.Addressables
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - UniTask.Editor
+    - Zenject-TestFramework
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0
