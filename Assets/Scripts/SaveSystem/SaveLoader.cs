@@ -1,24 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Zenject;
 
-public class SaveLoader : MonoBehaviour
+namespace SaveSystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class SaveLoader<TService, TData> : ISaveLoader
     {
-        
-    }
+        public void SaveGame(DiContainer diContainer, IGameRepository gameRepository)
+        {
+            TService service = diContainer.Resolve<TService>();
+            TData data = ConvertToData(service);
+            gameRepository.SetData(data);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+        public void LoadGame(DiContainer diContainer, IGameRepository gameRepository)
+        {
+            TService service = diContainer.Resolve<TService>();
+            if (gameRepository.TryGetData(out TData data))
+            {
+                SetupData(service, data);
+            }
+            else
+            {
+                SetupDefaultData(service);
+            }
+        }
 
-public interface ISaveLoader
-{
-    void SaveGame();
-    void LoadGame();
+        protected abstract TData ConvertToData(TService service);
+        protected abstract void SetupData(TService service, TData data);
+
+        protected virtual void SetupDefaultData(TService service)
+        {
+        }
+    }
 }
