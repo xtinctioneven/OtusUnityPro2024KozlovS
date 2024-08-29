@@ -7,14 +7,14 @@ namespace SaveSystem
     public class SaveLoadManager : MonoBehaviour
     {
         [ShowInInspector] private ISaveLoader[] saveLoaders;
-        private DiContainer diContainer;
+        private IDependencyResolver dependencyResolver;
         private GameRepository gameRepository;
 
         [Inject]
-        public void Construct(DiContainer diContainer, ISaveLoader[] saveLoaders,
+        public void Construct(IDependencyResolver dependencyResolver, ISaveLoader[] saveLoaders,
             GameRepository gameRepository)
         {
-            this.diContainer = diContainer;
+            this.dependencyResolver = dependencyResolver;
             this.saveLoaders = saveLoaders;
             this.gameRepository = gameRepository;
         }
@@ -24,7 +24,7 @@ namespace SaveSystem
         {
             foreach (var saveLoader in this.saveLoaders)
             {
-                saveLoader.SaveGame(this.diContainer, this.gameRepository);
+                saveLoader.SaveGame(this.dependencyResolver, this.gameRepository);
             }
 
             this.gameRepository.SaveState();
@@ -36,7 +36,7 @@ namespace SaveSystem
             this.gameRepository.LoadState();
             foreach (var saveLoader in this.saveLoaders)
             {
-                saveLoader.LoadGame(this.diContainer, this.gameRepository);
+                saveLoader.LoadGame(this.dependencyResolver, this.gameRepository);
             }
         }
     }

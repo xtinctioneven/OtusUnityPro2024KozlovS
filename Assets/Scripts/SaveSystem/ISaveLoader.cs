@@ -4,7 +4,7 @@ namespace SaveSystem
 {
     public interface ISaveLoader
     {
-        void SaveGame(DiContainer diContainer, IGameRepository gameRepository);
-        void LoadGame(DiContainer diContainer, IGameRepository gameRepository);
+        void SaveGame(IDependencyResolver dependencyResolver, IGameRepository gameRepository);
+        void LoadGame(IDependencyResolver dependencyResolver, IGameRepository gameRepository);
     }
 }

@@ -7,35 +7,36 @@ using UnityEngine;
 namespace SaveSystem
 {
     [Serializable]
-    public class ResourceSaveLoader : SaveLoader<ResourceService, Dictionary<string, ResourceData>>
+    public class ResourceSaveLoader : SaveLoader<ResourceService, ResourcesSaveData>
     {
         [SerializeField] private bool isErrorOnExcessiveSaveData = true;
         [SerializeField] private bool isErrorOnNoSaveDataForResource = true;
-        protected override Dictionary<string, ResourceData> ConvertToData(ResourceService resourceService)
+        protected override ResourcesSaveData ConvertToData(ResourceService resourceService)
         {
-            Dictionary<string, ResourceData> resourceDataCollection = new Dictionary<string, ResourceData>();
-            var resources = resourceService.GetResources();
+            ResourcesSaveData resourcesSaveData = new ResourcesSaveData();
+            List<Resource> resources = resourceService.GetResources().ToList();
             foreach (Resource resource in resources)
             {
                 string key = resource.ID;
-                ResourceData resourceData = new ResourceData
+                ResourcesSaveData.ResourceData resourceData = new ResourcesSaveData.ResourceData
                 {
                     Amount = resource.Amount
                 };
-                resourceDataCollection.Add(key, resourceData);
+                resourcesSaveData.ResourceDataCollection.Add(key, resourceData);
             }
-            return resourceDataCollection;
+            return resourcesSaveData;
         }
 
-        protected override void SetupData(ResourceService resourceService, Dictionary<string, ResourceData> resourceDataCollection)
+        protected override void SetupData(ResourceService resourceService, ResourcesSaveData resourcesSaveData)
         {
             var resources = resourceService.GetResources();
+            Dictionary<string, ResourcesSaveData.ResourceData> resourceDataCollection = resourcesSaveData.ResourceDataCollection;
             foreach (Resource resource in resources)
             {
                 string key = resource.ID;
                 if (resourceDataCollection.ContainsKey(key))
                 {
-                    ResourceData resourceData = resourceDataCollection[key];
+                    ResourcesSaveData.ResourceData resourceData = resourceDataCollection[key];
                     resource.Amount = resourceData.Amount;
                     resourceDataCollection.Remove(key);
                 }

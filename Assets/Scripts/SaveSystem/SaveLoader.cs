@@ -4,16 +4,16 @@ namespace SaveSystem
 {
     public abstract class SaveLoader<TService, TData> : ISaveLoader
     {
-        public void SaveGame(DiContainer diContainer, IGameRepository gameRepository)
+        public void SaveGame(IDependencyResolver dependencyResolver, IGameRepository gameRepository)
         {
-            TService service = diContainer.Resolve<TService>();
+            TService service = dependencyResolver.Resolve<TService>();
             TData data = ConvertToData(service);
             gameRepository.SetData(data);
         }
 
-        public void LoadGame(DiContainer diContainer, IGameRepository gameRepository)
+        public void LoadGame(IDependencyResolver dependencyResolver, IGameRepository gameRepository)
         {
-            TService service = diContainer.Resolve<TService>();
+            TService service = dependencyResolver.Resolve<TService>();
             if (gameRepository.TryGetData(out TData data))
             {
                 SetupData(service, data);

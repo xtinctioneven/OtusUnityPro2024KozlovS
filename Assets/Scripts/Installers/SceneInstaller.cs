@@ -13,5 +13,6 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<Resource>().FromComponentsInHierarchy().AsCached();
         Container.BindInterfacesAndSelfTo<ResourceService>().FromNew().AsSingle();
         Container.BindInterfacesAndSelfTo<ResourceSaveLoader>().FromNew().AsSingle();
+        Container.BindInterfacesAndSelfTo<ZenjectDependencyResolver>().FromNew().AsSingle().NonLazy();
     }
 }
