@@ -66805,23 +66805,9 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.23333333
-    functionName: ReceiveString
-    data: start_chop_trail
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.4
-    functionName: ReceiveString
-    data: chop
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.7
-    functionName: ReceiveString
-    data: end_chop_trail
+  - time: 0.33333334
+    functionName: DispatchEvent
+    data: StrikeAnimationEvent
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
