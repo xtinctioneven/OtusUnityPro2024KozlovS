@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Leopotam.EcsLite.Entities
 {
@@ -37,6 +38,11 @@ namespace Leopotam.EcsLite.Entities
                 entity.Dispose();
                 GameObject.Destroy(entity.gameObject);
             }
+        }
+
+        public void Add(Entity entity)
+        {
+            this.entities.Add(entity.Id, entity);
         }
 
         public Entity Get(int id)
