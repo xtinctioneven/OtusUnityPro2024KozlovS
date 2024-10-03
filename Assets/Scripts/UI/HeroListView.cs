@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    [RequireComponent(typeof(Canvas))]
+    //[RequireComponent(typeof(Canvas))]
     public sealed class HeroListView : MonoBehaviour
     {
         private const int FORWARD_LAYER = 10;
@@ -13,13 +13,15 @@ namespace UI
         public event Action<HeroView> OnHeroClicked;
 
         [SerializeField]
+        //private List<HeroView> views;
         private HeroView[] views;
 
         private Canvas canvas;
 
         private void Awake()
         {
-            this.canvas = this.GetComponent<Canvas>();
+            this.canvas = GetComponentInParent<Canvas>();
+            //this.canvas = this.GetComponent<Canvas>();
         }
 
         private void OnEnable()

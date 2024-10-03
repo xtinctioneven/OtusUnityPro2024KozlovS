@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2d965046fb4572ab7f7a3ac7df2700, type: 3}
+  m_Name: ElectroHeroConfig
+  m_EditorClassIdentifier: 
+  HeroName: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E"
+  HealthValue: 35
+  AttackValue: 7
+  Ability: {fileID: 11400000, guid: 394df37e883248445a45a4a0c76eef48, type: 2}
+  TurnStartSounds:
+  - {fileID: 8300000, guid: 9aec69027fb0d42d284ccb7c087858c0, type: 3}
+  - {fileID: 8300000, guid: 1314fcb530f1f444489b0b5a3caed0a1, type: 3}
+  - {fileID: 8300000, guid: 24cda1d363f66421b9a28d0ce15c2d2a, type: 3}
+  - {fileID: 8300000, guid: 6c42d7f78fc4c492c851c0f6d5ec764f, type: 3}
+  - {fileID: 8300000, guid: 8705eee9f468f4612995a31ade57aa3c, type: 3}
+  - {fileID: 8300000, guid: cf4131bc52c7c42d68eefca84e52e73a, type: 3}
+  LowHealthSounds:
+  - {fileID: 8300000, guid: 5bb9ff9087b6d492eacdeda34a7610f4, type: 3}
+  AbilityCastSounds:
+  - {fileID: 8300000, guid: 855f23e1af9964e14a4956788f3097a8, type: 3}
+  - {fileID: 8300000, guid: 22eae6007a5b540ddb343c25c1c84dae, type: 3}
+  - {fileID: 8300000, guid: 2e23698572f7448d1bad5e6f926790c0, type: 3}
+  - {fileID: 8300000, guid: 5394c6470fa594d1a96b89972712026e, type: 3}
+  - {fileID: 8300000, guid: 02f04a1cc50a2457799df1aadd4d69c2, type: 3}
+  DeathSounds:
+  - {fileID: 8300000, guid: 31a832b5ffe004b669c0b887d8e2b984, type: 3}

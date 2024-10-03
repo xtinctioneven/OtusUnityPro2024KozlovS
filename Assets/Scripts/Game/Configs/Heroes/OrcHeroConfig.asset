@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2d965046fb4572ab7f7a3ac7df2700, type: 3}
+  m_Name: OrcHeroConfig
+  m_EditorClassIdentifier: 
+  HeroName: "\u0422\u0443\u043F\u043E\u0439 \u043E\u0440\u043A"
+  HealthValue: 32
+  AttackValue: 8
+  Ability: {fileID: 11400000, guid: 17b2545f3e1abf24481fd889112b1bb0, type: 2}
+  TurnStartSounds:
+  - {fileID: 8300000, guid: ecba59054dcda4ece97352987857289b, type: 3}
+  - {fileID: 8300000, guid: 6db98fae60c78455f81beb82f267d315, type: 3}
+  - {fileID: 8300000, guid: bd0d4bf408ccf47e7a54455c78347fa7, type: 3}
+  - {fileID: 8300000, guid: 035fcad0317044a269025095209ae8b5, type: 3}
+  - {fileID: 8300000, guid: 82972a344ac784add9948bec53586af9, type: 3}
+  - {fileID: 8300000, guid: 925f229f6aa9e4a9d932b1df21c7c1e0, type: 3}
+  LowHealthSounds:
+  - {fileID: 8300000, guid: ca4ea813b9fe44879a16c7ffbb75d634, type: 3}
+  AbilityCastSounds: []
+  DeathSounds:
+  - {fileID: 8300000, guid: 7e2d09ca938c1487383581b917a8b48c, type: 3}

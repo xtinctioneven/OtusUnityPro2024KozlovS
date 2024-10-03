@@ -285,6 +285,8 @@ GameObject:
   m_Component:
   - component: {fileID: 383512545514860529}
   - component: {fileID: 8763992113062683896}
+  - component: {fileID: 1141858332}
+  - component: {fileID: 1141858333}
   m_Layer: 5
   m_Name: HeroView
   m_TagString: Untagged
@@ -385,6 +387,32 @@ MonoBehaviour:
     m_RotationOrder: 4
   backDuration: 0.5
   punchSFX: {fileID: 8300000, guid: 2d88ba13b6e704829a737e409185d1ea, type: 3}
+--- !u!114 &1141858332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383512545514860528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29fdbf7740145fbb7fdf411d5d83ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1141858333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383512545514860528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dcebde50fe14a3d8f60dea5e9d75042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HeroConfig: {fileID: 11400000, guid: a4e6524dd2230d24cac534143e484a87, type: 2}
+  Team: 0
 --- !u!1 &383512545822542975
 GameObject:
   m_ObjectHideFlags: 0

@@ -95,7 +95,6 @@ namespace UI
             }
 
             UniTaskCompletionSource tcs = new UniTaskCompletionSource();
-            
             Vector3 sourcePosition = this.center.position;
             Vector3 targetPosition = target.center.position;
 
@@ -113,6 +112,11 @@ namespace UI
                 });
 
             return tcs.Task;
+        }
+
+        public Image GetHeroImage()
+        {
+            return this.heroImage;
         }
     }
 }

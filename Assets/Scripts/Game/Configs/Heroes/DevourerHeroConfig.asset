@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2d965046fb4572ab7f7a3ac7df2700, type: 3}
+  m_Name: DevourerHeroConfig
+  m_EditorClassIdentifier: 
+  HeroName: "\u041F\u043E\u0436\u0438\u0440\u0430\u0442\u0435\u043B\u044C"
+  HealthValue: 50
+  AttackValue: 3
+  Ability: {fileID: 11400000, guid: 1bea9fdede78b944182d24b9ae02d3a7, type: 2}
+  TurnStartSounds:
+  - {fileID: 8300000, guid: 3b0eeec7c3abd42e484ac99b5b8ed794, type: 3}
+  - {fileID: 8300000, guid: fbf48d1898f2248fd9922ba1429d4b42, type: 3}
+  - {fileID: 8300000, guid: e4c3823ffca3f474ea4db4c4e741c794, type: 3}
+  - {fileID: 8300000, guid: 886bbc95762ec4b4e8e8a53bd6520b7e, type: 3}
+  - {fileID: 8300000, guid: 4c9ee245a544f44f2a0ab1c792044c67, type: 3}
+  LowHealthSounds:
+  - {fileID: 8300000, guid: a2de2f87ac95a498f9859a5608963e0b, type: 3}
+  AbilityCastSounds:
+  - {fileID: 8300000, guid: 9c3cb88de66244ea58fdef2aeac8a979, type: 3}
+  DeathSounds:
+  - {fileID: 8300000, guid: a2de2f87ac95a498f9859a5608963e0b, type: 3}

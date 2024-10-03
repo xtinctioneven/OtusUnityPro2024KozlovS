@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI
 {
@@ -9,6 +10,9 @@ namespace UI
 
         [SerializeField]
         private HeroListView redPlayer;
+        
+        [SerializeField]
+        private GameOverPopup gameOverPopup;
 
         public HeroListView GetBluePlayer()
         {
@@ -18,6 +22,11 @@ namespace UI
         public HeroListView GetRedPlayer()
         {
             return this.redPlayer;
+        }
+
+        public GameOverPopup GetGameOverPopup()
+        {
+            return this.gameOverPopup;
         }
     }
 }

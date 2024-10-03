@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2d965046fb4572ab7f7a3ac7df2700, type: 3}
+  m_Name: MageHeroConfig
+  m_EditorClassIdentifier: 
+  HeroName: "\u041B\u0435\u0434\u044F\u043D\u043E\u0439 \u043C\u0430\u0433"
+  HealthValue: 50
+  AttackValue: 2
+  Ability: {fileID: 11400000, guid: d25114c1417fe7d44a77b123425db6f4, type: 2}
+  TurnStartSounds:
+  - {fileID: 8300000, guid: 58a60bdc5e2d64a81a2b9d53513b684b, type: 3}
+  - {fileID: 8300000, guid: 0ba3f36a6a4424d0ab20e02a25c18d1d, type: 3}
+  LowHealthSounds:
+  - {fileID: 8300000, guid: 0ebd6580ff27d4dc1a08513f4d2330d3, type: 3}
+  AbilityCastSounds: []
+  DeathSounds:
+  - {fileID: 8300000, guid: 7d8f63236f074456dac94230db57fac4, type: 3}
