@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92182b3301624bbfb35ffb6a34227d5f, type: 3}
+  m_Name: LoadStorageCapacityUpgradeConfig
+  m_EditorClassIdentifier: 
+  Id: LoadStorageCapacity
+  MaxLevel: 10
+  PriceTable:
+    rid: 6334928839814938626
+  UpgradeTable:
+    _startLoadStorageCapacity: 2
+    _endLoadStorageCapacity: 20
+    _loadStorageCapacityStep: 2
+    _table: 020000000400000006000000080000000a0000000c0000000e000000100000001200000014000000
+  references:
+    version: 2
+    RefIds:
+    - rid: 6334928839814938626
+      type: {class: LinearUpgradePriceTable, ns: , asm: Assembly-CSharp}
+      data:
+        _basePrice: 25
+        _levels: 00000000320000004b000000640000007d00000096000000af000000c8000000e1000000fa000000
