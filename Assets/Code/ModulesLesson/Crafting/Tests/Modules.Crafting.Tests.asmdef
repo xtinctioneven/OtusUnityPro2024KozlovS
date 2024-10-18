@@ -1,0 +1,22 @@
+{
+    "name": "Modules.Crafting.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d9e4bb7d30c0a42e3b40fb839acc48ad"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

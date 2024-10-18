@@ -393,9 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d756007d7746d1bd5a10280b125e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHitPoints: 10
-  Mana: 10
-  Attack: 10
 --- !u!4 &1608645704
 Transform:
   m_ObjectHideFlags: 0
@@ -422,7 +419,7 @@ GameObject:
   - component: {fileID: 1655371230}
   - component: {fileID: 1655371231}
   m_Layer: 0
-  m_Name: InventoryDebug
+  m_Name: InventoryAndEquipmentDebug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -456,6 +453,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hero: {fileID: 1608645703}
-  Inventory:
-    EquipmentSlots: 00000000050000000a0000000f00000014000000
-  ItemConfig: {fileID: 0}
+  EquipmentSlots: 00000000050000000a0000000f00000014000000

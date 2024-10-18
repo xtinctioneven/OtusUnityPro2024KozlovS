@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13f99a72fba44d73b46d031dc1173c14, type: 3}
+  m_Name: Shield_ItemConfig
+  m_EditorClassIdentifier: 
+  Item:
+    Name: Shield
+    Description: A sturdy shield
+    Icon: {fileID: 0}
+    Flags: 12
+    IsOccupySingleEquipmentSlot: 1
+    EquipmentSlots: 0a000000
+    ItemComponents: []
+  references:
+    version: 2
+    RefIds: []
