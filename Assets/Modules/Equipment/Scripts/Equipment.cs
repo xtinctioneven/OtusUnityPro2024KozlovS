@@ -34,7 +34,7 @@ public class Equipment
     {
         if (!_equipment.TryGetValue(equipmentSlotType, out var item))
         {
-            Debug.Log($"There is no slot {equipmentSlotType} if target equipment.");
+            Debug.Log($"There is no slot {equipmentSlotType} in target equipment.");
             return null;
         }
         return item;
@@ -92,7 +92,7 @@ public class Equipment
         }
         if (!TryFindItem(item, out InventoryItem equipmentItem))
         {
-            Debug.LogWarning($"There is no {item.Name} in equipment!");
+            Debug.LogWarning($"There is no \"{item.Name}\" in equipment!");
             return false;
         }
         foreach (var slot in equipmentItem.EquipmentSlots)
@@ -112,13 +112,13 @@ public class Equipment
     {
         if ((item.Flags & ItemFlags.Equippable) != ItemFlags.Equippable)
         {
-            Debug.LogWarning($"{item.Name} is not equippable!");
+            Debug.LogWarning($"\"{item.Name}\" is not equippable!");
             fittingSlots = default;
             return false;
         }
         if (item.EquipmentSlots == null || item.EquipmentSlots.Length == 0)
         {
-            throw new ArgumentException($"Item {item.Name} has no equipment slots!");
+            throw new ArgumentException($"Item \"{item.Name}\" has no equipment slots!");
         }
         if (item.IsOccupySingleEquipmentSlot)
         {
@@ -146,7 +146,7 @@ public class Equipment
         }
         if (!slotsList.Any())
         {
-            Debug.LogWarning($"There is no equipment slot for {item.Name}!");
+            Debug.LogWarning($"There is no equipment slot for \"{item.Name}\"!");
             fittingSlots = default;
             return false;
         }
@@ -165,7 +165,7 @@ public class Equipment
         {
             if (!equipmentSlots.Contains(itemSlots[i]))
             {
-                Debug.LogWarning($"Can't equip {item}! There is no {itemSlots[i]} slot in the equipment!");
+                Debug.LogWarning($"Can't equip \"{item.Name}\"! There is no {itemSlots[i]} slot in the equipment!");
                 neededSlots = default;
                 return false;
             }
@@ -197,7 +197,7 @@ public class Equipment
     {
         if (neededSlots.Count() == 1)
         {
-            Debug.LogWarning($"Item {item.Name} marked as multi-slotted item but require only 1 slot!");
+            Debug.LogWarning($"Item \"{item.Name}\" marked as multi-slotted item but require only 1 slot!");
         }
         //Пробегаемся по необходимым слотам, снимаем с них экипировку 
         for (int i = 0; i < neededSlots.Count(); i++)
