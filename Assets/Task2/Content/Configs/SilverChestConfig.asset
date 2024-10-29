@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2bcc608fe94533a7b2eba353ea3c0a, type: 3}
+  m_Name: SilverChestConfig
+  m_EditorClassIdentifier: 
+  Id: SilverChest
+  OpenChestImage: {fileID: 21300000, guid: e1dc5c35fd2c22b409e70dd3f075a5fc, type: 3}
+  ClosedChestImage: {fileID: 21300000, guid: 7a2698bfc6913144cbc9fe97682b3696, type: 3}
+  TimeToOpenChest:
+    Hours: 0
+    Minutes: 0
+    Seconds: 15
+  Rewards:
+  - RewardType: 5
+    Amount: 100
+    Icon: {fileID: 21300000, guid: ef301773e5ac2a6458587889a49795a1, type: 3}
