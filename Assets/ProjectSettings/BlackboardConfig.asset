@@ -35,7 +35,7 @@ MonoBehaviour:
     name: NoTreesView
     type: 'GameObject : class'
   - id: 5
-    name: StoppingDistance
+    name: TreeStoppingDistance
     type: float
   - id: 6
     name: Barn

@@ -13,7 +13,7 @@ namespace Game
         public const int TreeService = 2; // TreeService : class
         public const int Target = 3; // GameObject : class
         public const int NoTreesView = 4; // GameObject : class
-        public const int StoppingDistance = 5; // float
+        public const int TreeStoppingDistance = 5; // float
         public const int Barn = 6; // GameObject : class
         public const int FullBarnView = 7; // GameObject : class
         public const int Waypoints = 8; // Transform[] : class
@@ -21,6 +21,7 @@ namespace Game
         public const int WaypointPause = 10; // float
         public const int WaypointTime = 11; // float
         public const int Enemy = 12; // GameObject : class
+        public const int BarnStoppingDistance = 13; // float
 
 
         ///Extensions
@@ -89,19 +90,19 @@ namespace Game
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool HasStoppingDistance(this IBlackboard obj) => obj.HasFloat(StoppingDistance);
+		public static bool HasTreeStoppingDistance(this IBlackboard obj) => obj.HasFloat(TreeStoppingDistance);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float GetStoppingDistance(this IBlackboard obj) => obj.GetFloat(StoppingDistance);
+		public static float GetTreeStoppingDistance(this IBlackboard obj) => obj.GetFloat(TreeStoppingDistance);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool TryGetStoppingDistance(this IBlackboard obj, out float value) => obj.TryGetFloat(StoppingDistance, out value);
+		public static bool TryGetTreeStoppingDistance(this IBlackboard obj, out float value) => obj.TryGetFloat(TreeStoppingDistance, out value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SetStoppingDistance(this IBlackboard obj, float value) => obj.SetFloat(StoppingDistance, value);
+		public static void SetTreeStoppingDistance(this IBlackboard obj, float value) => obj.SetFloat(TreeStoppingDistance, value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool DelStoppingDistance(this IBlackboard obj) => obj.DelFloat(StoppingDistance);
+		public static bool DelTreeStoppingDistance(this IBlackboard obj) => obj.DelFloat(TreeStoppingDistance);
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -214,6 +215,22 @@ namespace Game
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool DelEnemy(this IBlackboard obj) => obj.DelObject(Enemy);
+
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool HasBarnStoppingDistance(this IBlackboard obj) => obj.HasFloat(BarnStoppingDistance);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float GetBarnStoppingDistance(this IBlackboard obj) => obj.GetFloat(BarnStoppingDistance);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool TryGetBarnStoppingDistance(this IBlackboard obj, out float value) => obj.TryGetFloat(BarnStoppingDistance, out value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void SetBarnStoppingDistance(this IBlackboard obj, float value) => obj.SetFloat(BarnStoppingDistance, value);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool DelBarnStoppingDistance(this IBlackboard obj) => obj.DelFloat(BarnStoppingDistance);
 
     }
 }

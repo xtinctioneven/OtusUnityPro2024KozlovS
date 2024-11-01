@@ -9,12 +9,14 @@ namespace Game.Engine
     {
         [SerializeField, BlackboardKey]
         private int targetKey;
+        [SerializeField, BlackboardKey]
+        private int stoppingDistanceKey;
         
         protected override BTResult OnUpdate(IBlackboard blackboard, float deltaTime)
         {
             if (!blackboard.TryGetCharacter(out GameObject character) ||
                 !blackboard.TryGetObject(this.targetKey, out GameObject target) ||
-                !blackboard.TryGetStoppingDistance(out float stoppingDistance))
+                !blackboard.TryGetFloat(stoppingDistanceKey, out float stoppingDistance))
             {
                 return BTResult.FAILURE;
             }
