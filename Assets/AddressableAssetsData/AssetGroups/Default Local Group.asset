@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 73ba24ce69cd28b459f1298a629dbc82
+  m_SerializeEntries:
+  - m_GUID: 67cbe541ad91740769fd7f4c2c6429fb
+    m_Address: Assets/AssetPacks/3D/Tiles/Materials/Ground1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ea80d7d636e046dca895e2c51c49737
+    m_Address: Assets/AssetPacks/3D/Tiles/Materials/Sand1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ea26ded6afbc4572a655809c6ab88a6
+    m_Address: Assets/AssetPacks/3D/Objects/Materials/Pallete.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 16230a38704b2cf48b3d0c7310ce7ada, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 99d4a509f619498448d79413e51c3ab6, type: 2}
+    - {fileID: 11400000, guid: aa6499a51867b534d86866102a4849c7, type: 2}
