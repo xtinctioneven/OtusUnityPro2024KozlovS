@@ -13,7 +13,7 @@ namespace Game
         public const int TreeService = 2; // TreeService : class
         public const int Target = 3; // GameObject : class
         public const int NoTreesView = 4; // GameObject : class
-        public const int TreeStoppingDistance = 5; // float
+        public const int DefaultStoppingDistance = 5; // float
         public const int Barn = 6; // GameObject : class
         public const int FullBarnView = 7; // GameObject : class
         public const int Waypoints = 8; // Transform[] : class
@@ -90,19 +90,19 @@ namespace Game
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool HasTreeStoppingDistance(this IBlackboard obj) => obj.HasFloat(TreeStoppingDistance);
+		public static bool HasDefaultStoppingDistance(this IBlackboard obj) => obj.HasFloat(DefaultStoppingDistance);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float GetTreeStoppingDistance(this IBlackboard obj) => obj.GetFloat(TreeStoppingDistance);
+		public static float GetDefaultStoppingDistance(this IBlackboard obj) => obj.GetFloat(DefaultStoppingDistance);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool TryGetTreeStoppingDistance(this IBlackboard obj, out float value) => obj.TryGetFloat(TreeStoppingDistance, out value);
+		public static bool TryGetDefaultStoppingDistance(this IBlackboard obj, out float value) => obj.TryGetFloat(DefaultStoppingDistance, out value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SetTreeStoppingDistance(this IBlackboard obj, float value) => obj.SetFloat(TreeStoppingDistance, value);
+		public static void SetDefaultStoppingDistance(this IBlackboard obj, float value) => obj.SetFloat(DefaultStoppingDistance, value);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool DelTreeStoppingDistance(this IBlackboard obj) => obj.DelFloat(TreeStoppingDistance);
+		public static bool DelDefaultStoppingDistance(this IBlackboard obj) => obj.DelFloat(DefaultStoppingDistance);
 
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

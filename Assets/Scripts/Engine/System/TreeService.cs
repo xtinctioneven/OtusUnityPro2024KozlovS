@@ -21,7 +21,12 @@ namespace Game.Engine
         {
             float minDistance = float.MaxValue;
             closestResource = default;
-
+            if (this.trees == null || this.trees.Length == 0)
+            {
+                closestResource = default;
+                return false;
+            }
+            
             for (int i = 0, count = this.trees.Length; i < count; i++)
             {
                 GameObject resource = this.trees[i];
