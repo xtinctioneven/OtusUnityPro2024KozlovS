@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,14 +12,19 @@ namespace SampleGame
         [SerializeField]
         private PauseScreen pauseScreen;
 
-        private void OnEnable()
-        {
-            this.button.onClick.AddListener(this.pauseScreen.Show);
-        }
-
         private void OnDisable()
         {
-            this.button.onClick.RemoveListener(this.pauseScreen.Show);
+            this.button.onClick.RemoveAllListeners();
+        }
+
+        public void Subscribe(Action callback)
+        {
+            this.button.onClick.AddListener(callback.Invoke);
+        }
+
+        public void Unsubscribe(Action callback)
+        {
+            this.button.onClick.RemoveListener(callback.Invoke);
         }
     }
 }

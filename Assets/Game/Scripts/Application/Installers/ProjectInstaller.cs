@@ -12,8 +12,8 @@ namespace SampleGame
         public override void InstallBindings()
         {
             this.Container.Bind<ApplicationExiter>().AsSingle().NonLazy();
-            this.Container.Bind<GameLoader>().AsSingle().NonLazy();
-            this.Container.Bind<MenuLoader>().AsSingle().NonLazy();
+            this.Container.BindInterfacesAndSelfTo<GameLoader>().AsSingle().NonLazy();
+            this.Container.BindInterfacesAndSelfTo<MenuLoader>().AsSingle().NonLazy();
         }
     }
 }

@@ -10,30 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Location1
+  m_Name: UIScreens
   m_EditorClassIdentifier: 
-  m_GroupName: Location1
+  m_GroupName: UIScreens
   m_Data:
     m_SerializedData: []
-  m_GUID: a649e5be0c61104468f1d2318e531a3b
+  m_GUID: 9b133790217acb548a7738a8dc5649f5
   m_SerializeEntries:
-  - m_GUID: 513f7e548b1864e9191b993e98d583e7
-    m_Address: Tile
+  - m_GUID: 2e4558fee079a4560a88243884ada50e
+    m_Address: MenuScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 09aff6d7860984d4cad799797bc24247
-    m_Address: Cave
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 312bac25e306741d881b561dc70f8291
-    m_Address: Tree
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 902fe78380aa64ab689da18b17da0ea8
-    m_Address: Stone
+  - m_GUID: 4d3b77ff19d204d1cb351de63cb12c50
+    m_Address: PauseScreen
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -41,5 +31,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 16230a38704b2cf48b3d0c7310ce7ada, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 131a93efeebdd8648a591dc6216452de, type: 2}
-    - {fileID: 11400000, guid: b995be5c056edb541b680c183f869aa2, type: 2}
+    - {fileID: 11400000, guid: 8361b4f9929d7774f9de68d25084810c, type: 2}
+    - {fileID: 11400000, guid: 9cdbc1b1147d1d34e8c4d41334efc19e, type: 2}

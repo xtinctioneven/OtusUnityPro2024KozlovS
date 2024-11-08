@@ -16,22 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 73ba24ce69cd28b459f1298a629dbc82
-  m_SerializeEntries:
-  - m_GUID: 67cbe541ad91740769fd7f4c2c6429fb
-    m_Address: Assets/AssetPacks/3D/Tiles/Materials/Ground1.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5ea80d7d636e046dca895e2c51c49737
-    m_Address: Assets/AssetPacks/3D/Tiles/Materials/Sand1.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9ea26ded6afbc4572a655809c6ab88a6
-    m_Address: Assets/AssetPacks/3D/Objects/Materials/Pallete.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 16230a38704b2cf48b3d0c7310ce7ada, type: 2}
   m_SchemaSet:
