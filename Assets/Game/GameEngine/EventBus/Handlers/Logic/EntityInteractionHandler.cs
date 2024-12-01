@@ -1,0 +1,94 @@
+﻿using System;
+using Game.Gameplay;
+using UnityEngine;
+
+public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
+{
+    public EntityInteractionHandler(EventBus eventBus) : base(eventBus)
+    {
+    }
+
+    protected override void OnHandleEvent(EntityInteractionEvent evt)
+    {
+        EntityInteractionData interactionData = evt.EntityInteractionData;
+        //Resolve interaction data
+        ResolveInteractionData(interactionData);
+        //Apply results
+        //Source entity
+        IEntity sourceEntity = interactionData.SourceEntity;
+        HealthComponent healthComponent = sourceEntity.GetEntityComponent<HealthComponent>();
+        int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived;
+        entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
+        EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, entityHpResult));
+        //Target entity
+        IEntity targetEntity = interactionData.TargetEntity;
+        healthComponent = targetEntity.GetEntityComponent<HealthComponent>();
+        entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived;
+        entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
+        EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
+        
+        SendLog(interactionData);
+    }
+
+    private void ResolveInteractionData(EntityInteractionData interactionData)
+    {
+        DefenceComponent defenceComponent;
+        defenceComponent = interactionData.SourceEntity.GetEntityComponent<DefenceComponent>();
+        interactionData.SourceEntityDamageReceived = Math.Max(interactionData.TargetEntityDamageOutgoing - defenceComponent.Value, 0);
+        switch (interactionData.InteractionResult)
+        {
+            case (InteractionResult.Hit):
+            {
+                defenceComponent = interactionData.TargetEntity.GetEntityComponent<DefenceComponent>();
+                interactionData.TargetEntityDamageReceived = Math.Max(interactionData.SourceEntityDamageOutgoing - defenceComponent.Value, 0);
+                
+                break;
+            }
+            
+            case (InteractionResult.Dodge):
+            {
+                interactionData.TargetEntityDamageReceived = 0;
+                interactionData.TargetAppliedStatusEffects.Clear();
+                break;
+            }
+            
+            case (InteractionResult.CriticalHit):
+            {
+                defenceComponent = interactionData.TargetEntity.GetEntityComponent<DefenceComponent>();
+                interactionData.TargetEntityDamageReceived = Math.Max(0,
+                    (int)(interactionData.SourceEntityDamageOutgoing * interactionData.CriticalDamageMultiplier - defenceComponent.Value));
+                break;
+            }
+
+            default:
+            {
+                Debug.LogError($"Unhandled interaction result: {interactionData.InteractionResult}");
+                break;
+            }
+        }
+    }
+
+    private void SendLog(EntityInteractionData interactionData)
+    {
+        IEntity sourceEntity = interactionData.SourceEntity;
+        IEntity targetEntity = interactionData.TargetEntity;
+        DefenceComponent defenceComponent = targetEntity.GetEntityComponent<DefenceComponent>();
+        switch (interactionData.InteractionResult)
+        {
+            case (InteractionResult.Hit):
+            {
+                Helper.Instance.AddLog(
+                    $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
+                    $"{defenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
+                break;
+            }
+            case (InteractionResult.Dodge):
+            {
+                Helper.Instance.AddLog($"{sourceEntity.Name} tried to strike {targetEntity.Name}, " +
+                                       $"but {targetEntity.Name} dodged the attack!\n");
+                break;
+            }
+        }
+        
+    }
+}

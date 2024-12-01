@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443036e8b52447009cd2270532cbba85, type: 3}
+  m_Name: RogueCharacterConfig
+  m_EditorClassIdentifier: 
+  CharacterName: Rogue
+  StatsData:
+  - StatType: 0
+    Value: 300
+  - StatType: 10
+    Value: 120
+  - StatType: 20
+    Value: 60
+  - StatType: 30
+    Value: 40
+  Abilities:
+  - {fileID: 11400000, guid: bc1c5a3701401da488908fa63ad18c1c, type: 2}
+  - {fileID: 11400000, guid: d44eb1555d1e83f41ab7e14caa3c0120, type: 2}
