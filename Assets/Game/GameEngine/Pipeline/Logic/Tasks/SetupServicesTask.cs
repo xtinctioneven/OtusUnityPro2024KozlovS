@@ -9,6 +9,8 @@ public class SetupServicesTask : EventTask
     private EntityTrackerService _entityTrackerService;
     private TurnOrderService _turnOrderService;
     private EntityInteractionService _entityInteractionService;
+    private TargetFinderService _targetFinderService;
+    private TriggerEffectsTracker _triggerEffectsTracker;
     
     public SetupServicesTask(
         DiContainer diContainer,
@@ -31,6 +33,14 @@ public class SetupServicesTask : EventTask
 
         _entityInteractionService = new EntityInteractionService();
         _diContainer.Bind<EntityInteractionService>().FromInstance(_entityInteractionService).AsSingle().NonLazy();
+
+        _targetFinderService = new TargetFinderService(_diContainer);
+        _targetFinderService.Initialize();
+        _diContainer.Bind<TargetFinderService>().FromInstance(_targetFinderService).AsSingle().NonLazy();
+
+        _triggerEffectsTracker = new TriggerEffectsTracker(_eventBus, _diContainer);
+        _triggerEffectsTracker.Initialize();
+        _diContainer.Bind<TriggerEffectsTracker>().FromInstance(_triggerEffectsTracker).AsSingle().NonLazy();
         
         Finish();
     }

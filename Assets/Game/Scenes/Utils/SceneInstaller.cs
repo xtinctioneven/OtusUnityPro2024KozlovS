@@ -17,6 +17,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<CharacterFactory>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<StrikeTargetEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EvasionPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<HealTargetTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EntityInteractionHandler>().FromNew().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<StatsResolveHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<UpdateStatsHandler>().FromNew().AsSingle().NonLazy();

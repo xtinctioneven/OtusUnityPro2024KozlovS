@@ -49,6 +49,7 @@ public class EntityTrackerService
         {
             _rightTeam.Add(entity);
         }
+        //TODO: fire event
     }
 
     public void UntrackEntity(IEntity entity)
@@ -61,6 +62,7 @@ public class EntityTrackerService
         {
             _rightTeam.Remove(entity);
         }
+        //TODO: fire event
     }
 
     public IReadOnlyList<IEntity> GetLeftTeam()

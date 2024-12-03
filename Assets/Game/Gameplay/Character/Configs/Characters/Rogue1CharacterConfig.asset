@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 443036e8b52447009cd2270532cbba85, type: 3}
-  m_Name: RogueCharacterConfig
+  m_Name: Rogue1CharacterConfig
   m_EditorClassIdentifier: 
-  CharacterName: Rogue
+  CharacterName: Rogue 1
   StatsData:
   - StatType: 0
     Value: 300

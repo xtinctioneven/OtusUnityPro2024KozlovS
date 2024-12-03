@@ -1,9 +1,11 @@
 ﻿namespace Game.Gameplay
 {
-    public interface IEffectTarget
+    public interface IEffectTarget: IEffect
+
     {
-        TargetType TargetType {get; set;}
-        TargetPriorityType Priority {get; set;}
-        //IEntity[] TargetEntities { get; set; }
+    TargetType TargetType { get; }
+    TargetPriorityType TargetPriority { get; }
+    int TargetsCount { get; }
+    //IEntity[] TargetEntities { get; set; }
     }
 }

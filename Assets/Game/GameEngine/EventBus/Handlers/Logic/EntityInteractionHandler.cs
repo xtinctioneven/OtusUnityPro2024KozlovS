@@ -17,13 +17,13 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         //Source entity
         IEntity sourceEntity = interactionData.SourceEntity;
         HealthComponent healthComponent = sourceEntity.GetEntityComponent<HealthComponent>();
-        int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived;
+        int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived + interactionData.SourceEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
         EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, entityHpResult));
         //Target entity
         IEntity targetEntity = interactionData.TargetEntity;
         healthComponent = targetEntity.GetEntityComponent<HealthComponent>();
-        entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived;
+        entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
         
@@ -60,6 +60,13 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                 break;
             }
 
+            case (InteractionResult.Heal):
+            {
+                int maxHeal = interactionData.TargetEntity.GetEntityComponent<HealthComponent>().HealthShortage;
+                interactionData.TargetEntityHealReceived = Math.Min(interactionData.SourceEntityHealOutgoing, maxHeal);
+                break;
+            }
+
             default:
             {
                 Debug.LogError($"Unhandled interaction result: {interactionData.InteractionResult}");
@@ -72,20 +79,28 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
     {
         IEntity sourceEntity = interactionData.SourceEntity;
         IEntity targetEntity = interactionData.TargetEntity;
-        DefenceComponent defenceComponent = targetEntity.GetEntityComponent<DefenceComponent>();
+        DefenceComponent targetDefenceComponent = targetEntity.GetEntityComponent<DefenceComponent>();
+        HealthComponent targetHealthComponent = targetEntity.GetEntityComponent<HealthComponent>();
         switch (interactionData.InteractionResult)
         {
             case (InteractionResult.Hit):
             {
                 Helper.Instance.AddLog(
                     $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
-                    $"{defenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
+                    $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
                 break;
             }
             case (InteractionResult.Dodge):
             {
-                Helper.Instance.AddLog($"{sourceEntity.Name} tried to strike {targetEntity.Name}, " +
-                                       $"but {targetEntity.Name} dodged the attack!\n");
+                Helper.Instance.AddLog(
+                    $"{sourceEntity.Name} tried to strike {targetEntity.Name}, but {targetEntity.Name} dodged the attack!\n");
+                break;
+            }
+            case (InteractionResult.Heal):
+            {
+                Helper.Instance.AddLog(
+                    $"{sourceEntity.Name} healed {targetEntity.Name} for {interactionData.SourceEntityHealOutgoing}: " +
+                    $"{interactionData.TargetEntityHealReceived} hp added to current {targetHealthComponent.Value}.\n");
                 break;
             }
         }

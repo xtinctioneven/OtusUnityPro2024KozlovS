@@ -36,7 +36,7 @@ namespace Game.Gameplay
             }
         }
 
-        public IEntity[] GetAllEntities()
+        public List<IEntity> GetAllEntities()
         {
             List<IEntity> entities = new List<IEntity>();
             for (int i = 0; i < 3; i++)
@@ -49,7 +49,39 @@ namespace Game.Gameplay
                     }
                 }
             }
-            return entities.ToArray();
+            return entities;
+        }
+
+        public List<Vector2> GetOccupiedPositions()
+        {
+            List<Vector2> positions = new List<Vector2>();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (_teamGrid[i, j].Entity != null)
+                    {
+                        positions.Add(_teamGrid[i, j].Position);
+                    }
+                }
+            }
+            return positions;
+        }
+
+        public List<GridCell> GetOccupiedCells()
+        {
+            List<GridCell> cells = new List<GridCell>();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (_teamGrid[i, j].Entity != null)
+                    {
+                        cells.Add(_teamGrid[i, j]);
+                    }
+                }
+            }
+            return cells;
         }
 
         public bool TryGetFrontEntityInRow(int rowIndex, out IEntity entity)
@@ -75,7 +107,7 @@ namespace Game.Gameplay
                     Vector2 gridPosition = new Vector2(j, i);
                     if (_teamGrid[i, j].Entity != null)
                     {
-                        Debug.Log($"Position [{gridPosition.x}, {gridPosition.y}]. Cell is occupied by {_teamGrid[i, j].Entity}");
+                        Debug.Log($"Position [{gridPosition.x}, {gridPosition.y}]. Cell is occupied by {_teamGrid[i, j].Entity.Name}");
                     }
                     else
                     {
@@ -88,7 +120,7 @@ namespace Game.Gameplay
         private void ApplyGridData(TeamGridData gridData)
         {
             gridData.Entity.GetEntityComponent<TeamComponent>().SetTeam(Team);
-            gridData.Entity.GetEntityComponent<PositionComponent>().SetPosition(gridData.Position);
+            gridData.Entity.GetEntityComponent<GridPositionComponent>().SetPosition(gridData.Position);
         }
     }
 }

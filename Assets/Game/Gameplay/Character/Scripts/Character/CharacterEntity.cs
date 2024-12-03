@@ -29,7 +29,8 @@ namespace Game.Gameplay
             AbilityComponent abilityComponent = new AbilityComponent(config.Abilities);
             abilityComponent.Install(this);
             TeamComponent teamComponent = new TeamComponent();
-            PositionComponent positionComponent = new PositionComponent(new Vector2(-1, -1));
+            GridPositionComponent gridPositionComponent = new GridPositionComponent(new Vector2(-1, -1));
+            LinkComponent linkComponent = new LinkComponent();
 
             _components.Add(typeof(StatsComponent), statsComponent);
             _components.Add(typeof(AttackComponent), attackComponent);
@@ -39,7 +40,8 @@ namespace Game.Gameplay
             _components.Add(typeof(DeathComponent), deathComponent);
             _components.Add(typeof(AbilityComponent), abilityComponent);
             _components.Add(typeof(TeamComponent), teamComponent);
-            _components.Add(typeof(PositionComponent), positionComponent);
+            _components.Add(typeof(GridPositionComponent), gridPositionComponent);
+            _components.Add(typeof(LinkComponent), linkComponent);
             // viewComponentOld.Value.SetStats($"<color=blue>{attackComponent.Value}</color> / <color=red>{lifeComponent.Value}</color>");
             // abilityComponent.Install();
             // vfxComponent.Install(abilityComponent.GetAbilities(), anchorComponent.Value);

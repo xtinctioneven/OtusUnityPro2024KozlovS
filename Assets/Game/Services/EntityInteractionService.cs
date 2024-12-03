@@ -68,6 +68,8 @@ public class EntityInteractionData
     public int TargetEntityDamageOutgoing = 0;
     public int SourceEntityDamageReceived = 0;
     public int TargetEntityDamageReceived = 0;
+    public int SourceEntityHealOutgoing = 0;
+    public int TargetEntityHealOutgoing = 0;
     public int SourceEntityHealReceived = 0;
     public int TargetEntityHealReceived = 0;
     public float CriticalDamageMultiplier = 1.5f;
@@ -84,7 +86,10 @@ public enum InteractionResult
     Hit = 10,
     Dodge = 20,
     CriticalHit = 30,
-    Block = 40
+    Block = 40,
+    Heal = 50,
+    Buff = 60,
+    Passive = 70
 }
 
 public enum InteractionType

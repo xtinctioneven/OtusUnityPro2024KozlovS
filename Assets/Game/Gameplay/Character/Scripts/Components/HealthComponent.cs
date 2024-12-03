@@ -10,6 +10,7 @@ namespace Game.Gameplay
         public event Action<int> OnLifeChanged;
         public event Action<int> OnMaxLifeChanged;
         public int MaxValue => _healthStat.CurrentMaxValue;
+        public int HealthShortage => MaxValue - Value; 
 
         public int Value
         {

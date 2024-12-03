@@ -4,11 +4,11 @@ using UnityEngine;
 namespace Game.Gameplay
 {
     [Serializable]
-    public class PositionComponent
+    public class GridPositionComponent
     {
         public Vector2 Value { get; private set; }
 
-        public PositionComponent(Vector2 position)
+        public GridPositionComponent(Vector2 position)
         {
             Value = position;
         }

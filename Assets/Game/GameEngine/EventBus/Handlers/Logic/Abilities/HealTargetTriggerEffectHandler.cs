@@ -1,19 +1,21 @@
 ﻿using Game.Gameplay;
 using UnityEngine;
+using Zenject;
 
-public class StrikeTargetEffectHandler : BaseHandler<StrikeTargetEffect>
+public class HealTargetTriggerEffectHandler : BaseHandler<HealTargetTriggerEffect>
 {
-    public StrikeTargetEffectHandler(EventBus eventBus
-        ) : base(eventBus)
+    public HealTargetTriggerEffectHandler(EventBus eventBus,
+        DiContainer diDiContainer
+    ) : base(eventBus)
     {
     }
 
-    protected override void OnHandleEvent(StrikeTargetEffect evt)
+    protected override void OnHandleEvent(HealTargetTriggerEffect evt)
     { 
         EntityInteractionData interactionData = evt.InteractionData;
-        interactionData.SourceEntityDamageOutgoing =
+        interactionData.SourceEntityHealOutgoing =
             (int)Mathf.Floor(evt.AttackMultiplier * interactionData.SourceEntity.GetEntityComponent<AttackComponent>().Value);
-        interactionData.InteractionResult = InteractionResult.Hit;
+        interactionData.InteractionResult = InteractionResult.Heal;
         foreach (var statusEffect in evt.StatusEffects)
         {
             if (statusEffect.EffectProbability >= Random.Range(0, 1))

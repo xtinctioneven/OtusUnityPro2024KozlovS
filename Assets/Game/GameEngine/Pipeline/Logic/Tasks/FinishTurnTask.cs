@@ -20,11 +20,12 @@ public sealed class FinishTurnTask : EventTask
     {
         var turnOrderService = _diContainer.Resolve<TurnOrderService>();
         var entityInteractionService = _diContainer.Resolve<EntityInteractionService>(); 
-        var id = entityInteractionService.GetCurrentInteractionData();
-        var target = id.TargetEntity;
-        Helper.Instance.Log += $"{target.Name} have {target.GetEntityComponent<HealthComponent>().Value} health left.\n";
-        Debug.Log($"{target.Name} have {target.GetEntityComponent<HealthComponent>().Value} health left.");
-        
+        var interactionData = entityInteractionService.GetCurrentInteractionData();
+        if (interactionData != null)
+        {
+            var target = interactionData.TargetEntity;
+            Helper.Instance.Log += $"{target.Name} have {target.GetEntityComponent<HealthComponent>().Value} health left.\n";
+        }
         Debug.Log("Run finish round task");
         turnOrderService.PrepareQueue();
         entityInteractionService.Reset();

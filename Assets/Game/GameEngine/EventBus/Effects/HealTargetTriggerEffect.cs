@@ -1,35 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public class EvasionPassiveEffect : IEffectPassive
+    public class HealTargetTriggerEffect : IEffectTrigger, IEffectApplyStatus
     {
         //Fields to clone
-        [field: SerializeField] public List<InteractionType> InteractionTypesToDodge { get; private set; } 
-        [field: SerializeField, PropertyRange(0, 1)] public float EvasionProbability { get; private set; }
+        [PropertyRange(0, 10)] public float AttackMultiplier;
+        [field: SerializeField] public TriggerReason TriggerReason { get; private set; }
         [field: SerializeField] public InteractionType InteractionType { get; private set; }
         [field: SerializeField] public AbilityTraits Traits { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int InitialUseCounts { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int MaxUseCounts { get; private set; }
         public int CountsLeft { get; private set; }
-
+        [field: SerializeField] public TargetType TargetType { get; private set; }
+        [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; }
+        [field: SerializeField, PropertyRange(1, 9)] public int TargetsCount { get; private set; } = 1;
+        [field: SerializeField] public StatusEffectData[] StatusEffects { get; private set; }
+        
         public IEffect Clone()
         {
-            var clone = new EvasionPassiveEffect();
-            clone.InteractionTypesToDodge = InteractionTypesToDodge;
-            clone.EvasionProbability = EvasionProbability;
+            var clone = new HealTargetTriggerEffect();
+            clone.AttackMultiplier = AttackMultiplier;
+            clone.TriggerReason = TriggerReason;
             clone.InteractionType = InteractionType;
             clone.Traits = Traits;
             clone.InitialUseCounts = InitialUseCounts;
             clone.MaxUseCounts = MaxUseCounts;
             clone.CountsLeft = InitialUseCounts;
+            clone.TargetType = TargetType;
+            clone.TargetPriority = TargetPriority;
+            clone.TargetsCount = TargetsCount;
+            clone.StatusEffects = StatusEffects;
             clone.Enabled = true;
             return clone;
         }
-
+        
         //Non-clone fields
         public IEntity SourceEntity { get; set; }
         public IEntity[] TargetEntities { get; set; }
