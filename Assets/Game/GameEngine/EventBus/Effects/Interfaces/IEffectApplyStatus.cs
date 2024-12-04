@@ -2,6 +2,6 @@
 {
     public interface IEffectApplyStatus
     {
-        StatusEffectData[] StatusEffects { get; }
+        StatusEffectData[] StatusEffectsDataCollection { get; }
     }
 }

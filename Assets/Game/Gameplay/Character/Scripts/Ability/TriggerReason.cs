@@ -5,7 +5,7 @@
         None = 0,
         BattleStart = 10,
         RoundStart = 20,
-        TurnStart = 30,
+        //TurnStart = 30,
         BeforeAnyAction = 40
     }
 }

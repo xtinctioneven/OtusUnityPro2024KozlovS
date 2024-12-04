@@ -14,11 +14,14 @@ public class StrikeTargetEffectHandler : BaseHandler<StrikeTargetEffect>
         interactionData.SourceEntityDamageOutgoing =
             (int)Mathf.Floor(evt.AttackMultiplier * interactionData.SourceEntity.GetEntityComponent<AttackComponent>().Value);
         interactionData.InteractionResult = InteractionResult.Hit;
-        foreach (var statusEffect in evt.StatusEffects)
+        foreach (var statusEffectData in evt.StatusEffectsDataCollection)
         {
-            if (statusEffect.EffectProbability >= Random.Range(0, 1))
+            if (statusEffectData.EffectProbability >= Random.Range(0, 1))
             {
-                interactionData.StatusEffectsApplyToTarget.Add(statusEffect.StatusEffect);
+                for (int i = 0; i < statusEffectData.StatusEffects.Length; i++)
+                {
+                    interactionData.StatusEffectsApplyToTarget.Add(statusEffectData.StatusEffects[i]);
+                }
             }
         }
     }

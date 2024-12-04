@@ -89,7 +89,8 @@ public enum InteractionResult
     Block = 40,
     Heal = 50,
     Buff = 60,
-    Passive = 70
+    Passive = 70,
+    Kill = 80
 }
 
 public enum InteractionType

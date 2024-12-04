@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Game.Gameplay
 {
     public interface IEffect : IEvent
@@ -7,7 +5,7 @@ namespace Game.Gameplay
         IEntity SourceEntity { get; set; }
         EntityInteractionData InteractionData { get; set; }
         InteractionType InteractionType {get; }
-        public AbilityTraits Traits { get; }
+        // public AbilityTraits Traits { get; }
         //TurnPhase ActivateTurnPhase { get; set; }
         //VfxData VfxAbilityData { get; set; }
         bool CanBeUsed { get; }

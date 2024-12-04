@@ -24,7 +24,8 @@ public sealed class FinishTurnTask : EventTask
         if (interactionData != null)
         {
             var target = interactionData.TargetEntity;
-            Helper.Instance.Log += $"{target.Name} have {target.GetEntityComponent<HealthComponent>().Value} health left.\n";
+            // Helper.Instance.AddLog(
+            //     $"{target.Name} have {target.GetEntityComponent<HealthComponent>().Value} health left.\n");
         }
         Debug.Log("Run finish round task");
         turnOrderService.PrepareQueue();

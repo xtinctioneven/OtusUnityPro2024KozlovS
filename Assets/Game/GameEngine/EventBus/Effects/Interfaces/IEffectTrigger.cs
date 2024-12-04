@@ -1,8 +1,7 @@
 ﻿namespace Game.Gameplay
 {
-    public interface IEffectTrigger : IEffectTarget, IEffectUseCounts
+    public interface IEffectTrigger : IEffectTarget
     {
-        bool IEffect.CanBeUsed => Enabled && CountsLeft > 0;
         public TriggerReason TriggerReason { get; }
     }
 }

@@ -10,6 +10,7 @@ public class StandardActionTask : EventTask
     private readonly EventBus _eventBus;
     private EntityInteractionService _entityInteractionService;
     private TargetFinderService _targetFinderService;
+    private AbilityService _abilityService;
 
     public StandardActionTask(
         DiContainer diContainer,
@@ -25,9 +26,11 @@ public class StandardActionTask : EventTask
         var turnOrderService = _diContainer.Resolve<TurnOrderService>();
         _entityInteractionService = _diContainer.Resolve<EntityInteractionService>();
         _targetFinderService = _diContainer.Resolve<TargetFinderService>();
+        _abilityService = _diContainer.Resolve<AbilityService>();
         var activeEntity = turnOrderService.GetActiveEntity();
         var sourceAbilityComponent = activeEntity.GetEntityComponent<AbilityComponent>();
         var standardAbilities = sourceAbilityComponent.GetAbilitiesByType<IEffectStandard>();
+        var linkEffectsTracker = _diContainer.Resolve<LinkEffectsTracker>();
         foreach (var standardAbility in standardAbilities)
         {
             while (standardAbility.CanBeUsed)
@@ -41,47 +44,16 @@ public class StandardActionTask : EventTask
                     {
                         continue;
                     }
-                    UseAbility(activeEntity, effectTriggers[i]);
-                    effectTriggers[i].TryUseCount();
+                    _abilityService.UseAbility(activeEntity, effectTriggers[i]);
+                    //effectTriggers[i].TryUseCount();
                 }
                 
                 //Use Standard ability
-                UseAbility(activeEntity, standardAbility);
+                _abilityService.UseAbility(activeEntity, standardAbility);
                 standardAbility.TryUseCount();
             }
         }
         Finish();
-    }
-
-    private void ApplyPassiveEffects(IEntity sourceEntity, EntityInteractionData interactionData, AbilityComponent abilityComponent)
-    {
-        var passiveAbilities = abilityComponent.GetAbilitiesByType<IEffectPassive>();
-        foreach (var passiveAbility in passiveAbilities)
-        {
-            if (!passiveAbility.CanBeUsed)
-            {
-                continue;
-            }
-            passiveAbility.InteractionData = interactionData;
-            _eventBus.RaiseEvent(passiveAbility);
-        }
-    }
-
-    private void UseAbility(IEntity activeEntity, IEffect ability)
-    {
-        List<IEntity> targetsList = _targetFinderService.GetTargets(activeEntity, ability as IEffectTarget);
-        for (int i = 0; i < targetsList.Count; i++)
-        {
-            IEntity targetEntity = targetsList[i];
-            _entityInteractionService.SetTargetEntity(targetEntity);
-            EntityInteractionData interactionData = _entityInteractionService.CreateCurrentInteractionData();
-            interactionData.SourceEffect = ability;
-            ability.InteractionData = interactionData;
-            _eventBus.RaiseEvent(ability);
-            ApplyPassiveEffects(activeEntity, interactionData, activeEntity.GetEntityComponent<AbilityComponent>());
-            ApplyPassiveEffects(targetEntity, interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
-            _eventBus.RaiseEvent(new EntityInteractionEvent(ability.InteractionData));
-        }
     }
     
 }

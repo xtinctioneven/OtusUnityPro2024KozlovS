@@ -12,6 +12,7 @@ public class SetupServicesTask : EventTask
     private TargetFinderService _targetFinderService;
     private TriggerEffectsTracker _triggerEffectsTracker;
     private LinkEffectsTracker _linkEffectsTracker;
+    private AbilityService _abilityService;
     
     public SetupServicesTask(
         DiContainer diContainer,
@@ -42,7 +43,11 @@ public class SetupServicesTask : EventTask
         
         _linkEffectsTracker = new LinkEffectsTracker(_diContainer);
         _diContainer.Bind<LinkEffectsTracker>().FromInstance(_linkEffectsTracker).AsSingle().NonLazy();
+
+        _abilityService = new AbilityService(_diContainer, _eventBus);
+        _diContainer.Bind<AbilityService>().FromInstance(_abilityService).AsSingle().NonLazy();
         
+        _abilityService.Initialize();
         _turnOrderService.Initialize();
         _targetFinderService.Initialize();
         // _triggerEffectsTracker.Initialize();

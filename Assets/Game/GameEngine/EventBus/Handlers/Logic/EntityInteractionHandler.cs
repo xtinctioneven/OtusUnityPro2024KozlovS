@@ -28,9 +28,14 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
         ApplyStatusEffects(targetEntity, interactionData.StatusEffectsApplyToTarget);
+        if (entityHpResult == 0)
+        {
+            interactionData.InteractionResult = InteractionResult.Kill;
+        }
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
-        
-        SendLog(interactionData);
+        ApplyPassiveEffects(sourceEntity, interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
+        ApplyPassiveEffects(targetEntity, interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
+        SendLog(interactionData, entityHpResult);
     }
 
     private void ResolveInteractionData(EntityInteractionData interactionData)
@@ -95,8 +100,22 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             }
         }
     }
+    
+    private void ApplyPassiveEffects(IEntity sourceEntity, EntityInteractionData interactionData, AbilityComponent abilityComponent)
+    {
+        var passiveAbilities = abilityComponent.GetAbilitiesByType<IEffectPassive>();
+        foreach (var passiveAbility in passiveAbilities)
+        {
+            if (!passiveAbility.CanBeUsed)
+            {
+                continue;
+            }
+            passiveAbility.InteractionData = interactionData;
+            EventBus.RaiseEvent(passiveAbility);
+        }
+    }
 
-    private void SendLog(EntityInteractionData interactionData)
+    private void SendLog(EntityInteractionData interactionData, int entityHpResult)
     {
         IEntity sourceEntity = interactionData.SourceEntity;
         IEntity targetEntity = interactionData.TargetEntity;
@@ -109,6 +128,17 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                 Helper.Instance.AddLog(
                     $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
                     $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
+                Helper.Instance.AddLog(
+                    $"{targetEntity.Name} have {entityHpResult} health left.\n");
+                break;
+            }
+            case (InteractionResult.Kill):
+            {
+                Helper.Instance.AddLog(
+                    $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
+                    $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
+                Helper.Instance.AddLog(
+                    $"{targetEntity.Name} have {entityHpResult} health left and died.\n");
                 break;
             }
             case (InteractionResult.Dodge):
@@ -121,7 +151,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             {
                 Helper.Instance.AddLog(
                     $"{sourceEntity.Name} healed {targetEntity.Name} for {interactionData.SourceEntityHealOutgoing}: " +
-                    $"{interactionData.TargetEntityHealReceived} hp added to current {targetHealthComponent.Value}.\n");
+                    $"{targetEntity.Name} now have {entityHpResult} health left.\n");
                 break;
             }
         }

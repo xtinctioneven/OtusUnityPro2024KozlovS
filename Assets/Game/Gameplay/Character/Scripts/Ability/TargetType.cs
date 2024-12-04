@@ -9,5 +9,6 @@ namespace Game.Gameplay
         AllyTarget = 40,
         AllyRow = 50,
         AllyColumn = 60,
+        Self = 100
     }
 }

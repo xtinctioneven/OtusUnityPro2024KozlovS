@@ -1,7 +1,7 @@
 ﻿namespace Game.Gameplay
 {
-    public interface IEffectPassive : IEffect, IEffectUseCounts
+    public interface IEffectPassive : IEffect
     {
-        bool IEffect.CanBeUsed => Enabled && CountsLeft > 0;
+        //bool IEffect.CanBeUsed => Enabled && CountsLeft > 0;
     }
 }

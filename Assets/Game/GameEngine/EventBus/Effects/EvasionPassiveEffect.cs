@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public class EvasionPassiveEffect : IEffectPassive
+    public class EvasionPassiveEffect : IEffectPassive, IEffectUseCounts
     {
         //Fields to clone
+        [field: SerializeField] public List<InteractionResult> InteractionResultsToDodge { get; private set; }
         [field: SerializeField] public List<InteractionType> InteractionTypesToDodge { get; private set; } 
-        [field: SerializeField, PropertyRange(0, 1)] public float EvasionProbability { get; private set; }
+        [field: SerializeField, PropertyRange(0, 1)] public float EffectProbability { get; private set; }
         [field: SerializeField] public InteractionType InteractionType { get; private set; }
-        [field: SerializeField] public AbilityTraits Traits { get; private set; }
+        // [field: SerializeField] public AbilityTraits Traits { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int InitialUseCounts { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int MaxUseCounts { get; private set; }
         public int CountsLeft { get; private set; }
@@ -19,10 +19,11 @@ namespace Game.Gameplay
         public IEffect Clone()
         {
             var clone = new EvasionPassiveEffect();
+            clone.InteractionResultsToDodge = InteractionResultsToDodge;
             clone.InteractionTypesToDodge = InteractionTypesToDodge;
-            clone.EvasionProbability = EvasionProbability;
+            clone.EffectProbability = EffectProbability;
             clone.InteractionType = InteractionType;
-            clone.Traits = Traits;
+            // clone.Traits = Traits;
             clone.InitialUseCounts = InitialUseCounts;
             clone.MaxUseCounts = MaxUseCounts;
             clone.CountsLeft = InitialUseCounts;
@@ -32,10 +33,10 @@ namespace Game.Gameplay
 
         //Non-clone fields
         public IEntity SourceEntity { get; set; }
-        public IEntity[] TargetEntities { get; set; }
         public EntityInteractionData InteractionData { get; set; }
         public int CountsUsed { get; private set; }
         public bool Enabled { get; private set; }
+        bool IEffect.CanBeUsed => Enabled && CountsLeft > 0;
 
         //Self methods
         

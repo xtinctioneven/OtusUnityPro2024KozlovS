@@ -554,8 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LeftTeamCharacters:
-  - {fileID: 11400000, guid: fed5c191b503ece4bbd15fb6336446c2, type: 2}
-  - {fileID: 11400000, guid: 2010ca76377a76f4a8c4a6e15fa9999b, type: 2}
+  - {fileID: 11400000, guid: a6806f57505fab44791bddea243d19fa, type: 2}
   LeftTeamPositions:
   - {x: 0, y: 0}
   - {x: 0, y: 1}

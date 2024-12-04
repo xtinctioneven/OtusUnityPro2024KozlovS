@@ -109,7 +109,6 @@ namespace Game.Gameplay
                         }
                     }
                     break;
-                    break;
                 }
                 case (TargetType.AllyRow):
                 {
@@ -119,6 +118,15 @@ namespace Game.Gameplay
                 case (TargetType.AllyColumn):
                 {
                     //TODO: extension
+                    break;
+                }
+                case (TargetType.Self):
+                {
+                    targetEntities.Add(entity);
+                    if (targetsCount > 1)
+                    {
+                        //TODO: ?
+                    }
                     break;
                 }
                 default:
@@ -187,119 +195,5 @@ namespace Game.Gameplay
                 }
             }
         }
-        
-
-        // public List<IEntity> GetTargets(Team activeTeam, 
-        //     Vector2 sourcePosition, TargetType targetType = TargetType.EnemyTarget, int targetsCount = 1)
-        // {
-        //     List<IEntity> targetEntities = new();
-        //     switch (targetType)
-        //     {
-        //         case (TargetType.EnemyTarget):
-        //         {
-        //             int sourceRow = (int)sourcePosition.y;
-        //             TeamGridModel targetTeam = activeTeam == Team.Left ? _rightGridModel : _leftGridModel;
-        //             //Get first entity in this row
-        //             IEntity targetEntity = GetFrontEntity(targetTeam, sourceRow);
-        //             targetEntities.Add(targetEntity);
-        //             //Get first entity in 1st row
-        //             //Get first entity in 3rd row
-        //             
-        //             //var possibleTargets = targetTeam == Team.Left ? GetLeftTeamEntities() : GetRightTeamEntities();
-        //             
-        //             break;
-        //         }
-        //         default:
-        //         {
-        //             Debug.LogError($"Invalid target type: {targetType}");
-        //             break;
-        //         }
-        //     }
-        //     return targetEntities;
-        // }
-
-        // private IEntity GetFrontEntity(TeamGridModel targetTeam, int sourceRow)
-        // {
-        //     IEntity targetEntity = null;
-        //     int checkedRowCount = 0;
-        //     int nextRow = sourceRow;
-        //     while (targetEntity == null && checkedRowCount < 3)
-        //     {
-        //         if (!targetTeam.TryGetFrontEntityInRow(nextRow, out targetEntity))
-        //         {
-        //             if (nextRow == sourceRow)
-        //             {
-        //                 if (sourceRow == 0)
-        //                 {
-        //                     nextRow++;
-        //                 }
-        //                 else
-        //                 {
-        //                     nextRow--;
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 if (nextRow == 1)
-        //                 {
-        //                     nextRow--;
-        //                 }
-        //                 else
-        //                 {
-        //                     nextRow = 2;
-        //                 }
-        //             }
-        //             checkedRowCount++;
-        //         }
-        //     }
-        //
-        //     if (targetEntity == null)
-        //     {
-        //         Debug.LogError("Target entity not found!");
-        //     }
-        //     return targetEntity;
-        // }
-        
-        // private bool TryGetFrontTarget(List<IEntity> possibleTargets, int sourceRow, out IEntity entity)
-        // {
-        //     IEntity targetEntity = null;
-        //     int checkedRowCount = 0;
-        //     int nextRow = sourceRow;
-        //     while (targetEntity == null && checkedRowCount < 3)
-        //     {
-        //         if (!targetTeam.TryGetFrontEntityInRow(nextRow, out targetEntity))
-        //         {
-        //             if (nextRow == sourceRow)
-        //             {
-        //                 if (sourceRow == 0)
-        //                 {
-        //                     nextRow++;
-        //                 }
-        //                 else
-        //                 {
-        //                     nextRow--;
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 if (nextRow == 1)
-        //                 {
-        //                     nextRow--;
-        //                 }
-        //                 else
-        //                 {
-        //                     nextRow = 2;
-        //                 }
-        //             }
-        //             checkedRowCount++;
-        //         }
-        //     }
-        //
-        //     if (targetEntity == null)
-        //     {
-        //         Debug.LogError("Target entity not found!");
-        //     }
-        //     return targetEntity;
-        // }
     }
 }

@@ -4,6 +4,7 @@ namespace Game.Gameplay
     {
         Closest = 0,
         LowestHealth = 10,
-        Random = 20
+        Random = 20,
+        None = 100
     }
 }

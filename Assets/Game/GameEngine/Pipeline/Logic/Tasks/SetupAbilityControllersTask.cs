@@ -5,7 +5,7 @@ public class SetupAbilityControllersTask : EventTask
 {
     private readonly EventBus _eventBus;
     private readonly DiContainer _diContainer;
-    private AbilityController _abilityController;
+    private AbilityService _abilityService;
     //private readonly List<IAbilityController> _abilityControllersList;
     // private EntityTrackerService _entityTrackerService;
     // private TurnOrderService _turnOrderService;
