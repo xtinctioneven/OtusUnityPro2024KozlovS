@@ -8,6 +8,8 @@ public class StandardActionTask : EventTask
 {
     private readonly DiContainer _diContainer;
     private readonly EventBus _eventBus;
+    private EntityInteractionService _entityInteractionService;
+    private TargetFinderService _targetFinderService;
 
     public StandardActionTask(
         DiContainer diContainer,
@@ -21,58 +23,30 @@ public class StandardActionTask : EventTask
     {
         Debug.Log("StandardActionTask.OnRun");
         var turnOrderService = _diContainer.Resolve<TurnOrderService>();
-        var entityInteractionService = _diContainer.Resolve<EntityInteractionService>();
-        var battlefield = _diContainer.Resolve<BattlefieldModel>();
+        _entityInteractionService = _diContainer.Resolve<EntityInteractionService>();
+        _targetFinderService = _diContainer.Resolve<TargetFinderService>();
         var activeEntity = turnOrderService.GetActiveEntity();
         var sourceAbilityComponent = activeEntity.GetEntityComponent<AbilityComponent>();
-        var targetFinderService = _diContainer.Resolve<TargetFinderService>();
-
-        var triggerEffectsTracker = _diContainer.Resolve<TriggerEffectsTracker>();
-        
         var standardAbilities = sourceAbilityComponent.GetAbilitiesByType<IEffectStandard>();
         foreach (var standardAbility in standardAbilities)
         {
-            //standardAbility.SourceEntity = activeEntity;
-            Vector2 position = activeEntity.GetEntityComponent<GridPositionComponent>().Value;
-            Team activeTeam = activeEntity.GetEntityComponent<Game.Gameplay.TeamComponent>().Value;
-            List<IEntity> targetsList = new List<IEntity>();
             while (standardAbility.CanBeUsed)
             {
                 //Trigger before action abilities
-                List<IEffectTrigger> effectTriggers = triggerEffectsTracker.GetTriggers(TriggerReason.BeforeAnyAction, activeEntity);
+                List<IEffectTrigger> effectTriggers = sourceAbilityComponent.GetAbilitiesByType<IEffectTrigger>();
                 //Use Trigger abilites
                 for (int i = 0; i < effectTriggers.Count; i++)
                 {
-                    targetsList = targetFinderService.GetTargets(activeEntity, effectTriggers[i]);
-                    for (int j = 0; j < targetsList.Count; j++)
+                    if (effectTriggers[i].TriggerReason != TriggerReason.BeforeAnyAction || !effectTriggers[i].CanBeUsed)
                     {
-                        IEntity targetEntity = targetsList[j];
-                        entityInteractionService.SetTargetEntity(targetEntity);
-                        EntityInteractionData interactionData = entityInteractionService.CreateCurrentInteractionData();
-                        interactionData.SourceEffect = effectTriggers[i];
-                        effectTriggers[i].InteractionData = interactionData;
-                        _eventBus.RaiseEvent(effectTriggers[i]);
-                        ApplyPassiveEffects(activeEntity, interactionData, sourceAbilityComponent);
-                        ApplyPassiveEffects(targetEntity, interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
-                        _eventBus.RaiseEvent(new EntityInteractionEvent(effectTriggers[i].InteractionData));
+                        continue;
                     }
+                    UseAbility(activeEntity, effectTriggers[i]);
                     effectTriggers[i].TryUseCount();
                 }
                 
-                //Use Standard abilities
-                targetsList = targetFinderService.GetTargets(activeEntity, standardAbility);
-                for (int i = 0; i < targetsList.Count; i++)
-                {
-                    IEntity targetEntity = targetsList[i];
-                    entityInteractionService.SetTargetEntity(targetEntity);
-                    EntityInteractionData interactionData = entityInteractionService.CreateCurrentInteractionData();
-                    interactionData.SourceEffect = standardAbility;
-                    standardAbility.InteractionData = interactionData;
-                    _eventBus.RaiseEvent(standardAbility);
-                    ApplyPassiveEffects(activeEntity, interactionData, sourceAbilityComponent);
-                    ApplyPassiveEffects(targetEntity, interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
-                    _eventBus.RaiseEvent(new EntityInteractionEvent(standardAbility.InteractionData));
-                }
+                //Use Standard ability
+                UseAbility(activeEntity, standardAbility);
                 standardAbility.TryUseCount();
             }
         }
@@ -88,9 +62,25 @@ public class StandardActionTask : EventTask
             {
                 continue;
             }
-            //passiveAbility.SourceEntity = sourceEntity;
             passiveAbility.InteractionData = interactionData;
             _eventBus.RaiseEvent(passiveAbility);
+        }
+    }
+
+    private void UseAbility(IEntity activeEntity, IEffect ability)
+    {
+        List<IEntity> targetsList = _targetFinderService.GetTargets(activeEntity, ability as IEffectTarget);
+        for (int i = 0; i < targetsList.Count; i++)
+        {
+            IEntity targetEntity = targetsList[i];
+            _entityInteractionService.SetTargetEntity(targetEntity);
+            EntityInteractionData interactionData = _entityInteractionService.CreateCurrentInteractionData();
+            interactionData.SourceEffect = ability;
+            ability.InteractionData = interactionData;
+            _eventBus.RaiseEvent(ability);
+            ApplyPassiveEffects(activeEntity, interactionData, activeEntity.GetEntityComponent<AbilityComponent>());
+            ApplyPassiveEffects(targetEntity, interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
+            _eventBus.RaiseEvent(new EntityInteractionEvent(ability.InteractionData));
         }
     }
     

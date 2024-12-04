@@ -18,7 +18,7 @@ public class StrikeTargetEffectHandler : BaseHandler<StrikeTargetEffect>
         {
             if (statusEffect.EffectProbability >= Random.Range(0, 1))
             {
-                interactionData.TargetAppliedStatusEffects.Add(statusEffect.StatusEffect);
+                interactionData.StatusEffectsApplyToTarget.Add(statusEffect.StatusEffect);
             }
         }
     }

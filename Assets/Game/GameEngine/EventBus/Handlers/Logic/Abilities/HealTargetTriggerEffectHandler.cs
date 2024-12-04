@@ -20,7 +20,7 @@ public class HealTargetTriggerEffectHandler : BaseHandler<HealTargetTriggerEffec
         {
             if (statusEffect.EffectProbability >= Random.Range(0, 1))
             {
-                interactionData.TargetAppliedStatusEffects.Add(statusEffect.StatusEffect);
+                interactionData.StatusEffectsApplyToTarget.Add(statusEffect.StatusEffect);
             }
         }
     }

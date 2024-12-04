@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.Gameplay;
 using UnityEngine;
 
@@ -19,12 +20,14 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         HealthComponent healthComponent = sourceEntity.GetEntityComponent<HealthComponent>();
         int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived + interactionData.SourceEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
+        ApplyStatusEffects(sourceEntity, interactionData.StatusEffectsApplyToSource);
         EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, entityHpResult));
         //Target entity
         IEntity targetEntity = interactionData.TargetEntity;
         healthComponent = targetEntity.GetEntityComponent<HealthComponent>();
         entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
+        ApplyStatusEffects(targetEntity, interactionData.StatusEffectsApplyToTarget);
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
         
         SendLog(interactionData);
@@ -48,7 +51,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             case (InteractionResult.Dodge):
             {
                 interactionData.TargetEntityDamageReceived = 0;
-                interactionData.TargetAppliedStatusEffects.Clear();
+                interactionData.StatusEffectsApplyToTarget.Clear();
                 break;
             }
             
@@ -71,6 +74,24 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             {
                 Debug.LogError($"Unhandled interaction result: {interactionData.InteractionResult}");
                 break;
+            }
+        }
+    }
+
+    private void ApplyStatusEffects(IEntity entity, List<IStatusEffect> statusEffects)
+    {
+        //TODO: Extract to event + handler?
+        StatusEffectsComponent statusEffectsComponent = entity.GetEntityComponent<StatusEffectsComponent>();
+        LinkComponent linkComponent = entity.GetEntityComponent<LinkComponent>();
+        foreach (IStatusEffect statusEffect in statusEffects)
+        {
+            if (statusEffect is LinkStatusEffect linkStatusEffect)
+            {
+                linkComponent.ApplyStatus(linkStatusEffect.LinkStatus);
+            }
+            else
+            {
+                statusEffectsComponent.ApplyStatus(statusEffect);
             }
         }
     }

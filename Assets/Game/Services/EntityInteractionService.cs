@@ -75,8 +75,8 @@ public class EntityInteractionData
     public float CriticalDamageMultiplier = 1.5f;
     public List<IStatusEffect> SourceInitialStatusEffects = new();
     public List<IStatusEffect> TargetInitialStatusEffects = new();
-    public List<IStatusEffect> SourceAppliedStatusEffects = new();
-    public List<IStatusEffect> TargetAppliedStatusEffects = new();
+    public List<IStatusEffect> StatusEffectsApplyToSource = new();
+    public List<IStatusEffect> StatusEffectsApplyToTarget = new();
     public InteractionResult InteractionResult;
 }
 

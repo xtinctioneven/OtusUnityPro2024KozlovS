@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Gameplay;
 using Zenject;
 
 public class EntityTrackerService
 {
+    public event Action<IEntity> OnEntityTracked; 
+    public event Action<IEntity> OnEntityUntracked; 
     private EventBus _eventBus;
     private DiContainer _diContainer;
     private BattlefieldModel _battlefieldModel;
@@ -23,8 +26,14 @@ public class EntityTrackerService
     public void Initialize()
     {
         _battlefieldModel = _diContainer.Resolve<BattlefieldModel>();
-        _leftTeam = _battlefieldModel.GetLeftTeamEntities();
-        _rightTeam = _battlefieldModel.GetRightTeamEntities();
+        foreach (var entity in _battlefieldModel.GetLeftTeamEntities())
+        {
+            TrackEntity(entity);
+        }
+        foreach (var entity in _battlefieldModel.GetRightTeamEntities())
+        {
+            TrackEntity(entity);
+        }
     }
 
     public void Clear()
@@ -49,7 +58,7 @@ public class EntityTrackerService
         {
             _rightTeam.Add(entity);
         }
-        //TODO: fire event
+        OnEntityTracked?.Invoke(entity);
     }
 
     public void UntrackEntity(IEntity entity)
@@ -62,7 +71,7 @@ public class EntityTrackerService
         {
             _rightTeam.Remove(entity);
         }
-        //TODO: fire event
+        OnEntityUntracked?.Invoke(entity);
     }
 
     public IReadOnlyList<IEntity> GetLeftTeam()

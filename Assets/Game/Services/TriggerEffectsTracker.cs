@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using Game.Gameplay;
 using Zenject;
 
@@ -27,61 +26,69 @@ public class TriggerEffectsTracker
     {
         _triggerAbilitiesCollection = new Dictionary<TriggerReason, List<IEffectTrigger>>();
         _entityTrackerService = _diContainer.Resolve<EntityTrackerService>();
-        var allEntities = _entityTrackerService.GetAllEntities();
-        for (int i = 0; i < allEntities.Count; i++)
-        {
-            var abilityComponent = allEntities[i].GetEntityComponent<AbilityComponent>();
-            foreach (var triggerAbility in abilityComponent.GetAbilitiesByType<IEffectTrigger>())
-            {
-                if (!_triggerAbilitiesCollection.ContainsKey(triggerAbility.TriggerReason))
-                {
-                    _triggerAbilitiesCollection.Add(triggerAbility.TriggerReason, new List<IEffectTrigger>());
-                }
-                _triggerAbilitiesCollection[triggerAbility.TriggerReason].Add(triggerAbility);
-            }
-        }
+        _entityTrackerService.OnEntityTracked += TrackEntity;
+        _entityTrackerService.OnEntityUntracked += UntrackEntity;
+        // var allEntities = _entityTrackerService.GetAllEntities();
+        // for (int i = 0; i < allEntities.Count; i++)
+        // {
+        //     TrackEntity(allEntities[i]);
+        // }
     }
 
-    // public void TrackEntity(IEntity entity)
-    // {
-    //     if (entity.GetEntityComponent<Game.Gameplay.TeamComponent>().Value == Team.Left)
-    //     {
-    //         _leftTeam.Add(entity);
-    //     }
-    //     else
-    //     {
-    //         _rightTeam.Add(entity);
-    //     }
-    // }
-    //
-    // public void UntrackEntity(IEntity entity)
-    // {
-    //     if (_leftTeam.Contains(entity))
-    //     {
-    //         _leftTeam.Remove(entity);
-    //     }
-    //     else
-    //     {
-    //         _rightTeam.Remove(entity);
-    //     }
-    // }
-
-    public List<IEffectTrigger> GetTriggers(TriggerReason reason, IEntity activeEntity)
+    public bool GetTriggers(TriggerReason reason, out List<IEffectTrigger> triggers)
     {
-        List<IEffectTrigger> triggers = new List<IEffectTrigger>();
+        triggers = new List<IEffectTrigger>();
         if (!_triggerAbilitiesCollection.ContainsKey(reason))
         {
-            return triggers;
+            return false;
         }
         var possibleTriggers = _triggerAbilitiesCollection[reason];
         for (int i = 0; i < possibleTriggers.Count; i++)
         {
-            if (possibleTriggers[i].SourceEntity != activeEntity || !possibleTriggers[i].CanBeUsed)
+            if (!possibleTriggers[i].CanBeUsed)
             {
                 continue;
             }
             triggers.Add(possibleTriggers[i]);
         }
-        return triggers;
+        return true;
+    }
+
+    private void TrackEntity(IEntity entity)
+    {
+        var abilityComponent = entity.GetEntityComponent<AbilityComponent>();
+        foreach (var triggerAbility in abilityComponent.GetAbilitiesByType<IEffectTrigger>())
+        {
+            if (!_triggerAbilitiesCollection.ContainsKey(triggerAbility.TriggerReason))
+            {
+                _triggerAbilitiesCollection.Add(triggerAbility.TriggerReason, new List<IEffectTrigger>());
+            }
+            _triggerAbilitiesCollection[triggerAbility.TriggerReason].Add(triggerAbility);
+        }
+        
+    }
+    
+    private void UntrackEntity(IEntity entity)
+    {
+        List<TriggerReason> triggerReasons = new(); 
+        var abilityComponent = entity.GetEntityComponent<AbilityComponent>();
+        foreach (var triggerAbility in abilityComponent.GetAbilitiesByType<IEffectTrigger>())
+        {
+            if (!_triggerAbilitiesCollection.ContainsKey(triggerAbility.TriggerReason))
+            {
+                continue;
+            }
+            triggerReasons.Add(triggerAbility.TriggerReason);
+        }
+        for (int i = 0; i < triggerReasons.Count; i++)
+        {
+            foreach (var trigger in _triggerAbilitiesCollection[triggerReasons[i]])
+            {
+                if (trigger.SourceEntity == entity)
+                {
+                    _triggerAbilitiesCollection[triggerReasons[i]].Remove(trigger);
+                }
+            }
+        }
     }
 }
