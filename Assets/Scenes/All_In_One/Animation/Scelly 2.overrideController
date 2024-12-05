@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Scelly 2
+  m_Controller: {fileID: 9100000, guid: e730f3c99656b2645a69bafef19d96b6, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: eeb46b09c47b1dc4984ff310db9751cb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 82fa4f0e0d5151a45ba29841f4a91a45, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 039b97ac0c4854746b008b99d5b8d426, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c48b0be21e2af824685cb2c278c78939, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f4e3b23425f10844e9fe02746c0413f6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a7b42a40e81270e4499f218eb8335305, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 55df8d41146016444ba7ecedc5ca7f86, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f11a8addad930bd44b13608615e9e418, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e5289278920e8f640b018db34b383dba, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b3eb9d039ac48be459af75cf143325ce, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 45bcf07d7f486d2428b166e4d18f07d6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 62a805c0178b81c41b5ed2e7eacea40d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 21b3e219276d68d4bb79e4d1286443bf, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 851092fd93dd586409d8c29101d73e2f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 571eecd56f656974f94595145f30435b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3b04563ec3a74f542a9f56f1eb07a577, type: 2}
