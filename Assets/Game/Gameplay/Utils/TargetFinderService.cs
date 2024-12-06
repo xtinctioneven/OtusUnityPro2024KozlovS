@@ -135,7 +135,6 @@ namespace Game.Gameplay
                     break;
                 }
             }
-            Debug.Log($"{targetEntities}");
             return targetEntities;
         }
 

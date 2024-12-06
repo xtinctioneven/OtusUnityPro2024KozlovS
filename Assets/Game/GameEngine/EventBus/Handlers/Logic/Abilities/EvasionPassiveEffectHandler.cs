@@ -7,10 +7,10 @@ public class EvasionPassiveEffectHandler : BaseHandler<EvasionPassiveEffect>
     private DiContainer _diContainer;
     
     public EvasionPassiveEffectHandler(EventBus eventBus,
-        DiContainer diDiContainer
+        DiContainer diContainer
     ) : base(eventBus)
     {
-        _diContainer = diDiContainer;
+        _diContainer = diContainer;
     }
 
     protected override void OnHandleEvent(EvasionPassiveEffect evt)

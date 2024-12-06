@@ -8,7 +8,8 @@ namespace Game.Gameplay
     [Serializable]
     public struct StatusEffectData
     {
-        [SerializeReference] public IStatusEffect[] StatusEffects;
+        [SerializeReference] public StatusEffectConfig[] StatusEffectsApplyToTarget;
+        [SerializeReference] public StatusEffectConfig[] StatusEffectsApplyToSelf;
         [PropertyRange(0, 1)] public float EffectProbability;
     }
 }

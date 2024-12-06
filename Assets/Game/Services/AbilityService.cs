@@ -68,7 +68,7 @@ public class AbilityService
         }
     }
 
-    private void ApplyPassiveEffects(EntityInteractionData interactionData, AbilityComponent abilityComponent)
+    public void ApplyPassiveEffects(EntityInteractionData interactionData, AbilityComponent abilityComponent)
     {
         var passiveAbilities = abilityComponent.GetAbilitiesByType<IEffectPassive>();
         foreach (var passiveAbility in passiveAbilities)
@@ -81,5 +81,31 @@ public class AbilityService
             _eventBus.RaiseEvent(passiveAbility);
         }
     }
-
+    
+    public void ApplyStatusEffects(IEntity entity, List<IStatusEffect> statusEffects, EntityInteractionData interactionData)
+    {
+        StatusEffectsComponent statusEffectsComponent = entity.GetEntityComponent<StatusEffectsComponent>();
+        LinkComponent linkComponent = entity.GetEntityComponent<LinkComponent>();
+        foreach (IStatusEffect statusEffect in statusEffects)
+        {
+            statusEffect.InteractionData = interactionData;
+            if (statusEffect is LinkStatusEffect linkStatusEffect)
+            {
+                linkComponent.ApplyStatus(linkStatusEffect.LinkStatus);
+            }
+            else
+            {
+                statusEffect.AfflictedEntity = entity;
+                if (statusEffect is IConsumeStatusEffect)
+                {
+                    _eventBus.RaiseEvent(statusEffect);
+                }
+                else
+                {
+                    statusEffectsComponent.ApplyStatus(statusEffect);
+                }
+            }
+        }
+    }
+    
 }

@@ -6,12 +6,6 @@ using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
-    //public const string RED_TEAM = nameof(RED_TEAM);
-    //public const string BLUE_TEAM = nameof(BLUE_TEAM);
-    // const string RED_TEAM = Enum.GetName(typeof(Team), Team.RedTeamTeam);
-    // [SerializeField] private HeroListView _redHeroListView;
-    // [SerializeField] private HeroListView _blueHeroListView;
-    
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<CharacterFactory>().FromNew().AsSingle().NonLazy();
@@ -20,6 +14,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<HealTargetTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AddCountToSourceOnResultPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AddCountToStandardTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<AddCountToSourceStatusEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EntityInteractionHandler>().FromNew().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<StatsResolveHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<UpdateStatsHandler>().FromNew().AsSingle().NonLazy();

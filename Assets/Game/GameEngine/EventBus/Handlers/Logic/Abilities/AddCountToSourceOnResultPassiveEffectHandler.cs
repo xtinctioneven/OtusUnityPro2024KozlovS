@@ -7,10 +7,10 @@ public class AddCountToSourceOnResultPassiveEffectHandler : BaseHandler<AddCount
     private DiContainer _diContainer;
     
     public AddCountToSourceOnResultPassiveEffectHandler(EventBus eventBus,
-        DiContainer diDiContainer
+        DiContainer diContainer
     ) : base(eventBus)
     {
-        _diContainer = diDiContainer;
+        _diContainer = diContainer;
     }
 
     protected override void OnHandleEvent(AddCountToSourceOnResultPassiveEffect evt)

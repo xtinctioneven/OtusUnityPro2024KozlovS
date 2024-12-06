@@ -2,39 +2,44 @@
 using System.Collections.Generic;
 using Game.Gameplay;
 using UnityEngine;
+using Zenject;
 
 public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
 {
-    public EntityInteractionHandler(EventBus eventBus) : base(eventBus)
+    private AbilityService _abilityService;
+    private DiContainer _diContainer;
+    public EntityInteractionHandler(EventBus eventBus, DiContainer diContainer) : base(eventBus)
     {
+        _diContainer = diContainer;
     }
 
     protected override void OnHandleEvent(EntityInteractionEvent evt)
     {
+        _abilityService = _diContainer.Resolve<AbilityService>();
         EntityInteractionData interactionData = evt.EntityInteractionData;
         //Resolve interaction data
         ResolveInteractionData(interactionData);
         //Apply results
         //Source entity
         IEntity sourceEntity = interactionData.SourceEntity;
+        _abilityService.ApplyStatusEffects(sourceEntity, interactionData.StatusEffectsApplyToSource, interactionData);
         HealthComponent healthComponent = sourceEntity.GetEntityComponent<HealthComponent>();
         int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived + interactionData.SourceEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
-        ApplyStatusEffects(sourceEntity, interactionData.StatusEffectsApplyToSource);
         EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, entityHpResult));
         //Target entity
         IEntity targetEntity = interactionData.TargetEntity;
+        _abilityService.ApplyStatusEffects(targetEntity, interactionData.StatusEffectsApplyToTarget, interactionData);
         healthComponent = targetEntity.GetEntityComponent<HealthComponent>();
         entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
-        ApplyStatusEffects(targetEntity, interactionData.StatusEffectsApplyToTarget);
         if (entityHpResult == 0)
         {
             interactionData.InteractionResult = InteractionResult.Kill;
         }
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
-        ApplyPassiveEffects(sourceEntity, interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
-        ApplyPassiveEffects(targetEntity, interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
+        _abilityService.ApplyPassiveEffects(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
+        _abilityService.ApplyPassiveEffects(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
         SendLog(interactionData, entityHpResult);
     }
 
@@ -75,43 +80,16 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                 break;
             }
 
+            case (InteractionResult.Default):
+            {
+                break;
+            }
+
             default:
             {
                 Debug.LogError($"Unhandled interaction result: {interactionData.InteractionResult}");
                 break;
             }
-        }
-    }
-
-    private void ApplyStatusEffects(IEntity entity, List<IStatusEffect> statusEffects)
-    {
-        //TODO: Extract to event + handler?
-        StatusEffectsComponent statusEffectsComponent = entity.GetEntityComponent<StatusEffectsComponent>();
-        LinkComponent linkComponent = entity.GetEntityComponent<LinkComponent>();
-        foreach (IStatusEffect statusEffect in statusEffects)
-        {
-            if (statusEffect is LinkStatusEffect linkStatusEffect)
-            {
-                linkComponent.ApplyStatus(linkStatusEffect.LinkStatus);
-            }
-            else
-            {
-                statusEffectsComponent.ApplyStatus(statusEffect);
-            }
-        }
-    }
-    
-    private void ApplyPassiveEffects(IEntity sourceEntity, EntityInteractionData interactionData, AbilityComponent abilityComponent)
-    {
-        var passiveAbilities = abilityComponent.GetAbilitiesByType<IEffectPassive>();
-        foreach (var passiveAbility in passiveAbilities)
-        {
-            if (!passiveAbility.CanBeUsed)
-            {
-                continue;
-            }
-            passiveAbility.InteractionData = interactionData;
-            EventBus.RaiseEvent(passiveAbility);
         }
     }
 

@@ -6,10 +6,10 @@ public class AddCountToStandardTriggerEffectHandler : BaseHandler<AddCountToStan
     private DiContainer _diContainer;
     
     public AddCountToStandardTriggerEffectHandler(EventBus eventBus,
-        DiContainer diDiContainer
+        DiContainer diContainer
     ) : base(eventBus)
     {
-        _diContainer = diDiContainer;
+        _diContainer = diContainer;
     }
 
     protected override void OnHandleEvent(AddCountToStandardTriggerEffect evt)

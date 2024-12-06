@@ -23,10 +23,9 @@ MonoBehaviour:
         AttackMultiplier: 0.7
         <TriggerReason>k__BackingField: 40
         <InteractionType>k__BackingField: 20
-        <Traits>k__BackingField: 4
         <InitialUseCounts>k__BackingField: 2
         <MaxUseCounts>k__BackingField: 10
         <TargetType>k__BackingField: 40
         <TargetPriority>k__BackingField: 10
         <TargetsCount>k__BackingField: 2
-        <StatusEffects>k__BackingField: []
+        <StatusEffectsDataCollection>k__BackingField: []

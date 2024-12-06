@@ -5,7 +5,7 @@ using Zenject;
 public class HealTargetTriggerEffectHandler : BaseHandler<HealTargetTriggerEffect>
 {
     public HealTargetTriggerEffectHandler(EventBus eventBus,
-        DiContainer diDiContainer
+        DiContainer diContainer
     ) : base(eventBus)
     {
     }
@@ -20,9 +20,10 @@ public class HealTargetTriggerEffectHandler : BaseHandler<HealTargetTriggerEffec
         {
             if (statusEffectData.EffectProbability >= Random.Range(0, 1))
             {
-                for (int i = 0; i < statusEffectData.StatusEffects.Length; i++)
+                for (int i = 0; i < statusEffectData.StatusEffectsApplyToTarget.Length; i++)
                 {
-                    interactionData.StatusEffectsApplyToTarget.Add(statusEffectData.StatusEffects[i]);
+                    //TODO: REPAIR
+                    // interactionData.StatusEffectsApplyToTarget.Add(statusEffectData.StatusEffects[i]);
                 }
             }
         }

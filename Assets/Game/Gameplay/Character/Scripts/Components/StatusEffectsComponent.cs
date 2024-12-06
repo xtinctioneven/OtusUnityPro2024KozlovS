@@ -7,9 +7,11 @@ using UnityEngine.Serialization;
 public class StatusEffectsComponent
 {
     public List<IStatusEffect> StatusEffects { get; private set; } = new List<IStatusEffect>();
-
-    public StatusEffectsComponent()
+    private IEntity _afflictedEntity;
+    
+    public StatusEffectsComponent(IEntity afflictedEntity)
     {
+        _afflictedEntity = afflictedEntity;
     }
 
     public void ApplyStatus(IStatusEffect effect)
@@ -32,6 +34,19 @@ public class StatusEffectsComponent
         }
         StatusEffects.Remove(effect);
         return true;
+    }
+    
+    public List<TStatusType> GetStatusesByType<TStatusType>()
+    {
+        List<TStatusType> statuses = new List<TStatusType>();
+        foreach (var status in StatusEffects)
+        {
+            if (status is TStatusType)
+            {
+                statuses.Add((TStatusType)status);
+            }
+        }
+        return statuses;
     }
 
     public void Tick(int tickTimes = 1)

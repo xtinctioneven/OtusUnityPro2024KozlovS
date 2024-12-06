@@ -29,9 +29,5 @@ MonoBehaviour:
         <TargetsCount>k__BackingField: 1
         <StatusEffectsDataCollection>k__BackingField:
         - StatusEffects:
-          - rid: 7750859990555688972
+          - {fileID: 11400000, guid: 03b2f1467e0d89149a5a349e14712713, type: 2}
           EffectProbability: 0.45
-    - rid: 7750859990555688972
-      type: {class: LinkStatusEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
-      data:
-        LinkStatus: 20
