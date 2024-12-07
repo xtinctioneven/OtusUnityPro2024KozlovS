@@ -48,15 +48,4 @@ public class StatusEffectsComponent
         }
         return statuses;
     }
-
-    public void RemoveExpiredStatuses()
-    {
-        foreach (var status in StatusEffects)
-        {
-            if (status is IStickyStatusEffect stickyStatus && stickyStatus.DurationLeft <= 0)
-            {
-                TryRemoveStatus(stickyStatus);
-            }
-        }
-    }
 }

@@ -7,7 +7,8 @@ namespace Game.Gameplay
     {
         [field: SerializeField, PropertyRange(0, 1)] public float DamagePerTick { get; private set; }
         [field: SerializeField] public string Name { get; private set; }
-        [field: SerializeField] public StatusEffectType StatusEffectType { get; private set; }
+
+        [field: SerializeField] public StatusEffectType StatusEffectType { get; private set; } = StatusEffectType.Negative;
         [field: SerializeField] public bool IsCleanseable { get; private set; }
         [field: SerializeField] public int EffectDuration { get; private set; }
         public EntityInteractionData InteractionData { get; set; }

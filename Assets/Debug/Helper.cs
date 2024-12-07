@@ -13,8 +13,6 @@ public class Helper : MonoBehaviour
     public Vector2[] LeftTeamPositions;
     public CharacterConfig[] RightTeamCharacters;
     public Vector2[] RightTeamPositions;
-    // public CharacterConfig LeftCharacterConfig;
-    // public CharacterConfig RightCharacterConfig;
     public TeamGridData[] LeftTeamGridData { get; private set; }
     public TeamGridData[] RightTeamGridData { get; private set; }
     [TextArea(4, 10)] public string Log = "";
@@ -53,22 +51,12 @@ public class Helper : MonoBehaviour
                 Position = RightTeamPositions[i]
             };
         }
-        // LeftTeamGridData[0] = new TeamGridData
-        // {
-        //     Entity = CharacterFactory.CreateCharacter(LeftCharacterConfig),
-        //     Position = new Vector2(1, 1)
-        // };
-        // RightTeamGridData[0] = new TeamGridData
-        // {
-        //     Entity = CharacterFactory.CreateCharacter(RightCharacterConfig),
-        //     Position = new Vector2(1, 1)
-        // };
     }
 
     public void AddLog(string text)
     {
         Log += text;
-        Debug.Log(Log);
+        Debug.Log(text);
     }
 
 }

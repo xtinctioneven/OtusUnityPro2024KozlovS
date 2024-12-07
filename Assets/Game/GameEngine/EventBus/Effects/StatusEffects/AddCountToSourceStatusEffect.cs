@@ -5,7 +5,7 @@ namespace Game.Gameplay
 {
     public class AddCountToSourceStatusEffect : IConsumeStatusEffect
     {
-        [field: SerializeField, PropertyRange(0, 1)] public int AddCounts { get; private set; }
+        [field: SerializeField, PropertyRange(0, 10)] public int AddCounts { get; private set; } = 1;
         [field: SerializeField] public StatusEffectType StatusEffectType { get; private set; }
         public EntityInteractionData InteractionData { get; set; }
         public IEntity SourceEntity { get; set; }
@@ -18,6 +18,5 @@ namespace Game.Gameplay
             clone.StatusEffectType = this.StatusEffectType;
             return clone;
         }
-
     }
 }

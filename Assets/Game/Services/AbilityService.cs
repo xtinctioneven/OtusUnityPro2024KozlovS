@@ -119,8 +119,11 @@ public class AbilityService
             statusEffect.InteractionData.SourceEntity = statusEffect.SourceEntity ?? statusEffect.AfflictedEntity;
             _eventBus.RaiseEvent(statusEffect);
             _eventBus.RaiseEvent(new EntityInteractionEvent(statusEffect.InteractionData));
+            if (statusEffect is IStickyStatusEffect { DurationLeft: <= 0 })
+            {
+                _eventBus.RaiseEvent(new RemoveStatusEffectEvent(statusEffect));
+            }
         }
-        statusEffectsComponent.RemoveExpiredStatuses();
     }
     
 }
