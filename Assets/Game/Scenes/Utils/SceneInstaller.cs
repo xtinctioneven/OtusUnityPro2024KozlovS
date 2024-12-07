@@ -14,6 +14,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<HealTargetTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AddCountToSourceOnResultPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AddCountToStandardTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<DamageMaxHpPercentStatusEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AddCountToSourceStatusEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EntityInteractionHandler>().FromNew().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<StatsResolveHandler>().FromNew().AsSingle().NonLazy();

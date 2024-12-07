@@ -38,7 +38,6 @@ public class TurnPipelineInstaller : IInitializable
     {
         // _entityInteractionService = _diContainer.Resolve<EntityInteractionService>();
         // _entityTrackerService = _diContainer.Resolve<EntityTrackerService>();
-        _turnPipeline.AddTask(new StartTask());
         _turnPipeline.AddTask(new CharacterTurnStartTask(_diContainer, _eventBus));
         _turnPipeline.AddTask(new StandardActionTask(_diContainer, _eventBus));
         // _turnPipeline.AddTask(new PlayerInputTask(_turnOrderService, _uiService, _eventBus));
@@ -48,6 +47,5 @@ public class TurnPipelineInstaller : IInitializable
         // _turnPipeline.AddTask(new GameOverCheckTask(_eventBus, _heroTrackerService, _turnPipeline));
         _turnPipeline.AddTask(new FinishTurnTask(_diContainer));
         _turnPipeline.AddTask(new GameOverCheckTask(_eventBus, _diContainer));
-        _turnPipeline.AddTask(new FinishTask());
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Game.Gameplay;
+using UnityEngine;
 using Zenject;
 
 public class DamageMaxHpPercentStatusEffectHandler : BaseHandler<DamageMaxHpPercentStatusEffect>
@@ -11,14 +12,11 @@ public class DamageMaxHpPercentStatusEffectHandler : BaseHandler<DamageMaxHpPerc
 
     protected override void OnHandleEvent(DamageMaxHpPercentStatusEffect evt)
     { 
-        // EntityInteractionData interactionData = evt.InteractionData;
-        //
-        // if (evt.AfflictedEntity != interactionData.SourceEntity 
-        //     || !(interactionData.SourceEffect is IEffectUseCounts sourceEffect) 
-        //    )
-        // {
-        //     return;
-        // }
-        // sourceEffect.AddCount(evt.AddCounts);
+        EntityInteractionData interactionData = evt.InteractionData;
+        int damageAmount =
+            (int)Mathf.Floor(evt.AfflictedEntity.GetEntityComponent<HealthComponent>().MaxValue * evt.DamagePerTick);
+        interactionData.SourceEntityDamageOutgoing = damageAmount;
+        interactionData.InteractionResult = InteractionResult.StatusEffectTick;
+        evt.Tick();
     }
 }

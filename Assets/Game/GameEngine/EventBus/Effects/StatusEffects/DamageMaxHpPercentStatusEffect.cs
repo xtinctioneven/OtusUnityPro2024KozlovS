@@ -13,6 +13,7 @@ namespace Game.Gameplay
         public EntityInteractionData InteractionData { get; set; }
         public IEntity AfflictedEntity { get; set; }
         public int DurationLeft { get; private set; }
+        public IEntity SourceEntity { get; set; }
         
         public IStatusEffect Clone()
         {

@@ -90,7 +90,8 @@ public enum InteractionResult
     Heal = 50,
     Buff = 60,
     Passive = 70,
-    Kill = 80
+    Kill = 80,
+    StatusEffectTick = 90
 }
 
 public enum InteractionType
@@ -99,5 +100,6 @@ public enum InteractionType
     StandardStrike = 10,
     Heal = 20,
     Buff = 30,
-    Passive = 40
+    Passive = 40,
+    StatusEffectTick = 50
 }

@@ -20,7 +20,6 @@ public class RoundPipelineInstaller: IInitializable
 
     public void Initialize()
     { 
-        _roundPipeline.AddTask(new StartTask());
         // _roundPipeline.AddTask(new RefreshServicesTask());
         _roundPipeline.AddTask(new StartRoundTask(_diContainer, _eventBus));
         _roundPipeline.AddTask(new RunTurnPipelineTask(_diContainer, _eventBus));
@@ -36,7 +35,6 @@ public class RoundPipelineInstaller: IInitializable
         // _roundPipeline.AddTask(new GameOverCheckTask(_eventBus, _heroTrackerService, _turnPipeline));
         // _roundPipeline.AddTask(new FinishTask(_heroInteractionService));
         //_roundPipeline.AddTask(new FinishTurnTask());
-        //_roundPipeline.AddTask(new FinishRoundTask());
-        _roundPipeline.AddTask(new FinishTask());
+        _roundPipeline.AddTask(new FinishRoundTask(_diContainer, _eventBus));
     }
 }

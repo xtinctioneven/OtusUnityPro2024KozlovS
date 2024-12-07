@@ -17,7 +17,7 @@ namespace Game.Gameplay
         [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; }
         [field: SerializeField, PropertyRange(1, 9)] public int TargetsCount { get; private set; } = 1;
         [field: SerializeField] public StatusEffectData[] StatusEffectsDataCollection { get; private set; }
-        
+            
         public IEffect Clone()
         {
             var clone = new HealTargetTriggerEffect();

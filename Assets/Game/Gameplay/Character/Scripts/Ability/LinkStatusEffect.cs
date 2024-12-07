@@ -8,6 +8,7 @@ namespace Game.Gameplay
         public LinkStatusType LinkStatus;
         public IEntity AfflictedEntity { get; set; }
         public EntityInteractionData InteractionData { get; set; }
+        public IEntity SourceEntity { get; set; }
 
         public IStatusEffect Clone()
         {

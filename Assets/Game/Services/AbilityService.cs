@@ -45,8 +45,8 @@ public class AbilityService
             interactionData.SourceEffect = ability;
             ability.InteractionData = interactionData;
             _eventBus.RaiseEvent(ability);
-            ApplyPassiveEffects(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
-            ApplyPassiveEffects(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
+            PassiveEffectsApply(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
+            PassiveEffectsApply(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
             _eventBus.RaiseEvent(new EntityInteractionEvent(ability.InteractionData));
             //Check for link abilities
             foreach (var statusEffect in ability.InteractionData.StatusEffectsApplyToTarget)
@@ -68,21 +68,21 @@ public class AbilityService
         }
     }
 
-    public void ApplyPassiveEffects(EntityInteractionData interactionData, AbilityComponent abilityComponent)
+    public void PassiveEffectsApply(EntityInteractionData interactionData, AbilityComponent abilityComponent)
     {
         var passiveAbilities = abilityComponent.GetAbilitiesByType<IEffectPassive>();
         foreach (var passiveAbility in passiveAbilities)
         {
+            passiveAbility.InteractionData = interactionData;
             if (!passiveAbility.CanBeUsed)
             {
                 continue;
             }
-            passiveAbility.InteractionData = interactionData;
             _eventBus.RaiseEvent(passiveAbility);
         }
     }
     
-    public void ApplyStatusEffects(IEntity entity, List<IStatusEffect> statusEffects, EntityInteractionData interactionData)
+    public void StatusEffectsApply(IEntity entity, List<IStatusEffect> statusEffects, EntityInteractionData interactionData)
     {
         StatusEffectsComponent statusEffectsComponent = entity.GetEntityComponent<StatusEffectsComponent>();
         LinkComponent linkComponent = entity.GetEntityComponent<LinkComponent>();
@@ -106,6 +106,21 @@ public class AbilityService
                 }
             }
         }
+    }
+    
+    public void StatusEffectsTick(StatusEffectsComponent statusEffectsComponent)
+    {
+        foreach (IStatusEffect statusEffect in statusEffectsComponent.StatusEffects)
+        {
+            // statusEffect.InteractionData = interactionData;
+            // statusEffect.AfflictedEntity = entity;
+            statusEffect.InteractionData = _entityInteractionService.CreateEmptyInteractionData(
+                targetEntity: statusEffect.AfflictedEntity);
+            statusEffect.InteractionData.SourceEntity = statusEffect.SourceEntity ?? statusEffect.AfflictedEntity;
+            _eventBus.RaiseEvent(statusEffect);
+            _eventBus.RaiseEvent(new EntityInteractionEvent(statusEffect.InteractionData));
+        }
+        statusEffectsComponent.RemoveExpiredStatuses();
     }
     
 }

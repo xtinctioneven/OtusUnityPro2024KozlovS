@@ -8,6 +8,7 @@ namespace Game.Gameplay
         [field: SerializeField, PropertyRange(0, 1)] public int AddCounts { get; private set; }
         [field: SerializeField] public StatusEffectType StatusEffectType { get; private set; }
         public EntityInteractionData InteractionData { get; set; }
+        public IEntity SourceEntity { get; set; }
         public IEntity AfflictedEntity { get; set; }
         
         public IStatusEffect Clone()

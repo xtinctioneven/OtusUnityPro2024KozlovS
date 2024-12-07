@@ -49,15 +49,14 @@ public class StatusEffectsComponent
         return statuses;
     }
 
-    public void Tick(int tickTimes = 1)
+    public void RemoveExpiredStatuses()
     {
-        for (int i = 0; i < StatusEffects.Count; i++)
+        foreach (var status in StatusEffects)
         {
-            //TODO:!!!
-            // if (StatusEffects[i] is StatusEffect statusEffect)
-            // {
-            //     statusEffect.
-            // }
+            if (status is IStickyStatusEffect stickyStatus && stickyStatus.DurationLeft <= 0)
+            {
+                TryRemoveStatus(stickyStatus);
+            }
         }
     }
 }
