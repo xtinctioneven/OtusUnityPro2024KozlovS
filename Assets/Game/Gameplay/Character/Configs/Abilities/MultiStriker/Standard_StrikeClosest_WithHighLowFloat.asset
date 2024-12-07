@@ -31,4 +31,4 @@ MonoBehaviour:
         - StatusEffectsApplyToTarget:
           - {fileID: 11400000, guid: 3f376711ea1dd1a48b4ae655213f8470, type: 2}
           StatusEffectsApplyToSelf: []
-          EffectProbability: 0.7
+          EffectProbability: 1
