@@ -17,6 +17,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<DamageMaxHpPercentStatusEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AddCountToSourceStatusEffectHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CleanseStatusEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<StrikeTargetLinkEffecttHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<RemoveStatusEffectEventHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EntityInteractionHandler>().FromNew().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<StatsResolveHandler>().FromNew().AsSingle().NonLazy();

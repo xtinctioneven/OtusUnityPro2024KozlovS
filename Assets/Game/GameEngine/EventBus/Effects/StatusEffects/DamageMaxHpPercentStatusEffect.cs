@@ -9,6 +9,7 @@ namespace Game.Gameplay
         [field: SerializeField] public string Name { get; private set; }
 
         [field: SerializeField] public StatusEffectType StatusEffectType { get; private set; } = StatusEffectType.Negative;
+        [field: SerializeField] public InteractionType InteractionType { get; private set; } = InteractionType.StatusEffectTick;
         [field: SerializeField] public bool IsCleanseable { get; private set; }
         [field: SerializeField] public int EffectDuration { get; private set; }
         public EntityInteractionData InteractionData { get; set; }

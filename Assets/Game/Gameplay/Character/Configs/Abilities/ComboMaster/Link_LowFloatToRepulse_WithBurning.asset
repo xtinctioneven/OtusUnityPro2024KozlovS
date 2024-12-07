@@ -10,26 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
-  m_Name: Standard_StrikeClosest_WithGivenLowFloat_AndAddCount_MaxCount2
+  m_Name: Link_LowFloatToRepulse_WithBurning
   m_EditorClassIdentifier: 
   Abilities:
-  - rid: 2785875064133779470
+  - rid: 7750860057758924801
   references:
     version: 2
     RefIds:
-    - rid: 2785875064133779470
-      type: {class: StrikeTargetEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
+    - rid: 7750860057758924801
+      type: {class: StrikeTargetLinkEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
       data:
-        AttackMultiplier: 1
-        <InteractionType>k__BackingField: 10
+        AttackMultiplier: 0.5
+        <SeekLinkStatus>k__BackingField: 10
+        <InteractionType>k__BackingField: 60
         <InitialUseCounts>k__BackingField: 1
         <MaxUseCounts>k__BackingField: 2
         <TargetType>k__BackingField: 10
-        <TargetPriority>k__BackingField: 0
+        <TargetPriority>k__BackingField: 100
         <TargetsCount>k__BackingField: 1
         <StatusEffectsDataCollection>k__BackingField:
         - StatusEffectsApplyToTarget:
-          - {fileID: 11400000, guid: 8b0903ed5145ba6448c17dfd152e88d0, type: 2}
-          StatusEffectsApplyToSelf:
-          - {fileID: 11400000, guid: 5530e02e6dfd12e45a7cdb5242f05011, type: 2}
-          EffectProbability: 0.45
+          - {fileID: 11400000, guid: 03b2f1467e0d89149a5a349e14712713, type: 2}
+          - {fileID: 11400000, guid: eaff9d55eb783444693a866ef8f4cd92, type: 2}
+          StatusEffectsApplyToSelf: []
+          EffectProbability: 1

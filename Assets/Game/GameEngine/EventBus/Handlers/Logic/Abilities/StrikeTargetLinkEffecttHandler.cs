@@ -1,14 +1,14 @@
 ﻿using Game.Gameplay;
 using UnityEngine;
 
-public class StrikeTargetEffectHandler : BaseHandler<StrikeTargetEffect>
+public class StrikeTargetLinkEffecttHandler : BaseHandler<StrikeTargetLinkEffect>
 {
-    public StrikeTargetEffectHandler(EventBus eventBus
-        ) : base(eventBus)
+    public StrikeTargetLinkEffecttHandler(EventBus eventBus
+    ) : base(eventBus)
     {
     }
 
-    protected override void OnHandleEvent(StrikeTargetEffect evt)
+    protected override void OnHandleEvent(StrikeTargetLinkEffect evt)
     { 
         EntityInteractionData interactionData = evt.InteractionData;
         interactionData.SourceEntityDamageOutgoing =

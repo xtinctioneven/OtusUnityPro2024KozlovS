@@ -11,6 +11,6 @@ public class RemoveStatusEffectEventHandler: BaseHandler<RemoveStatusEffectEvent
         IEntity afflictedEntity = evt.StatusEffect.AfflictedEntity;
         afflictedEntity.GetEntityComponent<StatusEffectsComponent>().TryRemoveStatus(evt.StatusEffect);
         
-        Helper.Instance.AddLog($"Removed status effect {evt.StatusEffect} from afflicted entity {afflictedEntity.Name}.");
+        Helper.Instance.AddLog($"Removed status effect {(evt.StatusEffect as IStickyStatusEffect)?.Name} from afflicted entity {afflictedEntity.Name}.");
     }
 }

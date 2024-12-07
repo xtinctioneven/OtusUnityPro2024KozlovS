@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: BuffCleanseStatusEffect
   m_EditorClassIdentifier: 
   StatusEffect:
-    rid: 7750860015839739939
+    rid: 7750860057758924800
   references:
     version: 2
     RefIds:
-    - rid: 7750860015839739939
-      type: {class: AddCountToSourceStatusEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
+    - rid: 7750860057758924800
+      type: {class: CleanseStatusEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
       data:
-        <AddCounts>k__BackingField: 1
+        <CleanseStatusesCount>k__BackingField: 1
+        <CleanseStatusType>k__BackingField: 20
         <StatusEffectType>k__BackingField: 10

@@ -33,7 +33,7 @@ public class StandardActionTask : EventTask
         var linkEffectsTracker = _diContainer.Resolve<LinkEffectsTracker>();
         foreach (var standardAbility in standardAbilities)
         {
-            while (standardAbility.CanBeUsed)
+            while (standardAbility.CanBeUsed && !Helper.Instance.IsGameOver)
             {
                 //Trigger before action abilities
                 List<IEffectTrigger> effectTriggers = sourceAbilityComponent.GetAbilitiesByType<IEffectTrigger>();
@@ -50,7 +50,7 @@ public class StandardActionTask : EventTask
                 
                 //Use Standard ability
                 _abilityService.UseAbility(activeEntity, standardAbility);
-                standardAbility.TryUseCount();
+                //standardAbility.TryUseCount();
             }
         }
         Finish();

@@ -13,7 +13,7 @@ namespace Game.Gameplay
             IEntity sourceEntity = interactionData.SourceEntity;
             foreach (var statusEffectData in StatusEffectsDataCollection)
             {
-                if (statusEffectData.EffectProbability >= Random.Range(0, 1))
+                if (statusEffectData.EffectProbability >= Random.value)
                 {
                     for (int i = 0; i < statusEffectData.StatusEffectsApplyToTarget.Length; i++)
                     {

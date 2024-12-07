@@ -79,12 +79,11 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                 interactionData.TargetEntityHealReceived = Math.Min(interactionData.SourceEntityHealOutgoing, maxHeal);
                 break;
             }
-
             case (InteractionResult.Default):
             {
+                Helper.Instance.AddLog($"Interaction result is not set for ability: {interactionData.SourceEffect}\n");
                 break;
             }
-            
             case (InteractionResult.StatusEffectTick):
             {
                 defenceComponent = interactionData.TargetEntity.GetEntityComponent<DefenceComponent>();
@@ -92,7 +91,11 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                 
                 break;
             }
-
+            case (InteractionResult.Buff):
+            {
+                
+                break;
+            }
             default:
             {
                 Debug.LogError($"Unhandled interaction result: {interactionData.InteractionResult}");
@@ -112,7 +115,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             case (InteractionResult.Hit):
             {
                 Helper.Instance.AddLog(
-                    $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
+                    $"{sourceEntity.Name} damaged {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
                     $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
                 Helper.Instance.AddLog(
                     $"{targetEntity.Name} have {entityHpResult} health left.\n");
@@ -121,7 +124,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             case (InteractionResult.Kill):
             {
                 Helper.Instance.AddLog(
-                    $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
+                    $"{sourceEntity.Name} damaged {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
                     $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
                 Helper.Instance.AddLog(
                     $"{targetEntity.Name} have {entityHpResult} health left and died.\n");
@@ -146,6 +149,13 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                     $"{targetEntity.Name} was damaged by StatusEffect for {interactionData.TargetEntityDamageReceived}.\n");
                 Helper.Instance.AddLog(
                     $"{targetEntity.Name} have {entityHpResult} health left.\n");
+                break;
+            
+            }
+            case (InteractionResult.Buff):
+            {
+                Helper.Instance.AddLog(
+                    $"{sourceEntity.Name} used buff action on {targetEntity.Name}.\n");
                 break;
             
             }

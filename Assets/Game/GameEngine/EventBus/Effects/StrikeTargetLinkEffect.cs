@@ -1,27 +1,27 @@
-using System;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public class StrikeTargetEffect : IEffectStandard, IEffectApplyStatus
+    public class StrikeTargetLinkEffect : IEffectLink, IEffectApplyStatus
     {
         //Fields to clone
         [PropertyRange(0, 10)] public float AttackMultiplier;
-        [field: SerializeField] public InteractionType InteractionType { get; private set; }
+        [field: SerializeField] public LinkStatusType SeekLinkStatus { get; set; }
+        [field: SerializeField] public InteractionType InteractionType { get; private set; } = InteractionType.LinkStrike;
         [field: SerializeField, PropertyRange(0, 10)] public int InitialUseCounts { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int MaxUseCounts { get; private set; }
         public int CountsLeft { get; private set; }
-        [field: SerializeField] public TargetType TargetType { get; private set; }
-        [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; }
+        [field: SerializeField] public TargetType TargetType { get; private set; } = TargetType.EnemyTarget;
+        [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; } = TargetPriorityType.None;
         [field: SerializeField, PropertyRange(1, 9)] public int TargetsCount { get; private set; } = 1;
         [field: SerializeField] public StatusEffectData[] StatusEffectsDataCollection { get; private set; }
         
         public IEffect Clone()
         {
-            var clone = new StrikeTargetEffect();
+            var clone = new StrikeTargetLinkEffect();
             clone.AttackMultiplier = AttackMultiplier;
+            clone.SeekLinkStatus = SeekLinkStatus;
             clone.InteractionType = InteractionType;
             // clone.Traits = Traits;
             clone.InitialUseCounts = InitialUseCounts;

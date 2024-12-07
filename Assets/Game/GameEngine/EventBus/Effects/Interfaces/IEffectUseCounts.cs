@@ -10,5 +10,6 @@
         public int SubtractCount(int subtractCount = 1);
         public bool TryUseCount(int count = 1);
         public void ResetCounts();
+        bool IEffect.CanBeUsed => Enabled && CountsLeft > 0;
     }
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   - StatType: 0
     Value: 400
   - StatType: 10
-    Value: 400
+    Value: 200
   - StatType: 20
     Value: 40
   - StatType: 30

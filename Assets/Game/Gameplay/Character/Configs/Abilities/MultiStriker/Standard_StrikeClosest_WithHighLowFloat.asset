@@ -29,6 +29,6 @@ MonoBehaviour:
         <TargetsCount>k__BackingField: 1
         <StatusEffectsDataCollection>k__BackingField:
         - StatusEffectsApplyToTarget:
-          - {fileID: 11400000, guid: eaff9d55eb783444693a866ef8f4cd92, type: 2}
+          - {fileID: 11400000, guid: 3f376711ea1dd1a48b4ae655213f8470, type: 2}
           StatusEffectsApplyToSelf: []
-          EffectProbability: 1
+          EffectProbability: 0.7

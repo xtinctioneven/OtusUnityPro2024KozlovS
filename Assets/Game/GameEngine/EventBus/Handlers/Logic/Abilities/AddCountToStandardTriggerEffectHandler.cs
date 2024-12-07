@@ -17,6 +17,7 @@ public class AddCountToStandardTriggerEffectHandler : BaseHandler<AddCountToStan
         EntityInteractionData interactionData = evt.InteractionData;
         var standardAbilities = interactionData.TargetEntity.
             GetEntityComponent<AbilityComponent>().GetAbilitiesByType<IEffectStandard>();
+        interactionData.InteractionResult = InteractionResult.Buff;
         foreach (var ability in standardAbilities)
         {
             ability.AddCount(evt.CountsToAdd);

@@ -33,15 +33,20 @@ public class AbilityService
             targetsList = _targetFinderService.GetTargets(sourceEntity, ability as IEffectTarget);
         }
 
+        if (targetsList.Count == 0)
+        {
+            return;
+        }
+        
         for (int i = 0; i < targetsList.Count; i++)
         {
             targetEntity = targetsList[i];
             _entityInteractionService.SetTargetEntity(targetEntity);
-            EntityInteractionData interactionData = _entityInteractionService.CreateCurrentInteractionData();
-            if (interactionData.SourceEntity == null)
-            {
-                interactionData.SourceEntity = sourceEntity;
-            }
+            EntityInteractionData interactionData = _entityInteractionService.CreateInteractionData(sourceEntity, targetEntity);
+            // if (interactionData.SourceEntity == null)
+            // {
+            //     interactionData.SourceEntity = sourceEntity;
+            // }
             interactionData.SourceEffect = ability;
             ability.InteractionData = interactionData;
             _eventBus.RaiseEvent(ability);
@@ -53,6 +58,7 @@ public class AbilityService
             {
                 if (statusEffect is LinkStatusEffect linkStatus)
                 {
+                    ability.InteractionData.StatusEffectsApplyToTarget.Remove(statusEffect);
                     LinkStatusType linkType = linkStatus.LinkStatus;
                     LinkEffectsTracker linkEffectsTracker = _diContainer.Resolve<LinkEffectsTracker>();
                     if (linkEffectsTracker.TryGetActiveLink(linkType,
@@ -114,7 +120,7 @@ public class AbilityService
         {
             // statusEffect.InteractionData = interactionData;
             // statusEffect.AfflictedEntity = entity;
-            statusEffect.InteractionData = _entityInteractionService.CreateEmptyInteractionData(
+            statusEffect.InteractionData = _entityInteractionService.CreateInteractionData(
                 targetEntity: statusEffect.AfflictedEntity);
             statusEffect.InteractionData.SourceEntity = statusEffect.SourceEntity ?? statusEffect.AfflictedEntity;
             _eventBus.RaiseEvent(statusEffect);
