@@ -12,6 +12,7 @@ namespace Game.Gameplay
     {
         public string CharacterName = "New Character";
         public Stat.StatData[] StatsData;
+        public EntityView EntityViewPrefab;
         [InlineEditor] public AbilityConfig[] Abilities = new AbilityConfig[5];
     }
 }

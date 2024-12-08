@@ -4,21 +4,20 @@ using Zenject;
 
 public class AbilityService
 {
-    private readonly DiContainer _diContainer;
     private readonly EventBus _eventBus;
     private TargetFinderService _targetFinderService;
     private EntityInteractionService _entityInteractionService;
+    private LinkEffectsTracker _linkEffectsTracker;
     
-    public AbilityService(DiContainer diContainer, EventBus eventBus)
+    public AbilityService( LinkEffectsTracker linkEffectsTracker, 
+        TargetFinderService targetFinderService, 
+        EntityInteractionService entityInteractionService, 
+        EventBus eventBus)
     {
-        _diContainer = diContainer;
+        _linkEffectsTracker = linkEffectsTracker;
+        _targetFinderService = targetFinderService;
+        _entityInteractionService = entityInteractionService;
         _eventBus = eventBus;
-    }
-    
-    public void Initialize()
-    {
-        _targetFinderService = _diContainer.Resolve<TargetFinderService>();
-        _entityInteractionService = _diContainer.Resolve<EntityInteractionService>();
     }
 
     public void UseAbility(IEntity sourceEntity, IEffect ability, IEntity targetEntity = null)
@@ -60,8 +59,7 @@ public class AbilityService
                 {
                     ability.InteractionData.StatusEffectsApplyToTarget.Remove(statusEffect);
                     LinkStatusType linkType = linkStatus.LinkStatus;
-                    LinkEffectsTracker linkEffectsTracker = _diContainer.Resolve<LinkEffectsTracker>();
-                    if (linkEffectsTracker.TryGetActiveLink(linkType,
+                    if (_linkEffectsTracker.TryGetActiveLink(linkType,
                             sourceEntity.GetEntityComponent<Game.Gameplay.TeamComponent>().Value,
                             out IEffectLink linkAbility))
                     {

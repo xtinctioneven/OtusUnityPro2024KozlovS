@@ -16,11 +16,6 @@ public class TurnOrderService
     )
     {
         _entityTrackerService = entityTrackerService;
-    }
-
-    public void Initialize()
-    {
-        //EnqueueEntities(_entityTrackerService.GetAllEntities());
         _entityTrackerService.OnEntityUntracked += EntityTrackerOnEntityUntracked;
         _entityTrackerService.OnEntityTracked += EntityTrackerServiceOnOnEntityTracked;
     }

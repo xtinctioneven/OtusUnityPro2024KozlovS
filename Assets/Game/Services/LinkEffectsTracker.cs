@@ -94,7 +94,7 @@ public class LinkEffectsTracker
     
     private void UntrackEntity(IEntity entity)
     {
-        if (entity.GetEntityComponent<Game.Gameplay.TeamComponent>().Value == Team.Left)
+        if (entity.GetEntityComponent<TeamComponent>().Value == Team.Left)
         {
             RemoveAbilitiesFromCollection(entity, _linkAbilitiesCollectionLeft);
         }
@@ -103,29 +103,32 @@ public class LinkEffectsTracker
             RemoveAbilitiesFromCollection(entity, _linkAbilitiesCollectionRight);
         }
     }
-
+    
     private void RemoveAbilitiesFromCollection(IEntity entity,
         Dictionary<LinkStatusType, List<IEffectLink>> linkAbilitiesCollection)
     {
-        List<LinkStatusType> seekedLinks = new();
         var abilityComponent = entity.GetEntityComponent<AbilityComponent>();
+        var abilitiesToRemove = new List<KeyValuePair<LinkStatusType, IEffectLink>>();
+
         foreach (var linkAbility in abilityComponent.GetAbilitiesByType<IEffectLink>())
         {
-            if (!linkAbilitiesCollection.ContainsKey(linkAbility.SeekLinkStatus))
+            if (linkAbilitiesCollection.TryGetValue(linkAbility.SeekLinkStatus, out var linkList))
             {
-                continue;
-            }
-            seekedLinks.Add(linkAbility.SeekLinkStatus);
-        }
-        for (int i = 0; i < seekedLinks.Count; i++)
-        {
-            foreach (var link in linkAbilitiesCollection[seekedLinks[i]])
-            {
-                if (link.SourceEntity == entity)
+                for (int i = 0; i < linkList.Count; i++)
                 {
-                    linkAbilitiesCollection[seekedLinks[i]].Remove(link);
+                    var link = linkList[i];
+                    if (link.SourceEntity == entity)
+                    {
+                        abilitiesToRemove.Add(new KeyValuePair<LinkStatusType, IEffectLink>(linkAbility.SeekLinkStatus, link));
+                    }
                 }
             }
+        }
+
+        for (int i = 0; i < abilitiesToRemove.Count; i++)
+        {
+            var abilityToRemove = abilitiesToRemove[i];
+            linkAbilitiesCollection[abilityToRemove.Key].Remove(abilityToRemove.Value);
         }
     }
         

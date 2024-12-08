@@ -8,6 +8,6 @@ namespace Game.Gameplay
     public class TeamGridData
     {
         public Vector2 Position;
-        [field: SerializeReference] public IEntity Entity;
+        public CharacterConfig CharacterConfig;
     }
 }

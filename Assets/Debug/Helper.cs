@@ -7,6 +7,7 @@ using Zenject;
 
 public class Helper : MonoBehaviour
 {
+    public event Action OnLoadingFinished;
     public static Helper Instance;
     public CharacterFactory CharacterFactory;
     public CharacterConfig[] LeftTeamCharacters;
@@ -22,35 +23,19 @@ public class Helper : MonoBehaviour
     public BattlefieldModel BattlefieldModel;
     
     [Inject]
-    public void Construct(CharacterFactory characterFactory)
+    public void Construct(
+    )
     {
-        CharacterFactory = characterFactory;
     }
-    
+
     private void Awake()
     {
         Instance = this;
-        int length;
-        length = LeftTeamCharacters.Length <= LeftTeamPositions.Length ? LeftTeamCharacters.Length : LeftTeamPositions.Length;
-        LeftTeamGridData = new TeamGridData[length];
-        for (int i = 0; i < length; i++)
-        {
-            LeftTeamGridData[i] = new TeamGridData()
-            {
-                Entity = CharacterFactory.CreateCharacter(LeftTeamCharacters[i]),
-                Position = LeftTeamPositions[i]
-            };
-        }
-        length = RightTeamCharacters.Length <= RightTeamPositions.Length ? RightTeamCharacters.Length : RightTeamPositions.Length;
-        RightTeamGridData = new TeamGridData[length];
-        for (int i = 0; i < length; i++)
-        {
-            RightTeamGridData[i] = new TeamGridData()
-            {
-                Entity = CharacterFactory.CreateCharacter(RightTeamCharacters[i]),
-                Position = RightTeamPositions[i]
-            };
-        }
+    }
+
+    private void Start()
+    {
+        OnLoadingFinished?.Invoke();
     }
 
     public void AddLog(string text)

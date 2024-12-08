@@ -1,14 +1,16 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Gameplay
 {
+    [Serializable]
     public class TeamGridModel
     {
         public Team Team { get; private set; }
         private GridCell[,] _teamGrid;
 
-        public TeamGridModel(Team team, TeamGridData[] teamGridData = null)
+        public TeamGridModel(Team team)
         {
             _teamGrid = new GridCell[3, 3];
             Team = team;
@@ -17,23 +19,16 @@ namespace Game.Gameplay
                 for (int j = 0; j < 3; j++)
                 {
                     Vector2 gridPosition = new Vector2(j, i);
-                    GridCell gridCell = null;
-                    foreach (var gridData in teamGridData)
-                    {
-                        if (gridData.Position == gridPosition)
-                        {
-                            gridCell = new GridCell(team, gridPosition, gridData.Entity);
-                            ApplyGridData(gridData);
-                        }
-                    }
-
-                    if (gridCell == null)
-                    {
-                        gridCell = new GridCell(team, gridPosition);
-                    }
-                    _teamGrid[i, j] = gridCell;
+                    _teamGrid[i, j] = new GridCell(team, gridPosition);
                 }
             }
+        }
+
+        public void SetupEntity(IEntity entity, Vector2 gridPosition)
+        {
+            _teamGrid[(int)gridPosition.x, (int)gridPosition.y].SetEntity(entity);
+            entity.GetEntityComponent<TeamComponent>().SetTeam(Team);
+            entity.GetEntityComponent<GridPositionComponent>().SetPosition(gridPosition);
         }
 
         public List<IEntity> GetAllEntities()
@@ -117,10 +112,10 @@ namespace Game.Gameplay
             }
         }
         
-        private void ApplyGridData(TeamGridData gridData)
-        {
-            gridData.Entity.GetEntityComponent<TeamComponent>().SetTeam(Team);
-            gridData.Entity.GetEntityComponent<GridPositionComponent>().SetPosition(gridData.Position);
-        }
+        // private void ApplyGridData(TeamGridData gridData)
+        // {
+        //     gridData.Entity.GetEntityComponent<TeamComponent>().SetTeam(Team);
+        //     gridData.Entity.GetEntityComponent<GridPositionComponent>().SetPosition(gridData.Position);
+        // }
     }
 }
