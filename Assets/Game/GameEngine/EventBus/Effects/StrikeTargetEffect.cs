@@ -10,7 +10,6 @@ namespace Game.Gameplay
         //Fields to clone
         [PropertyRange(0, 10)] public float AttackMultiplier;
         [field: SerializeField] public InteractionType InteractionType { get; private set; }
-        // [field: SerializeField] public AbilityTraits Traits { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int InitialUseCounts { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int MaxUseCounts { get; private set; }
         public int CountsLeft { get; private set; }

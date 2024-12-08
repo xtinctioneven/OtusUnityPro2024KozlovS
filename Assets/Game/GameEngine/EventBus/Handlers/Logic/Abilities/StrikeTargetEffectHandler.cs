@@ -14,6 +14,7 @@ public class StrikeTargetEffectHandler : BaseHandler<StrikeTargetEffect>
         interactionData.SourceEntityDamageOutgoing =
             (int)Mathf.Floor(evt.AttackMultiplier * interactionData.SourceEntity.GetEntityComponent<AttackComponent>().Value);
         interactionData.InteractionResult = InteractionResult.Hit;
-        (evt as IEffectApplyStatus).ApplyStatusEffects(interactionData);
+        (evt as IEffectApplyStatus).ApplyStatusEffects(interactionData.SourceEntity, interactionData);
+        evt.TryUseCount();
     }
 }

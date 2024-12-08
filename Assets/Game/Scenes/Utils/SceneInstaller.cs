@@ -8,20 +8,12 @@ public class SceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<CharacterFactory>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<StrikeTargetEffectHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<EvasionPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<HealTargetTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<AddCountToSourceOnResultPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<AddCountToStandardTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<AddCountToSourceStatusEffectHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<EntityInteractionHandler>().FromNew().AsSingle().NonLazy();
+        // TeamGridData[] leftTeamGridData = Helper.Instance.LeftTeamGridData;
+        // TeamGridData[] rightTeamGridData = Helper.Instance.RightTeamGridData;
+        // Container.BindInterfacesAndSelfTo<BattlefieldModel>().WithArguments(leftTeamGridData, rightTeamGridData).NonLazy();
         // Container.BindInterfacesAndSelfTo<StatsResolveHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<UpdateStatsHandler>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<DeathHandler>().FromNew().AsSingle().NonLazy();
         
-        //Container.BindInterfacesAndSelfTo<EntityTrackerService>().FromNew().AsSingle().NonLazy();
-        
+        Container.BindInterfacesAndSelfTo<BattlefieldPresenter>().FromComponentsInHierarchy().AsSingle().NonLazy();
         
         ConfigureEventBus();
         ConfigureHandlers();
@@ -41,26 +33,25 @@ public class SceneInstaller : MonoInstaller
     {
         //Register handlers
         //Logic
-        // Container.BindInterfacesAndSelfTo<ActivateHeroHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<DeathHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<GameOverHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<HeroInteractionHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<TargetHeroClickedHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<UpdateStatsHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<HeroStatsResolveHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<ActivateAbilitiesHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<RemoveAbilityHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<RemoveStatusEffectEventHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<EntityInteractionHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<UpdateStatsHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<DeathHandler>().FromNew().AsSingle().NonLazy();
         
         //Logic/Effects
-        // Container.BindInterfacesAndSelfTo<DamageRandomEnemyEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<NullifyRetaliateDamageEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<SetRandomTargetEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<StealHealthOnAttackEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<NullifyDamageEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<AddAbilityToTargetEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<SkipTurnEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<HealRandomAllyEffectHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<DamageAllEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<StrikeTargetEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<StrikeTargetLinkEffecttHandler>().FromNew().AsSingle().NonLazy();
+        
+        //Logic/Effects/Triggers
+        Container.BindInterfacesAndSelfTo<HealTargetTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<AddCountToStandardTriggerEffectHandler>().FromNew().AsSingle().NonLazy();
+        //Logic/Effects/Passives
+        Container.BindInterfacesAndSelfTo<AddCountToSourceOnResultPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<EvasionPassiveEffectHandler>().FromNew().AsSingle().NonLazy();
+        //Logic/Effects/StatusEffects
+        Container.BindInterfacesAndSelfTo<DamageMaxHpPercentStatusEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<AddCountToSourceStatusEffectHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<CleanseStatusEffectHandler>().FromNew().AsSingle().NonLazy();
         
         //Visual
         // Container.BindInterfacesAndSelfTo<ActivateHeroVisualHandler>().FromNew().AsSingle().NonLazy();
@@ -74,6 +65,15 @@ public class SceneInstaller : MonoInstaller
     private void ConfigureServices()
     {
         //Register services
+        Container.BindInterfacesAndSelfTo<CharacterFactory>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<EntityTrackerService>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<TurnOrderService>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<EntityInteractionService>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<TargetFinderService>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<LinkEffectsTracker>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<AbilityService>().FromNew().AsSingle().NonLazy();
+        
+        
         // Container.BindInterfacesAndSelfTo<UIService>().FromComponentInHierarchy().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<TurnOrderService>().FromNew().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<HeroTrackerService>().FromNew().AsSingle().NonLazy();

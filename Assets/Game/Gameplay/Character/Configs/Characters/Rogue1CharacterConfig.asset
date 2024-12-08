@@ -22,6 +22,7 @@ MonoBehaviour:
     Value: 60
   - StatType: 30
     Value: 40
+  EntityViewPrefab: {fileID: 6226108324609227229, guid: 6f077fef3a05d2d478b11c7ac06cde4a, type: 3}
   Abilities:
   - {fileID: 11400000, guid: bc1c5a3701401da488908fa63ad18c1c, type: 2}
   - {fileID: 11400000, guid: d44eb1555d1e83f41ab7e14caa3c0120, type: 2}

@@ -29,33 +29,33 @@ public class EntityInteractionService
         _currentInteractionData = null;
     }
 
-    public EntityInteractionData CreateCurrentInteractionData(IEntity sourceEntity = null, IEntity targetEntity = null)
-    {
-        IEntity tempSourceEntity = sourceEntity ?? _activeEntity;
-        IEntity tempTargetEntity = targetEntity ?? _mainTargetEntity;
-        _currentInteractionData = new EntityInteractionData
-        {
-            SourceEntity = tempSourceEntity,
-            TargetEntity = tempTargetEntity,
-        };
-        return _currentInteractionData;
-    }
+    // public EntityInteractionData CreateCurrentInteractionData(IEntity sourceEntity = null, IEntity targetEntity = null)
+    // {
+    //     IEntity tempSourceEntity = sourceEntity ?? _activeEntity;
+    //     IEntity tempTargetEntity = targetEntity ?? _mainTargetEntity;
+    //     _currentInteractionData = new EntityInteractionData
+    //     {
+    //         SourceEntity = tempSourceEntity,
+    //         TargetEntity = tempTargetEntity,
+    //     };
+    //     return _currentInteractionData;
+    // }
 
     public EntityInteractionData GetCurrentInteractionData()
     {
         return _currentInteractionData;
     }
 
-    public EntityInteractionData CreateEmptyInteractionData(IEntity sourceEntity = null, IEntity targetEntity = null)
+    public EntityInteractionData CreateInteractionData(IEntity sourceEntity = null, IEntity targetEntity = null)
     {
         IEntity tempSourceHero = sourceEntity ?? _activeEntity;
         IEntity tempTargetHero = targetEntity ?? _mainTargetEntity;
-        EntityInteractionData tempData = new EntityInteractionData
+        _currentInteractionData = new EntityInteractionData
         {
             SourceEntity = tempSourceHero,
             TargetEntity = tempTargetHero,
         };
-        return tempData;
+        return _currentInteractionData;
     }
 }
 
@@ -90,7 +90,8 @@ public enum InteractionResult
     Heal = 50,
     Buff = 60,
     Passive = 70,
-    Kill = 80
+    Kill = 80,
+    StatusEffectTick = 90
 }
 
 public enum InteractionType
@@ -99,5 +100,7 @@ public enum InteractionType
     StandardStrike = 10,
     Heal = 20,
     Buff = 30,
-    Passive = 40
+    Passive = 40,
+    StatusEffectTick = 50,
+    LinkStrike = 60
 }

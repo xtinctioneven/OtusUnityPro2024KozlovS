@@ -9,7 +9,6 @@ namespace Game.Gameplay
         [PropertyRange(0, 10)] public int CountsToAdd;
         [field: SerializeField] public TriggerReason TriggerReason { get; private set; }
         [field: SerializeField] public InteractionType InteractionType { get; private set; } = InteractionType.Buff;
-        // [field: SerializeField] public AbilityTraits Traits { get; private set; }
         [field: SerializeField] public TargetType TargetType { get; private set; } = TargetType.Self;
         [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; } = TargetPriorityType.None;
         [field: SerializeField] public int TargetsCount { get; private set; } = 1;
@@ -20,7 +19,6 @@ namespace Game.Gameplay
             clone.CountsToAdd = CountsToAdd;
             clone.TriggerReason = TriggerReason;
             clone.InteractionType = InteractionType;
-            // clone.Traits = Traits;
             clone.TargetType = TargetType;
             clone.TargetPriority = TargetPriority;
             clone.TargetsCount = TargetsCount;

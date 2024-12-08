@@ -1,18 +1,46 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Gameplay
 {
+    [Serializable]
     public class BattlefieldModel
     {
+        public event Action<IEntity, Vector2> OnEntitySetup;
         public TeamGridModel LeftGridModel { get; private set; }
-        public TeamGridModel RightGridModel  { get; private set; }
-
-        public BattlefieldModel(TeamGridData[] leftTeamGridData = null, TeamGridData[] rightTeamGridData = null)
+        public TeamGridModel RightGridModel { get; private set; }
+        public BattlefieldPresenter BattlefieldPresenter { get; private set; }
+        
+        [Inject]
+        public BattlefieldModel(
+            [Inject(Id = "LeftTeamData")] TeamGridData[] leftTeamGridData,
+            [Inject(Id = "RightTeamData")] TeamGridData[] rightTeamGridData,
+            BattlefieldPresenter battlefieldPresenter,
+            CharacterFactory characterFactory
+            )
         {
-            LeftGridModel = new TeamGridModel(Team.Left, leftTeamGridData);
-            RightGridModel = new TeamGridModel(Team.Right, rightTeamGridData);
+            BattlefieldPresenter = battlefieldPresenter;
+            LeftGridModel = new TeamGridModel(Team.Left);
+            BattlefieldPresenter.Setup(this);
+            for (int i = 0; i < leftTeamGridData.Length; i++)
+            {
+                TeamGridData teamGridData = leftTeamGridData[i];
+                IEntity entity = characterFactory.CreateCharacter(teamGridData.CharacterConfig);
+                LeftGridModel.SetupEntity(entity, teamGridData.Position);
+                OnEntitySetup?.Invoke(entity, teamGridData.Position);
+            }
+            
+            RightGridModel = new TeamGridModel(Team.Right);
+            for (int i = 0; i < rightTeamGridData.Length; i++)
+            {
+                TeamGridData teamGridData = rightTeamGridData[i];
+                IEntity entity = characterFactory.CreateCharacter(teamGridData.CharacterConfig);
+                RightGridModel.SetupEntity(entity, teamGridData.Position);
+                OnEntitySetup?.Invoke(entity, teamGridData.Position);
+            }
         }
 
         public List<IEntity> GetAllEntities()

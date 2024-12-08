@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
+  m_Name: Link_HighFloatToLowFloat_WithParalysis_Twice
+  m_EditorClassIdentifier: 
+  Abilities:
+  - rid: 7750860057758924801
+  references:
+    version: 2
+    RefIds:
+    - rid: 7750860057758924801
+      type: {class: StrikeTargetLinkEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
+      data:
+        AttackMultiplier: 0.5
+        <SeekLinkStatus>k__BackingField: 15
+        <InteractionType>k__BackingField: 60
+        <InitialUseCounts>k__BackingField: 1
+        <MaxUseCounts>k__BackingField: 2
+        <TargetType>k__BackingField: 10
+        <TargetPriority>k__BackingField: 100
+        <TargetsCount>k__BackingField: 1
+        <StatusEffectsDataCollection>k__BackingField:
+        - StatusEffectsApplyToTarget:
+          - {fileID: 11400000, guid: 8b0903ed5145ba6448c17dfd152e88d0, type: 2}
+          StatusEffectsApplyToSelf: []
+          EffectProbability: 1

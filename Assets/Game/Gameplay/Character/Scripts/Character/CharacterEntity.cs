@@ -12,7 +12,7 @@ namespace Game.Gameplay
         private string _characterName;
         public string Name => _characterName;
 
-        public CharacterEntity(CharacterConfig config)
+        public CharacterEntity(CharacterConfig config, EntityView entityView)
         {
             _characterConfig = config;
             _characterName = config.CharacterName;
@@ -32,6 +32,7 @@ namespace Game.Gameplay
             GridPositionComponent gridPositionComponent = new GridPositionComponent(new Vector2(-1, -1));
             LinkComponent linkComponent = new LinkComponent();
             StatusEffectsComponent statusEffectsComponent = new StatusEffectsComponent(this);
+            ViewComponent viewComponent = new ViewComponent(entityView);
 
             _components.Add(typeof(StatsComponent), statsComponent);
             _components.Add(typeof(AttackComponent), attackComponent);
@@ -44,6 +45,7 @@ namespace Game.Gameplay
             _components.Add(typeof(GridPositionComponent), gridPositionComponent);
             _components.Add(typeof(LinkComponent), linkComponent);
             _components.Add(typeof(StatusEffectsComponent), statusEffectsComponent);
+            _components.Add(typeof(ViewComponent), viewComponent);
             // viewComponentOld.Value.SetStats($"<color=blue>{attackComponent.Value}</color> / <color=red>{lifeComponent.Value}</color>");
             // abilityComponent.Install();
             // vfxComponent.Install(abilityComponent.GetAbilities(), anchorComponent.Value);

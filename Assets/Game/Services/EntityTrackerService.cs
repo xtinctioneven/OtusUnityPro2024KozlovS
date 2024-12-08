@@ -72,6 +72,10 @@ public class EntityTrackerService
             _rightTeam.Remove(entity);
         }
         OnEntityUntracked?.Invoke(entity);
+        if (_rightTeam.Count == 0 || _leftTeam.Count == 0)
+        {
+            Helper.Instance.IsGameOver = true;
+        }
     }
 
     public IReadOnlyList<IEntity> GetLeftTeam()

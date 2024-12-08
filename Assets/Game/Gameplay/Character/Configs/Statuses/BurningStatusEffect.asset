@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 7750860015839739951
       type: {class: DamageMaxHpPercentStatusEffect, ns: Game.Gameplay, asm: Assembly-CSharp}
       data:
-        <DamagePerTick>k__BackingField: 0.316
+        <DamagePerTick>k__BackingField: 0.3
         <Name>k__BackingField: Burning
         <StatusEffectType>k__BackingField: 20
         <IsCleanseable>k__BackingField: 1

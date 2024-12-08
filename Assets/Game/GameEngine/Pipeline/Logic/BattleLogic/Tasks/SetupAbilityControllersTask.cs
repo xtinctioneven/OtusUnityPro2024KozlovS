@@ -21,7 +21,7 @@ public class SetupAbilityControllersTask : EventTask
 
     protected override void OnRun()
     {
-        
+        //TODO: Delete?
         //BattlefieldModel battlefieldModel = _diContainer.Resolve<BattlefieldModel>();
         // _entityTrackerService = new EntityTrackerService(_eventBus, battlefieldModel);
         // _entityTrackerService.Initialize();

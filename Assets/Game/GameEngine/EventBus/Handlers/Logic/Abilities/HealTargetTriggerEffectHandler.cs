@@ -16,17 +16,7 @@ public class HealTargetTriggerEffectHandler : BaseHandler<HealTargetTriggerEffec
         interactionData.SourceEntityHealOutgoing =
             (int)Mathf.Floor(evt.AttackMultiplier * interactionData.SourceEntity.GetEntityComponent<AttackComponent>().Value);
         interactionData.InteractionResult = InteractionResult.Heal;
-        foreach (var statusEffectData in evt.StatusEffectsDataCollection)
-        {
-            if (statusEffectData.EffectProbability >= Random.Range(0, 1))
-            {
-                for (int i = 0; i < statusEffectData.StatusEffectsApplyToTarget.Length; i++)
-                {
-                    //TODO: REPAIR
-                    // interactionData.StatusEffectsApplyToTarget.Add(statusEffectData.StatusEffects[i]);
-                }
-            }
-        }
+        (evt as IEffectApplyStatus).ApplyStatusEffects(interactionData.SourceEntity, interactionData);
         evt.TryUseCount(1);
     }
 }

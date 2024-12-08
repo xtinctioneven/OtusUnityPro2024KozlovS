@@ -32,8 +32,15 @@ namespace Game.Gameplay
         public IEntity[] TargetEntities { get; set; }
         public EntityInteractionData InteractionData { get; set; }
         public bool Enabled { get; private set; }
-        bool IEffect.CanBeUsed => Enabled;
-        
+
+        bool IEffect.CanBeUsed =>
+            (InteractionData.SourceEffect != null
+             && SourceEntity == InteractionData.SourceEntity
+             && Enabled
+             && InteractionTypesToTrigger.Contains(InteractionData.SourceEffect.InteractionType)
+             && InteractionResultsToTrigger.Contains(InteractionData.InteractionResult)
+            );
+
         public void Enable()
         {
             Enabled = true;

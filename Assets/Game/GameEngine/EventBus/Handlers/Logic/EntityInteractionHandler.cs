@@ -22,14 +22,14 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         //Apply results
         //Source entity
         IEntity sourceEntity = interactionData.SourceEntity;
-        _abilityService.ApplyStatusEffects(sourceEntity, interactionData.StatusEffectsApplyToSource, interactionData);
+        _abilityService.StatusEffectsApply(sourceEntity, interactionData.StatusEffectsApplyToSource, interactionData);
         HealthComponent healthComponent = sourceEntity.GetEntityComponent<HealthComponent>();
         int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived + interactionData.SourceEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
         EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, entityHpResult));
         //Target entity
         IEntity targetEntity = interactionData.TargetEntity;
-        _abilityService.ApplyStatusEffects(targetEntity, interactionData.StatusEffectsApplyToTarget, interactionData);
+        _abilityService.StatusEffectsApply(targetEntity, interactionData.StatusEffectsApplyToTarget, interactionData);
         healthComponent = targetEntity.GetEntityComponent<HealthComponent>();
         entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
         entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
@@ -38,8 +38,8 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             interactionData.InteractionResult = InteractionResult.Kill;
         }
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
-        _abilityService.ApplyPassiveEffects(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
-        _abilityService.ApplyPassiveEffects(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
+        _abilityService.PassiveEffectsApply(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
+        _abilityService.PassiveEffectsApply(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
         SendLog(interactionData, entityHpResult);
     }
 
@@ -79,12 +79,23 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                 interactionData.TargetEntityHealReceived = Math.Min(interactionData.SourceEntityHealOutgoing, maxHeal);
                 break;
             }
-
             case (InteractionResult.Default):
             {
+                Helper.Instance.AddLog($"Interaction result is not set for ability: {interactionData.SourceEffect}\n");
                 break;
             }
-
+            case (InteractionResult.StatusEffectTick):
+            {
+                defenceComponent = interactionData.TargetEntity.GetEntityComponent<DefenceComponent>();
+                interactionData.TargetEntityDamageReceived = Math.Max(interactionData.SourceEntityDamageOutgoing - defenceComponent.Value, 0);
+                
+                break;
+            }
+            case (InteractionResult.Buff):
+            {
+                
+                break;
+            }
             default:
             {
                 Debug.LogError($"Unhandled interaction result: {interactionData.InteractionResult}");
@@ -104,7 +115,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             case (InteractionResult.Hit):
             {
                 Helper.Instance.AddLog(
-                    $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
+                    $"{sourceEntity.Name} damaged {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
                     $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
                 Helper.Instance.AddLog(
                     $"{targetEntity.Name} have {entityHpResult} health left.\n");
@@ -113,7 +124,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
             case (InteractionResult.Kill):
             {
                 Helper.Instance.AddLog(
-                    $"{sourceEntity.Name} striked {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
+                    $"{sourceEntity.Name} damaged {targetEntity.Name} for {interactionData.TargetEntityDamageReceived}: " +
                     $"{targetDefenceComponent.Value} of {interactionData.SourceEntityDamageOutgoing} outgoing damage was blocked.\n");
                 Helper.Instance.AddLog(
                     $"{targetEntity.Name} have {entityHpResult} health left and died.\n");
@@ -131,6 +142,22 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
                     $"{sourceEntity.Name} healed {targetEntity.Name} for {interactionData.SourceEntityHealOutgoing}: " +
                     $"{targetEntity.Name} now have {entityHpResult} health left.\n");
                 break;
+            }
+            case (InteractionResult.StatusEffectTick):
+            {
+                Helper.Instance.AddLog(
+                    $"{targetEntity.Name} was damaged by StatusEffect for {interactionData.TargetEntityDamageReceived}.\n");
+                Helper.Instance.AddLog(
+                    $"{targetEntity.Name} have {entityHpResult} health left.\n");
+                break;
+            
+            }
+            case (InteractionResult.Buff):
+            {
+                Helper.Instance.AddLog(
+                    $"{sourceEntity.Name} used buff action on {targetEntity.Name}.\n");
+                break;
+            
             }
         }
         

@@ -48,16 +48,4 @@ public class StatusEffectsComponent
         }
         return statuses;
     }
-
-    public void Tick(int tickTimes = 1)
-    {
-        for (int i = 0; i < StatusEffects.Count; i++)
-        {
-            //TODO:!!!
-            // if (StatusEffects[i] is StatusEffect statusEffect)
-            // {
-            //     statusEffect.
-            // }
-        }
-    }
 }
