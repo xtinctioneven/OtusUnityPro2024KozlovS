@@ -3625,6 +3625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8332438679933945037}
   - component: {fileID: 2684963421195984567}
+  - component: {fileID: 7642594640999220248}
   m_Layer: 0
   m_Name: Frag_Scelly_Archer
   m_TagString: Untagged
@@ -3687,6 +3688,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7642594640999220248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712517466539974263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df4f978f37238844999ababc41e542e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8899155590698077110
 GameObject:
   m_ObjectHideFlags: 0

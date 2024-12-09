@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 443036e8b52447009cd2270532cbba85, type: 3}
-  m_Name: Warrior2CharacterConfig
+  m_Name: _HealerCharacterConfig
   m_EditorClassIdentifier: 
-  CharacterName: Warrior 2
+  CharacterName: Sakura
   StatsData:
   - StatType: 0
-    Value: 500
+    Value: 400
   - StatType: 10
-    Value: 80
+    Value: 40
   - StatType: 20
-    Value: 50
+    Value: 40
   - StatType: 30
-    Value: 10
+    Value: 30
   EntityViewPrefab: {fileID: 6226108324609227229, guid: f442c84d4e46cc148b2126aedaad7cfe, type: 3}
   CharacterVisualPrefab: {fileID: 5669538231628601157, guid: 2fabc084d8339fa42915677af883d6b4, type: 3}
   Abilities:
-  - {fileID: 11400000, guid: bc1c5a3701401da488908fa63ad18c1c, type: 2}
+  - {fileID: 11400000, guid: b1713b307a7723044ad0dc7a1ebf15d5, type: 2}
+  - {fileID: 11400000, guid: c10701e45a3008e4897a5e18dc2c40d3, type: 2}
+  - {fileID: 11400000, guid: b1713b307a7723044ad0dc7a1ebf15d5, type: 2}
+  - {fileID: 11400000, guid: f64de1da91bbf1646b10c8ef1cc77e1a, type: 2}
+  - {fileID: 11400000, guid: d44eb1555d1e83f41ab7e14caa3c0120, type: 2}

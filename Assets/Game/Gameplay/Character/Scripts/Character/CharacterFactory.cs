@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace Game.Gameplay
 {
@@ -8,6 +9,7 @@ namespace Game.Gameplay
         {
             EntityView entityView = GameObject.Instantiate(config.EntityViewPrefab);
             CharacterEntity characterEntity = new(config, entityView);
+            entityView.Setup(config.CharacterVisualPrefab);
             return characterEntity;
         }
     }

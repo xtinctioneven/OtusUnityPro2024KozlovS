@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Gameplay
 {
@@ -13,6 +14,7 @@ namespace Game.Gameplay
         public string CharacterName = "New Character";
         public Stat.StatData[] StatsData;
         public EntityView EntityViewPrefab;
+        public GameObject CharacterVisualPrefab;
         [InlineEditor] public AbilityConfig[] Abilities = new AbilityConfig[5];
     }
 }

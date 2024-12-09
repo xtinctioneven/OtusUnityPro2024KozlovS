@@ -2,19 +2,21 @@
 
 public class CharacterTurnStartTask : EventTask
 {
-    private DiContainer _diContainer;
+    private readonly TurnOrderService _turnOrderService;
+    private readonly EntityInteractionService _entityInteractionService;
     
     public CharacterTurnStartTask(
-        DiContainer diContainer,
-        EventBus eventBus)
+        TurnOrderService turnOrderService,
+        EntityInteractionService entityInteractionService)
     {
-        _diContainer = diContainer;
+        _turnOrderService = turnOrderService;
+        _entityInteractionService = entityInteractionService;
     }
 
     protected override void OnRun()
     {
-        var activeEntity = _diContainer.Resolve<TurnOrderService>().ActivateNextEntity();
-        _diContainer.Resolve<EntityInteractionService>().SetActiveEntity(activeEntity);
+        var activeEntity = _turnOrderService.ActivateNextEntity();
+        _entityInteractionService.SetActiveEntity(activeEntity);
         Finish();
     }
 }

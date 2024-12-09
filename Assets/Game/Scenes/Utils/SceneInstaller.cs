@@ -8,13 +8,7 @@ public class SceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        // TeamGridData[] leftTeamGridData = Helper.Instance.LeftTeamGridData;
-        // TeamGridData[] rightTeamGridData = Helper.Instance.RightTeamGridData;
-        // Container.BindInterfacesAndSelfTo<BattlefieldModel>().WithArguments(leftTeamGridData, rightTeamGridData).NonLazy();
-        // Container.BindInterfacesAndSelfTo<StatsResolveHandler>().FromNew().AsSingle().NonLazy();
-        
-        Container.BindInterfacesAndSelfTo<BattlefieldPresenter>().FromComponentsInHierarchy().AsSingle().NonLazy();
-        
+        ConfigureSceneContext();
         ConfigureEventBus();
         ConfigureHandlers();
         ConfigureServices();
@@ -24,6 +18,11 @@ public class SceneInstaller : MonoInstaller
         ConfigureVisualPipeline();
     }
 
+    private void ConfigureSceneContext()
+    {
+        Container.BindInterfacesAndSelfTo<BattlefieldPresenter>().FromComponentsInHierarchy().AsSingle().NonLazy();
+    }
+    
     private void ConfigureEventBus()
     {
         Container.BindInterfacesAndSelfTo<EventBus>().FromNew().AsSingle().NonLazy();
@@ -83,7 +82,6 @@ public class SceneInstaller : MonoInstaller
     private void ConfigureTurnPipeline()
     {
         //Register turn pipeline
-        ////Container.BindInterfacesAndSelfTo<TurnPipelineRunner>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<TurnPipeline>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<TurnPipelineInstaller>().FromNew().AsSingle().NonLazy();
     }
@@ -91,7 +89,6 @@ public class SceneInstaller : MonoInstaller
     private void ConfigureBattlePipeline()
     {
         //Register battle pipeline
-        //Container.BindInterfacesAndSelfTo<TurnPipelineRunner>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<BattlePipeline>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<BattlePipelineInstaller>().FromNew().AsSingle().NonLazy();
     }
@@ -99,7 +96,6 @@ public class SceneInstaller : MonoInstaller
     private void ConfigureRoundPipeline()
     {
         //Register battle pipeline
-        //Container.BindInterfacesAndSelfTo<TurnPipelineRunner>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<RoundPipeline>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<RoundPipelineInstaller>().FromNew().AsSingle().NonLazy();
     }
@@ -107,6 +103,6 @@ public class SceneInstaller : MonoInstaller
     private void ConfigureVisualPipeline()
     {
         //Register visual pipeline
-        //Container.BindInterfacesAndSelfTo<VisualPipeline>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<VisualPipeline>().FromNew().AsSingle().NonLazy();
     }
 }

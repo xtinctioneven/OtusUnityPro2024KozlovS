@@ -1591,6 +1591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2842618890440089914}
   - component: {fileID: 8183935548633840448}
+  - component: {fileID: -7379631155784051079}
   m_Layer: 0
   m_Name: Hero_ShldSw
   m_TagString: Untagged
@@ -1653,6 +1654,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-7379631155784051079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186528172670679936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df4f978f37238844999ababc41e542e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3409753614606052929
 GameObject:
   m_ObjectHideFlags: 0

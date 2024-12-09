@@ -3,25 +3,21 @@
 public class GameOverCheckTask: EventTask
 {
     private EventBus _eventBus;
-    private DiContainer _diContainer;
-    //private HeroTrackerService _heroTrackerService;
-    //private TurnPipeline _turnPipeline;
+    readonly EntityTrackerService _entityTrackerService;
     
-    public GameOverCheckTask(EventBus eventBus, DiContainer diContainer)
+    public GameOverCheckTask(EventBus eventBus, EntityTrackerService entityTrackerService)
     {
         _eventBus = eventBus;
-        // _heroTrackerService = heroTrackerService;
-        // _turnPipeline = turnPipeline;
-        _diContainer = diContainer;
+        _entityTrackerService = entityTrackerService;
     }
 
     protected override void OnRun()
     {
-        EntityTrackerService trackerService = _diContainer.Resolve<EntityTrackerService>();
-        bool isLeftPlayerLose = trackerService.GetLeftTeam().Count <= 0;
-        bool isRightPlayerLose = trackerService.GetRightTeam().Count <= 0;
+        bool isLeftPlayerLose = _entityTrackerService.GetLeftTeam().Count <= 0;
+        bool isRightPlayerLose = _entityTrackerService.GetRightTeam().Count <= 0;
         if (isLeftPlayerLose || isRightPlayerLose)
         {
+            //TODO: !!!
             //_turnPipeline.ClearAll();
             //GameOverReason gameOverReason = new GameOverReason();
             // if (isLeftPlayerLose && isRightPlayerLose)

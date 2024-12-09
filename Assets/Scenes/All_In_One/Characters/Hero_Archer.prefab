@@ -2507,6 +2507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5043689390171454132}
   - component: {fileID: 1377789308960678094}
+  - component: {fileID: -5340956260876522963}
   m_Layer: 0
   m_Name: Hero_Archer
   m_TagString: Untagged
@@ -2569,6 +2570,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5340956260876522963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671466155733360654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df4f978f37238844999ababc41e542e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5674011086566109849
 GameObject:
   m_ObjectHideFlags: 0
