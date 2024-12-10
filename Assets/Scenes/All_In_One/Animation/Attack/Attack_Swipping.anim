@@ -84647,7 +84647,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.6333334
+  - time: 2.3666666
     functionName: DispatchEvent
     data: AnimationEnd
     objectReferenceParameter: {fileID: 0}
