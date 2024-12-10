@@ -115096,6 +115096,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1.15
+    functionName: DispatchEvent
+    data: Strike
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 4.116667
     functionName: DispatchEvent
     data: AnimationEnd
