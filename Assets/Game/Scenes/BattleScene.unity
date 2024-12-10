@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 04bc3d856cfbbe442803d179d5a6b62b, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -20535,18 +20535,22 @@ MonoBehaviour:
   IsGameOver: 0
   ForwardJumpPower: 2
   ForwardJumpDuration: 0.3
+  ForwardJumpEase: 3
   BackJumpPower: 2
   BackJumpDuration: 0.3
-  LinkNoneVar1: 0.4
-  LinkNoneVar2: 0.4
-  LinkRepulseVar1: 0.7
-  LinkRepulseVar2: 0.4
-  LinkHighFloatVar1: 1.5
-  LinkHighFloatVar2: 0.6
-  LinkLowFloatVar1: 1
-  LinkLowFloatVar2: 0.5
-  RepulseLeftZ: -5.3
-  RepulseRightZ: 8.3
+  BackJumpEase: 3
+  NoLinkWigglePower: 0.4
+  NoLinkWiggleDuration: 0.4
+  LinkHighFloatAltitude: 1.5
+  LinkHighFloatDuration: 0.6
+  HighFloatEase: 18
+  LinkLowFloatAltitude: 1
+  LinkLowFloatDuration: 0.5
+  LowFloatEase: 18
+  LinkRepulseDuration: 0.7
+  RepulseLeftTeamZ: -5.3
+  RepulseRightTeamZ: 8.5
+  RepulseEase: 18
   Log: 
 --- !u!1 &1004961824
 GameObject:

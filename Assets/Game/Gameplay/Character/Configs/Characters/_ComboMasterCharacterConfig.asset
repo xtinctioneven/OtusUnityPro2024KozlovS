@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443036e8b52447009cd2270532cbba85, type: 3}
   m_Name: _ComboMasterCharacterConfig
   m_EditorClassIdentifier: 
-  CharacterName: Sasuke
+  CharacterIcon: {fileID: 21300000, guid: b8f1940f13084834cabf99dba5082d60, type: 3}
+  CharacterName: Rupert
   StatsData:
   - StatType: 0
     Value: 400

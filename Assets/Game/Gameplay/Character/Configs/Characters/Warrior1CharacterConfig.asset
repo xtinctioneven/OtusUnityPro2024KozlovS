@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443036e8b52447009cd2270532cbba85, type: 3}
   m_Name: Warrior1CharacterConfig
   m_EditorClassIdentifier: 
+  CharacterIcon: {fileID: 21300000, guid: 54bfc928de112434a82abfffa8d6e52a, type: 3}
   CharacterName: Warrior 1
   StatsData:
   - StatType: 0

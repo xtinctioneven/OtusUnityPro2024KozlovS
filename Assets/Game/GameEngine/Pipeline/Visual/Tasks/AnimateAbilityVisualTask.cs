@@ -40,7 +40,6 @@ public class AnimateAbilityVisualTask : EventTask
             {
                 Finish();
                 return;
-                break;
             }
             case (AbilityVisualData.AbilityCollisionType.Strike):
             {
