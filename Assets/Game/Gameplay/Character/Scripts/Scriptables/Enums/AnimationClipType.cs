@@ -1,0 +1,22 @@
+﻿public enum AnimationClipType
+{
+    None,
+    AttackStrike1,
+    AttackStrike2,
+    AttackRange1,
+    AttackRange2,
+    AttackLink1,
+    AttackLink2,
+    Cast1,
+    Cast2,
+    Dodge,
+    Hit,
+    LowFloat,
+    HighFloat,
+    Repulse,
+    Death,
+    Hi,
+    Resurrect,
+    MoveBack,
+    MoveForward
+}

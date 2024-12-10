@@ -18,7 +18,7 @@ public class MoveBackVisualTask : EventTask
     {
         switch (_abilityVisualData.CastType)
         {
-            case (AbilityVisualData.AbilityCastType.Melee):
+            case (AbilityCastType.Melee):
             {
                 EntityViewComponent sourceEntityViewComponent = _sourceEntity.GetEntityComponent<EntityViewComponent>();
                 float offset = _abilityVisualData.MeelePositionOffset;
@@ -36,17 +36,17 @@ public class MoveBackVisualTask : EventTask
                 }
                 break;
             }
-            case (AbilityVisualData.AbilityCastType.FromPlace):
+            case (AbilityCastType.FromPlace):
             {
                 Finish();
                 break;
             }
-            case (AbilityVisualData.AbilityCastType.SameRowMelee):
+            case (AbilityCastType.SameRowMelee):
             {
                 //TODO: Extension
                 break;
             }
-            case (AbilityVisualData.AbilityCastType.SameRowRanged):
+            case (AbilityCastType.SameRowRanged):
             {
                 //TODO: Extension
                 break;

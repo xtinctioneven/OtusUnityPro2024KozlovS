@@ -41,7 +41,7 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         _abilityService.PassiveEffectsApply(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
         if (interactionData.SourceEffect.AbilityVisualData != null)
         {
-            _visualPipeline.AddTask(new AnimateAbilityVisualTask(interactionData));
+            _visualPipeline.AddTask(new AnimateAbilityVisualTask(interactionData, EventBus));
         }
         EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, sourceEntityHpResult));
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, targetEntityHpResult));

@@ -34,8 +34,10 @@ MonoBehaviour:
           StatusEffectsApplyToSelf: []
           EffectProbability: 1
         <AbilityVisualData>k__BackingField:
+          _targetFxDelay: 0
+          _casterFxDelay: 0
           CastType: 10
           CollisionType: 20
           SourceAnimationClip: 6
           MeelePositionOffset: 2
-          CastCollisionDelay: 0.1
+          CastCollisionDelay: 0.01
