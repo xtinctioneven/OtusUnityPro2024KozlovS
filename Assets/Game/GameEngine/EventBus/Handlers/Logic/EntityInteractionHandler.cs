@@ -25,27 +25,27 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         IEntity sourceEntity = interactionData.SourceEntity;
         _abilityService.StatusEffectsApply(sourceEntity, interactionData.StatusEffectsApplyToSource, interactionData);
         HealthComponent healthComponent = sourceEntity.GetEntityComponent<HealthComponent>();
-        int entityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived + interactionData.SourceEntityHealReceived;
-        entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
-        EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, entityHpResult));
+        int sourceEntityHpResult = healthComponent.Value - interactionData.SourceEntityDamageReceived + interactionData.SourceEntityHealReceived;
+        sourceEntityHpResult = Math.Clamp(sourceEntityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
         //Target entity
         IEntity targetEntity = interactionData.TargetEntity;
         _abilityService.StatusEffectsApply(targetEntity, interactionData.StatusEffectsApplyToTarget, interactionData);
         healthComponent = targetEntity.GetEntityComponent<HealthComponent>();
-        entityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
-        entityHpResult = Math.Clamp(entityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
-        if (entityHpResult == 0)
+        int targetEntityHpResult = healthComponent.Value - interactionData.TargetEntityDamageReceived + interactionData.TargetEntityHealReceived;
+        targetEntityHpResult = Math.Clamp(targetEntityHpResult, HealthComponent.MIN_LIFE, healthComponent.MaxValue);
+        if (targetEntityHpResult == 0)
         {
             interactionData.InteractionResult = InteractionResult.Kill;
         }
-        EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
         _abilityService.PassiveEffectsApply(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
         _abilityService.PassiveEffectsApply(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
         if (interactionData.SourceEffect.AbilityVisualData != null)
         {
             _visualPipeline.AddTask(new AnimateAbilityVisualTask(interactionData));
         }
-        SendLog(interactionData, entityHpResult);
+        EventBus.RaiseEvent(new UpdateStatsEvent(sourceEntity, sourceEntityHpResult));
+        EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, targetEntityHpResult));
+        SendLog(interactionData, targetEntityHpResult);
     }
 
     private void ResolveInteractionData(EntityInteractionData interactionData)

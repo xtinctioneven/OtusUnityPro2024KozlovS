@@ -7,10 +7,11 @@ namespace Game.Gameplay
     {
         public CharacterEntity CreateCharacter(CharacterConfig config)
         {
+            CharacterEntity characterEntity = new(config);
             EntityView entityView = GameObject.Instantiate(config.EntityViewPrefab);
             entityView.name = config.CharacterName;
             entityView.Setup(config.CharacterVisualPrefab);
-            CharacterEntity characterEntity = new(config, entityView);
+            characterEntity.AttachView(entityView);
             return characterEntity;
         }
     }

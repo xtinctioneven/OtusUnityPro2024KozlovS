@@ -1,16 +1,14 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Game.Gameplay;
 using UnityEngine;
 
 [Serializable]
-public class ViewComponent
+public class EntityViewComponent
 {
     public EntityView Value { get; }
     public Vector3 Position => Value.transform.position;
 
-    public ViewComponent(EntityView entityView)
+    public EntityViewComponent(EntityView entityView)
     {
         Value = entityView;
     }
@@ -23,10 +21,5 @@ public class ViewComponent
     public void SetRotation(Quaternion rotation)
     {
         Value.transform.rotation = rotation;
-    }
-    
-    public async UniTask DoJump(Vector3 position)
-    {
-        await Value.transform.DOMove(position, .1f).ToUniTask();
     }
 }

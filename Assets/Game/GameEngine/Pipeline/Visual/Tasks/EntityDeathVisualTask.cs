@@ -12,6 +12,7 @@ public class EntityDeathVisualTask : EventTask
     protected override void OnRun()
     {
         _entity.GetEntityComponent<AnimatorComponent>().Animator.Play("Death");
+        _entity.GetEntityComponent<HealthViewComponent>().DisableView();
         Finish();
     }
 }

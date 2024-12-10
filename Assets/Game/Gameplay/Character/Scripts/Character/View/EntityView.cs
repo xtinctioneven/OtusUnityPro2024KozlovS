@@ -6,6 +6,7 @@ namespace Game.Gameplay
     public class EntityView : MonoBehaviour
     {
         [SerializeField] private Transform _visualRoot;
+        [field: SerializeField] public HealthBarView HealthView {get; private set; }
         public AnimationDispatcher AnimationDispatcher {get; private set;}
         public Animator Animator {get; private set;}
         private GameObject _entityVisual;

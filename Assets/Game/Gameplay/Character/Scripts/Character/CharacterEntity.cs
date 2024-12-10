@@ -12,7 +12,7 @@ namespace Game.Gameplay
         private CharacterConfig _characterConfig;
         private readonly Dictionary<Type, object> _components = new();
 
-        public CharacterEntity(CharacterConfig config, EntityView entityView)
+        public CharacterEntity(CharacterConfig config)
         {
             _characterConfig = config;
             _characterName = config.CharacterName;
@@ -32,8 +32,6 @@ namespace Game.Gameplay
             GridPositionComponent gridPositionComponent = new GridPositionComponent(new Vector2(-1, -1));
             LinkComponent linkComponent = new LinkComponent();
             StatusEffectsComponent statusEffectsComponent = new StatusEffectsComponent(this);
-            ViewComponent viewComponent = new ViewComponent(entityView);
-            AnimatorComponent animatorComponent = new AnimatorComponent(entityView);
 
             _components.Add(typeof(StatsComponent), statsComponent);
             _components.Add(typeof(AttackComponent), attackComponent);
@@ -46,12 +44,25 @@ namespace Game.Gameplay
             _components.Add(typeof(GridPositionComponent), gridPositionComponent);
             _components.Add(typeof(LinkComponent), linkComponent);
             _components.Add(typeof(StatusEffectsComponent), statusEffectsComponent);
-            _components.Add(typeof(ViewComponent), viewComponent);
-            _components.Add(typeof(AnimatorComponent), animatorComponent);
             // viewComponentOld.Value.SetStats($"<color=blue>{attackComponent.Value}</color> / <color=red>{lifeComponent.Value}</color>");
             // abilityComponent.Install();
             // vfxComponent.Install(abilityComponent.GetAbilities(), anchorComponent.Value);
             // viewComponentOld.Value.gameObject.name += $" {config.HeroName}";
+        }
+
+        public void AttachView(EntityView entityView)
+        {
+            EntityViewComponent entityViewComponent = new EntityViewComponent(entityView);
+            AnimatorComponent animatorComponent = new AnimatorComponent(entityView);
+            
+            _components.Add(typeof(EntityViewComponent), entityViewComponent);
+            _components.Add(typeof(AnimatorComponent), animatorComponent);
+            
+            if (entityView.HealthView != null)
+            {
+                HealthViewComponent healthViewComponent = new HealthViewComponent(entityView.HealthView, GetEntityComponent<HealthComponent>());
+                _components.Add(typeof(HealthViewComponent), healthViewComponent); 
+            }
         }
 
         public TType GetEntityComponent<TType>()

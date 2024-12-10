@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visualRoot: {fileID: 4607770744363913121}
+  <HealthView>k__BackingField: {fileID: 7970067328032991910}
 --- !u!1 &4607770743841437601
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +398,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14f4d56614bf7ba42aca32d52ef4165e, type: 3}
+--- !u!1 &202195667955669652 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2723472757820652453, guid: 14f4d56614bf7ba42aca32d52ef4165e, type: 3}
+  m_PrefabInstance: {fileID: 2811917325006315825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7970067328032991910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202195667955669652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a3fbc6a1bf4b3299941c0544ce05bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueUpdateDuration: 0.5
 --- !u!224 &1531847693749602642 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3623102693607139427, guid: 14f4d56614bf7ba42aca32d52ef4165e, type: 3}

@@ -58,7 +58,7 @@ public class BattleSceneInstaller : MonoInstaller
         // Container.BindInterfacesAndSelfTo<DeactivateHeroVisualHandler>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<DeathVisualHandler>().FromNew().AsSingle().NonLazy();
         // Container.BindInterfacesAndSelfTo<GameOverVisualHandler>().FromNew().AsSingle().NonLazy();
-        // Container.BindInterfacesAndSelfTo<UpdateStatsVisualHandler>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<UpdateStatsVisualHandler>().FromNew().AsSingle().NonLazy();
     }
     
     private void ConfigureServices()

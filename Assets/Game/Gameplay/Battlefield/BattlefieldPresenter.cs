@@ -19,7 +19,7 @@ public class BattlefieldPresenter : MonoBehaviour
     private void BattlefieldModelOnOnEntitySetup(IEntity entity, Vector2 gridPosition)
     {
         Team team = entity.GetEntityComponent<TeamComponent>().Value;
-        ViewComponent viewComponent = entity.GetEntityComponent<ViewComponent>();
+        EntityViewComponent entityViewComponent = entity.GetEntityComponent<EntityViewComponent>();
         Vector3 worldPosition;
         Quaternion worldRotation;
         if (team == Team.Left)
@@ -32,8 +32,8 @@ public class BattlefieldPresenter : MonoBehaviour
             worldPosition = _rightTeamGridPresenter.GetPositionOfGridPosition(gridPosition);
             worldRotation = _rightTeamGridPresenter.GetRotationOfGridPosition(gridPosition);
         }
-        viewComponent.SetPosition(worldPosition);
-        viewComponent.SetRotation(worldRotation);
+        entityViewComponent.SetPosition(worldPosition);
+        entityViewComponent.SetRotation(worldRotation);
         entity.GetEntityComponent<GridPositionComponent>().SetWorldGridPosition(worldPosition);
     }
 }

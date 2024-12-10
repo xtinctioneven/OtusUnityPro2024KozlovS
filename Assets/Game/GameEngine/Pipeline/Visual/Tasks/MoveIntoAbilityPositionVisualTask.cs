@@ -28,7 +28,7 @@ public class MoveIntoAbilityPositionVisualTask : EventTask
             {
                 IEntity target = _targetEntities[0];
                 GridPositionComponent targetGridPositionComponent = target.GetEntityComponent<GridPositionComponent>();
-                ViewComponent sourceViewComponent = _sourceEntity.GetEntityComponent<ViewComponent>();
+                EntityViewComponent sourceEntityViewComponent = _sourceEntity.GetEntityComponent<EntityViewComponent>();
                 float offset = _abilityVisualData.MeelePositionOffset;
                 if (target.GetEntityComponent<TeamComponent>().Value == Team.Right)
                 {
@@ -36,15 +36,16 @@ public class MoveIntoAbilityPositionVisualTask : EventTask
                 }
                 Vector3 targetPosition = targetGridPositionComponent.WorldGridPosition;
                 targetPosition.z += offset;
-                if (sourceViewComponent.Position == targetPosition)
+                if (sourceEntityViewComponent.Position == targetPosition)
                 {
                     Finish();
                 }
                 else
                 {
                     _sourceEntity.GetEntityComponent<AnimatorComponent>().PlayAnimation("MoveForward");
-                    sourceViewComponent.Value.transform.DOJump(targetPosition, 2f, 1, .3f)
-                        .SetEase(Ease.OutSine).OnComplete(OnMoveFinish);
+                    sourceEntityViewComponent.Value.transform.DOJump(targetPosition, Helper.Instance.ForwardJumpPower,
+                            1, Helper.Instance.ForwardJumpDuration)
+                        .SetEase(Helper.Instance.ForwardJumpEase).OnComplete(OnMoveFinish);
                 }
                 break;
             }

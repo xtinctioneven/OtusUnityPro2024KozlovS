@@ -97,8 +97,8 @@ public class AnimateAbilityVisualTask : EventTask
             case (LinkStatusType.None):
             {
                 _targetAnimatorComponent.PlayAnimation(AbilityVisualData.AnimationClipType.Hit.ToString());
-                _targetEntity.GetEntityComponent<ViewComponent>().Value.transform.
-                    DOPunchPosition(Vector3.up * Helper.Instance.LinkNoneVar1, Helper.Instance.LinkNoneVar2);
+                _targetEntity.GetEntityComponent<EntityViewComponent>().Value.transform.
+                    DOPunchPosition(Vector3.up * Helper.Instance.NoLinkWigglePower, Helper.Instance.NoLinkWiggleDuration);
                 break;
             }
             case (LinkStatusType.Repulse):
@@ -106,26 +106,27 @@ public class AnimateAbilityVisualTask : EventTask
                 _targetAnimatorComponent.PlayAnimation(linkStatus.ToString());
                 Vector3 targetPosition = _targetEntity.GetEntityComponent<GridPositionComponent>().WorldGridPosition;
                 targetPosition.z = _targetEntity.GetEntityComponent<TeamComponent>().Value == Team.Left 
-                    ? Helper.Instance.RepulseLeftZ 
-                    : Helper.Instance.RepulseRightZ;
-                _targetEntity.GetEntityComponent<ViewComponent>().Value.transform
-                    .DOMove(targetPosition, Helper.Instance.LinkRepulseVar1).SetLoops(2, LoopType.Yoyo);
+                    ? Helper.Instance.RepulseLeftTeamZ 
+                    : Helper.Instance.RepulseRightTeamZ;
+                _targetEntity.GetEntityComponent<EntityViewComponent>().Value.transform
+                    .DOMove(targetPosition, Helper.Instance.LinkRepulseDuration)
+                    .SetEase(Helper.Instance.RepulseEase).SetLoops(2, LoopType.Yoyo);
                 break;
             }
             case (LinkStatusType.LowFloat):
             {
                 _targetAnimatorComponent.PlayAnimation(linkStatus.ToString());
-                _targetEntity.GetEntityComponent<ViewComponent>().Value.transform
-                    .DOMoveY(Helper.Instance.LinkLowFloatVar1, Helper.Instance.LinkLowFloatVar2)
-                    .SetEase(Ease.OutExpo).SetLoops(2, LoopType.Yoyo);;
+                _targetEntity.GetEntityComponent<EntityViewComponent>().Value.transform
+                    .DOMoveY(Helper.Instance.LinkLowFloatAltitude, Helper.Instance.LinkLowFloatDuration)
+                    .SetEase(Helper.Instance.LowFloatEase).SetLoops(2, LoopType.Yoyo);;
                 break;
             }
             case (LinkStatusType.HighFloat):
             {
                 _targetAnimatorComponent.PlayAnimation(linkStatus.ToString());
-                _targetEntity.GetEntityComponent<ViewComponent>().Value.transform
-                    .DOMoveY(Helper.Instance.LinkHighFloatVar1, Helper.Instance.LinkHighFloatVar2)
-                    .SetEase(Ease.OutExpo).SetLoops(2, LoopType.Yoyo);
+                _targetEntity.GetEntityComponent<EntityViewComponent>().Value.transform
+                    .DOMoveY(Helper.Instance.LinkHighFloatAltitude, Helper.Instance.LinkHighFloatDuration)
+                    .SetEase(Helper.Instance.HighFloatEase).SetLoops(2, LoopType.Yoyo);
                 break;
             }
         }

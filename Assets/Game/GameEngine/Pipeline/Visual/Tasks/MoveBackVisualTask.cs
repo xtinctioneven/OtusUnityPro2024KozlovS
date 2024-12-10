@@ -20,18 +20,19 @@ public class MoveBackVisualTask : EventTask
         {
             case (AbilityVisualData.AbilityCastType.Melee):
             {
-                ViewComponent sourceViewComponent = _sourceEntity.GetEntityComponent<ViewComponent>();
+                EntityViewComponent sourceEntityViewComponent = _sourceEntity.GetEntityComponent<EntityViewComponent>();
                 float offset = _abilityVisualData.MeelePositionOffset;
                 Vector3 targetPosition = _sourceEntity.GetEntityComponent<GridPositionComponent>().WorldGridPosition;
-                if (sourceViewComponent.Position == targetPosition)
+                if (sourceEntityViewComponent.Position == targetPosition)
                 {
                     Finish();
                 }
                 else
                 {
                     _sourceEntity.GetEntityComponent<AnimatorComponent>().PlayAnimation("MoveBack");
-                    _sourceEntity.GetEntityComponent<ViewComponent>().Value.transform.DOJump(targetPosition, 2f, 1, .3f)
-                        .SetEase(Ease.OutSine).OnComplete(OnMoveFinish);
+                    sourceEntityViewComponent.Value.transform.DOJump(targetPosition, Helper.Instance.BackJumpPower,
+                            1, Helper.Instance.BackJumpDuration)
+                        .SetEase(Helper.Instance.BackJumpEase).OnComplete(OnMoveFinish);
                 }
                 break;
             }

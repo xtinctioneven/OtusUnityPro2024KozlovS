@@ -3,26 +3,21 @@ using UnityEngine;
 
 public class UpdateStatsVisualTask : EventTask
 {
-    // private readonly HeroView _heroView;
-    private readonly string _statsValue;
-    private readonly AudioClip _audioClip;
-
-    public UpdateStatsVisualTask(
-        // HeroView heroView, string stats, AudioClip audioClip = null
-        )
+    private HealthViewComponent _healthView;
+    private int _newValue;
+    
+    public UpdateStatsVisualTask(HealthViewComponent healthView, int newValue)
     {
-        // _heroView = heroView;
-        // _statsValue = stats;
-        // _audioClip = audioClip;
+        _healthView = healthView;
+        _newValue = newValue;
     }
 
     protected override void OnRun()
     {
-        if (_audioClip != null)
+        if (_healthView != null)
         {
-            AudioPlayer.Instance.PlaySound(_audioClip);
+            _healthView.UpdateCurrentHealth(_newValue);
         }
-        // _heroView.SetStats(_statsValue);
         Finish();
     }
 }
