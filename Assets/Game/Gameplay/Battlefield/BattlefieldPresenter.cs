@@ -12,6 +12,8 @@ public class BattlefieldPresenter : MonoBehaviour
     {
         _battlefieldModel = battlefieldModel;
         _battlefieldModel.OnEntitySetup += BattlefieldModelOnOnEntitySetup;
+        _leftTeamGridPresenter.Setup(_battlefieldModel.LeftGridModel);
+        _rightTeamGridPresenter.Setup(_battlefieldModel.RightGridModel);
     }
 
     private void BattlefieldModelOnOnEntitySetup(IEntity entity, Vector2 gridPosition)
@@ -32,5 +34,6 @@ public class BattlefieldPresenter : MonoBehaviour
         }
         viewComponent.SetPosition(worldPosition);
         viewComponent.SetRotation(worldRotation);
+        entity.GetEntityComponent<GridPositionComponent>().SetWorldGridPosition(worldPosition);
     }
 }

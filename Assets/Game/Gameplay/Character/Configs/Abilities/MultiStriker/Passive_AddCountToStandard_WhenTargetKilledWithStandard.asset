@@ -25,4 +25,7 @@ MonoBehaviour:
         <EffectProbability>k__BackingField: 1
         <AddCountsOnTrigger>k__BackingField: 1
         <InteractionType>k__BackingField: 40
-        <Traits>k__BackingField: 0
+        <AbilityVisualData>k__BackingField:
+          CastType: 20
+          SourceAnimationClip: 0
+          TargetAnimationClip: 0

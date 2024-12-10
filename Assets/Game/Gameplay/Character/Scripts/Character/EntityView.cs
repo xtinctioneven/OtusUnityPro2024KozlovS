@@ -1,18 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Gameplay
 {
     public class EntityView : MonoBehaviour
     {
         [SerializeField] private Transform _visualRoot;
-        private AnimationDispatcher _animationDispatcher;
-        private Animator _animator;
+        public AnimationDispatcher AnimationDispatcher {get; private set;}
+        public Animator Animator {get; private set;}
         private GameObject _entityVisual;
-
-        // private void Awake()
-        // {
-        //     _animationDispatcher.SubscribeOnEvent("AnimationEnd", Test);
-        // }
 
         public void Setup(GameObject entityVisualPrefab)
         {
@@ -21,19 +17,13 @@ namespace Game.Gameplay
                 Debug.LogError("No visual, please assign visualPrefab");
             }
             _entityVisual = GameObject.Instantiate(entityVisualPrefab, _visualRoot);
-            _animator = _entityVisual.GetComponent<Animator>();
-            _animationDispatcher = _entityVisual.GetComponent<AnimationDispatcher>();
-            _animationDispatcher.SubscribeOnEvent("AnimationEnd", Test);
+            Animator = _entityVisual.GetComponent<Animator>();
+            AnimationDispatcher = _entityVisual.GetComponent<AnimationDispatcher>();
         }
 
         public void SetPosition(Vector3 position)
         {
             this.transform.position = position;
-        }
-
-        public void Test()
-        {
-            Debug.Log("Test");
         }
     }
 }

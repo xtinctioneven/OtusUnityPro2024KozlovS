@@ -11,6 +11,12 @@ public class StartVisualPipelineTask : EventTask
 
     protected override void OnRun()
     {
+        if (!_visualPipeline.IsActive)
+        {
+            _visualPipeline.ClearAll();
+            Finish();
+            return;
+        }
         Debug.Log("Run visual pipeline");
         _visualPipeline.OnFinished += VisualPipelineOnFinished;
         _visualPipeline.Reset();

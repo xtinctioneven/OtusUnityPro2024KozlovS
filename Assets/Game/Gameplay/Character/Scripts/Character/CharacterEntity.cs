@@ -7,10 +7,10 @@ namespace Game.Gameplay
     [Serializable]
     public class CharacterEntity : IEntity
     {
+        public string Name => _characterName;
+        private string _characterName;
         private CharacterConfig _characterConfig;
         private readonly Dictionary<Type, object> _components = new();
-        private string _characterName;
-        public string Name => _characterName;
 
         public CharacterEntity(CharacterConfig config, EntityView entityView)
         {
@@ -33,6 +33,7 @@ namespace Game.Gameplay
             LinkComponent linkComponent = new LinkComponent();
             StatusEffectsComponent statusEffectsComponent = new StatusEffectsComponent(this);
             ViewComponent viewComponent = new ViewComponent(entityView);
+            AnimatorComponent animatorComponent = new AnimatorComponent(entityView);
 
             _components.Add(typeof(StatsComponent), statsComponent);
             _components.Add(typeof(AttackComponent), attackComponent);
@@ -46,6 +47,7 @@ namespace Game.Gameplay
             _components.Add(typeof(LinkComponent), linkComponent);
             _components.Add(typeof(StatusEffectsComponent), statusEffectsComponent);
             _components.Add(typeof(ViewComponent), viewComponent);
+            _components.Add(typeof(AnimatorComponent), animatorComponent);
             // viewComponentOld.Value.SetStats($"<color=blue>{attackComponent.Value}</color> / <color=red>{lifeComponent.Value}</color>");
             // abilityComponent.Install();
             // vfxComponent.Install(abilityComponent.GetAbilities(), anchorComponent.Value);

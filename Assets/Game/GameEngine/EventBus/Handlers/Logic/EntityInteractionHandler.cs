@@ -6,16 +6,17 @@ using Zenject;
 
 public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
 {
-    private AbilityService _abilityService;
-    private DiContainer _diContainer;
-    public EntityInteractionHandler(EventBus eventBus, DiContainer diContainer) : base(eventBus)
+    private readonly AbilityService _abilityService;
+    private readonly VisualPipeline _visualPipeline;
+    public EntityInteractionHandler(EventBus eventBus, AbilityService abilityService,VisualPipeline visualPipeline) : base(eventBus)
     {
-        _diContainer = diContainer;
+        _abilityService = abilityService;
+        _visualPipeline = visualPipeline;
     }
 
     protected override void OnHandleEvent(EntityInteractionEvent evt)
     {
-        _abilityService = _diContainer.Resolve<AbilityService>();
+        // _abilityService = _diContainer.Resolve<AbilityService>();
         EntityInteractionData interactionData = evt.EntityInteractionData;
         //Resolve interaction data
         ResolveInteractionData(interactionData);
@@ -40,6 +41,10 @@ public class EntityInteractionHandler: BaseHandler<EntityInteractionEvent>
         EventBus.RaiseEvent(new UpdateStatsEvent(targetEntity, entityHpResult));
         _abilityService.PassiveEffectsApply(interactionData, sourceEntity.GetEntityComponent<AbilityComponent>());
         _abilityService.PassiveEffectsApply(interactionData, targetEntity.GetEntityComponent<AbilityComponent>());
+        if (interactionData.SourceEffect.AbilityVisualData != null)
+        {
+            _visualPipeline.AddTask(new AnimateAbilityVisualTask(interactionData));
+        }
         SendLog(interactionData, entityHpResult);
     }
 

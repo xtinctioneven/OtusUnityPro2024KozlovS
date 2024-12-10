@@ -22,7 +22,8 @@ public class StatusEffectsComponent
         }
         else
         {
-            //TODO: Replace existing with new!
+            TryRemoveStatus(effect);
+            StatusEffects.Add(effect);
         }
     }
 

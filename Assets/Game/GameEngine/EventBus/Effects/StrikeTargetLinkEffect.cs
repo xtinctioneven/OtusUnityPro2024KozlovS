@@ -16,6 +16,7 @@ namespace Game.Gameplay
         [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; } = TargetPriorityType.None;
         [field: SerializeField, PropertyRange(1, 9)] public int TargetsCount { get; private set; } = 1;
         [field: SerializeField] public StatusEffectData[] StatusEffectsDataCollection { get; private set; }
+        [field: SerializeField] public AbilityVisualData AbilityVisualData { get; private set; }
         
         public IEffect Clone()
         {
@@ -31,6 +32,7 @@ namespace Game.Gameplay
             clone.TargetPriority = TargetPriority;
             clone.TargetsCount = TargetsCount;
             clone.StatusEffectsDataCollection = StatusEffectsDataCollection;
+            clone.AbilityVisualData = AbilityVisualData;
             clone.Enabled = true;
             return clone;
         }

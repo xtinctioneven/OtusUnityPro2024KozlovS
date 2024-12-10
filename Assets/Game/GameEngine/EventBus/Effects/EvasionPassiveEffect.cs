@@ -11,10 +11,10 @@ namespace Game.Gameplay
         [field: SerializeField] public List<InteractionType> InteractionTypesToDodge { get; private set; } 
         [field: SerializeField, PropertyRange(0, 1)] public float EffectProbability { get; private set; }
         [field: SerializeField] public InteractionType InteractionType { get; private set; }
-        // [field: SerializeField] public AbilityTraits Traits { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int InitialUseCounts { get; private set; }
         [field: SerializeField, PropertyRange(0, 10)] public int MaxUseCounts { get; private set; }
         public int CountsLeft { get; private set; }
+        [field: SerializeField] public AbilityVisualData AbilityVisualData { get; private set; }
 
         public IEffect Clone()
         {
@@ -23,10 +23,10 @@ namespace Game.Gameplay
             clone.InteractionTypesToDodge = InteractionTypesToDodge;
             clone.EffectProbability = EffectProbability;
             clone.InteractionType = InteractionType;
-            // clone.Traits = Traits;
             clone.InitialUseCounts = InitialUseCounts;
             clone.MaxUseCounts = MaxUseCounts;
             clone.CountsLeft = InitialUseCounts;
+            clone.AbilityVisualData = AbilityVisualData;
             clone.Enabled = true;
             return clone;
         }

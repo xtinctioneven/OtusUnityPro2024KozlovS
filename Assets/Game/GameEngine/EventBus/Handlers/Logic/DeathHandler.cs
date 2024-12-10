@@ -3,19 +3,17 @@ using Zenject;
 
 public class DeathHandler: BaseHandler<DeathEvent>
 {
-    //private EntityTrackerService _entityTrackerService;
-    private DiContainer _diContainer;
+    private EntityTrackerService _entityTrackerService;
     
-    public DeathHandler(EventBus eventBus, DiContainer diContainer) : base(eventBus)
+    public DeathHandler(EventBus eventBus, EntityTrackerService entityTrackerService) : base(eventBus)
     {
-        _diContainer = diContainer;
+        _entityTrackerService = entityTrackerService;
     }
 
     protected override void OnHandleEvent(DeathEvent evt)
     {
-        var entityTracker = _diContainer.Resolve<EntityTrackerService>();
         IEntity entity = evt.Entity;
         entity.GetEntityComponent<DeathComponent>().Die();
-        entityTracker.UntrackEntity(entity);
+        _entityTrackerService.UntrackEntity(entity);
     }
 }

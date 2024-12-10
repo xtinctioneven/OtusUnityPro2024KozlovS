@@ -47,17 +47,4 @@ public abstract class Pipeline
     {
         RunNextTask();
     }
-
-    protected bool TryToSkipToTask(Type taskType)
-    {
-        for (int i = 0; i < _tasks.Count; i++)
-        {
-            if (_tasks[i].GetType() == taskType)
-            {
-                _tasksToSkip = i - _taskIndex - 1;
-                return true;
-            }
-        }
-        return false;
-    }
 }

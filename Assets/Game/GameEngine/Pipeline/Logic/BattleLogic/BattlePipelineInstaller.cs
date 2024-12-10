@@ -31,7 +31,6 @@ public class BattlePipelineInstaller: IInitializable
     public void Initialize()
     { 
         _battlePipeline.AddTask(new SetupServicesTask(_targetFinderService, _linkEffectsTracker, _entityTrackerService)); //Определить порядок хода, инициализировать сервисы типа HeroTracker
-        _battlePipeline.AddTask(new SetupAbilityControllersTask(_diContainer, _eventBus)); //=> SetupObservers??? Пусть будут сервисы-обсерверы на каждый триггер
         _battlePipeline.AddTask(new StartBattleTask());
         _battlePipeline.AddTask(new RunRoundPipelineTask(_diContainer, _eventBus));
         _battlePipeline.AddTask(new FinishBattleTask());

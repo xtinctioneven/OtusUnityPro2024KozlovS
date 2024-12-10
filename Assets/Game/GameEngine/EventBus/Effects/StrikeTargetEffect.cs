@@ -32,6 +32,7 @@ namespace Game.Gameplay
             clone.TargetPriority = TargetPriority;
             clone.TargetsCount = TargetsCount;
             clone.StatusEffectsDataCollection = StatusEffectsDataCollection;
+            clone.AbilityVisualData = AbilityVisualData;
             clone.Enabled = true;
             return clone;
         }

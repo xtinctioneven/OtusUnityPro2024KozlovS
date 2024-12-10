@@ -24,6 +24,11 @@ MonoBehaviour:
         <InteractionTypesToDodge>k__BackingField: 0a000000
         <EffectProbability>k__BackingField: 0.7
         <InteractionType>k__BackingField: 40
-        <Traits>k__BackingField: 0
         <InitialUseCounts>k__BackingField: 1
         <MaxUseCounts>k__BackingField: 5
+        <AbilityVisualData>k__BackingField:
+          CastType: 20
+          CollisionType: 0
+          SourceAnimationClip: 9
+          MeelePositionOffset: 1
+          CastCollisionDelay: 0.6

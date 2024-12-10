@@ -44,7 +44,6 @@ public class EntityActionTask : EventTask
                 }
                 //Use Standard ability
                 _abilityService.UseAbility(activeEntity, standardAbility);
-                // _visualPipeline.AddTask(new GetBackToIdleTask(activeEntity));
             }
         }
         Finish();

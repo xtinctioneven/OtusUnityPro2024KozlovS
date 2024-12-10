@@ -28,7 +28,7 @@ namespace Game.Gameplay
         {
             _teamGrid[(int)gridPosition.x, (int)gridPosition.y].SetEntity(entity);
             entity.GetEntityComponent<TeamComponent>().SetTeam(Team);
-            entity.GetEntityComponent<GridPositionComponent>().SetPosition(gridPosition);
+            entity.GetEntityComponent<GridPositionComponent>().SetGridPosition(gridPosition);
         }
 
         public List<IEntity> GetAllEntities()

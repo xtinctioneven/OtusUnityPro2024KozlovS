@@ -26,3 +26,7 @@ MonoBehaviour:
         <TargetType>k__BackingField: 100
         <TargetPriority>k__BackingField: 100
         <TargetsCount>k__BackingField: 1
+        <AbilityVisualData>k__BackingField:
+          CastType: 20
+          SourceAnimationClip: 0
+          TargetAnimationClip: 0

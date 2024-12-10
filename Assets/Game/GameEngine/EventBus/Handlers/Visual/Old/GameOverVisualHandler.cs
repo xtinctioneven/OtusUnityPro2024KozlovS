@@ -13,33 +13,33 @@ public class GameOverVisualHandler: BaseHandler<GameOverEvent>
 
     protected override void OnHandleEvent(GameOverEvent evt)
     {
-        string gameOverText ="Game Over";
-        switch (evt.GameOverReason)
-        {
-            case GameOverCheckTask.GameOverReason.Draw:
-            {
-                gameOverText = "Game over!\nDraw!";
-                break;
-            }
-            case GameOverCheckTask.GameOverReason.RightTeamWin:
-            {
-                gameOverText = "Game over!\n<color=blue>Blue player wins!</color>";
-                break;
-            }
-            case GameOverCheckTask.GameOverReason.LeftTeamWin:
-            {
-                gameOverText = "Game over!\n<color=red>Red player wins!</color>";
-                break;
-            }
-            default:
-            {
-                Debug.LogError("Game over reason unknown!");
-                break;
-            }
-        }
-
-        GameOverPopup gameOverPopup = _uiService.GetGameOverPopup();
-        gameOverPopup.SetText(gameOverText);
-        gameOverPopup.SetActive(true);
+        // string gameOverText ="Game Over";
+        // switch (evt.GameOverReason)
+        // {
+        //     case GameOverCheckTask.GameOverReason.Draw:
+        //     {
+        //         gameOverText = "Game over!\nDraw!";
+        //         break;
+        //     }
+        //     case GameOverCheckTask.GameOverReason.RightTeamWin:
+        //     {
+        //         gameOverText = "Game over!\n<color=blue>Blue player wins!</color>";
+        //         break;
+        //     }
+        //     case GameOverCheckTask.GameOverReason.LeftTeamWin:
+        //     {
+        //         gameOverText = "Game over!\n<color=red>Red player wins!</color>";
+        //         break;
+        //     }
+        //     default:
+        //     {
+        //         Debug.LogError("Game over reason unknown!");
+        //         break;
+        //     }
+        // }
+        //
+        // GameOverPopup gameOverPopup = _uiService.GetGameOverPopup();
+        // gameOverPopup.SetText(gameOverText);
+        // gameOverPopup.SetActive(true);
     }
 }

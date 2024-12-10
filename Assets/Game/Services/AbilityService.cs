@@ -5,18 +5,21 @@ using Zenject;
 public class AbilityService
 {
     private readonly EventBus _eventBus;
-    private TargetFinderService _targetFinderService;
-    private EntityInteractionService _entityInteractionService;
-    private LinkEffectsTracker _linkEffectsTracker;
+    private readonly TargetFinderService _targetFinderService;
+    private readonly EntityInteractionService _entityInteractionService;
+    private readonly LinkEffectsTracker _linkEffectsTracker;
+    private readonly VisualPipeline _visualPipeline;
     
     public AbilityService( LinkEffectsTracker linkEffectsTracker, 
         TargetFinderService targetFinderService, 
-        EntityInteractionService entityInteractionService, 
+        EntityInteractionService entityInteractionService,
+        VisualPipeline visualPipeline,
         EventBus eventBus)
     {
         _linkEffectsTracker = linkEffectsTracker;
         _targetFinderService = targetFinderService;
         _entityInteractionService = entityInteractionService;
+        _visualPipeline = visualPipeline;
         _eventBus = eventBus;
     }
 
@@ -36,7 +39,8 @@ public class AbilityService
         {
             return;
         }
-        
+        _visualPipeline.AddTask(new MoveIntoAbilityPositionVisualTask(ability.AbilityVisualData, 
+        sourceEntity, targetsList, _visualPipeline));
         for (int i = 0; i < targetsList.Count; i++)
         {
             targetEntity = targetsList[i];
@@ -57,7 +61,7 @@ public class AbilityService
             {
                 if (statusEffect is LinkStatusEffect linkStatus)
                 {
-                    ability.InteractionData.StatusEffectsApplyToTarget.Remove(statusEffect);
+                    // ability.InteractionData.StatusEffectsApplyToTarget.Remove(statusEffect);
                     LinkStatusType linkType = linkStatus.LinkStatus;
                     if (_linkEffectsTracker.TryGetActiveLink(linkType,
                             sourceEntity.GetEntityComponent<Game.Gameplay.TeamComponent>().Value,

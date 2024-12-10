@@ -12,7 +12,7 @@ namespace Game.Gameplay
         [field: SerializeField, PropertyRange(0, 1)] public float EffectProbability { get; private set; }
         [field: SerializeField] public int AddCountsOnTrigger { get; private set; }
         [field: SerializeField] public InteractionType InteractionType { get; private set; }
-        // [field: SerializeField] public AbilityTraits Traits { get; private set; }
+        [field: SerializeField] public AbilityVisualData AbilityVisualData { get; private set; }
         
         public IEffect Clone()
         {
@@ -22,7 +22,7 @@ namespace Game.Gameplay
             clone.EffectProbability = EffectProbability;
             clone.AddCountsOnTrigger = AddCountsOnTrigger;
             clone.InteractionType = InteractionType;
-            // clone.Traits = Traits;
+            clone.AbilityVisualData = AbilityVisualData;
             clone.Enabled = true;
             return clone;
         }

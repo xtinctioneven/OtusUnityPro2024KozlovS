@@ -28,6 +28,12 @@ MonoBehaviour:
         <TargetPriority>k__BackingField: 0
         <TargetsCount>k__BackingField: 1
         <StatusEffectsDataCollection>k__BackingField:
-        - StatusEffects:
-          - {fileID: 11400000, guid: 03b2f1467e0d89149a5a349e14712713, type: 2}
+        - StatusEffectsApplyToTarget: []
+          StatusEffectsApplyToSelf: []
           EffectProbability: 0.45
+        <AbilityVisualData>k__BackingField:
+          CastType: 10
+          CollisionType: 10
+          SourceAnimationClip: 1
+          MeelePositionOffset: 1
+          CastCollisionDelay: 0.6

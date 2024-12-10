@@ -12,6 +12,7 @@ namespace Game.Gameplay
         [field: SerializeField] public TargetType TargetType { get; private set; } = TargetType.Self;
         [field: SerializeField] public TargetPriorityType TargetPriority { get; private set; } = TargetPriorityType.None;
         [field: SerializeField] public int TargetsCount { get; private set; } = 1;
+        [field: SerializeField] public AbilityVisualData AbilityVisualData { get; private set; }
         
         public IEffect Clone()
         {
@@ -22,6 +23,7 @@ namespace Game.Gameplay
             clone.TargetType = TargetType;
             clone.TargetPriority = TargetPriority;
             clone.TargetsCount = TargetsCount;
+            clone.AbilityVisualData = AbilityVisualData;
             clone.Enabled = true;
             return clone;
         }

@@ -8,8 +8,9 @@ namespace Game.Gameplay
         public CharacterEntity CreateCharacter(CharacterConfig config)
         {
             EntityView entityView = GameObject.Instantiate(config.EntityViewPrefab);
-            CharacterEntity characterEntity = new(config, entityView);
+            entityView.name = config.CharacterName;
             entityView.Setup(config.CharacterVisualPrefab);
+            CharacterEntity characterEntity = new(config, entityView);
             return characterEntity;
         }
     }

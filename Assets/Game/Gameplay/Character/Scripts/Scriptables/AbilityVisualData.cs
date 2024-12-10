@@ -14,9 +14,12 @@ public class AbilityVisualData
     // public string _targetTargetTransform;
     // public float _targetFxDelay;
     // public float _casterFxDelay;
-    public AbilityCastType CastType;
-    public AnimationClipType SourceAnimationClip;  
-    public AnimationClipType TargetAnimationClip;
+    public AbilityCastType CastType = AbilityCastType.Melee;
+    public AbilityCollisionType CollisionType = AbilityCollisionType.None;
+    public AnimationClipType SourceAnimationClip = AnimationClipType.AttackStrike1;  
+    // public AnimationClipType TargetAnimationClip = AnimationClipType.Hit;
+    public float MeelePositionOffset = 1f;
+    public float CastCollisionDelay = .6f;
     // public string _impactAnimation = "Impact";
     // public float _casterTargetFxSpeed = 1;
     // public float _waitTime = 3;
@@ -29,12 +32,24 @@ public class AbilityVisualData
         SameRowMelee = 30,
         SameRowRanged = 40
     }
+    public enum AbilityCollisionType
+    {
+        None = 0,
+        Strike = 10,
+        Cast = 20,
+    }
     
     public enum AnimationClipType
     {
-        AttackStrike,
-        AttackRange,
-        AttackCast,
+        None,
+        AttackStrike1,
+        AttackStrike2,
+        AttackRange1,
+        AttackRange2,
+        AttackLink1,
+        AttackLink2,
+        Cast1,
+        Cast2,
         Dodge,
         Hit,
         LowFloat,
@@ -42,7 +57,8 @@ public class AbilityVisualData
         Repulse,
         Death,
         Hi,
-        Knockdown,
-        Resurrect
+        Resurrect,
+        MoveBack,
+        MoveForward
     }
 }

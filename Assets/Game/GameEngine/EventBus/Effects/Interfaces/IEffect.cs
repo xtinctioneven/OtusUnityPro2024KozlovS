@@ -13,5 +13,6 @@ namespace Game.Gameplay
         public void Enable();
         public void Disable();
         public IEffect Clone();
+        public AbilityVisualData AbilityVisualData { get; }
     }
 }

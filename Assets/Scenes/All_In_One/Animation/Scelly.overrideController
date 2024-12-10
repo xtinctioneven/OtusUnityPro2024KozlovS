@@ -7,7 +7,7 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Scelly
-  m_Controller: {fileID: 9100000, guid: e730f3c99656b2645a69bafef19d96b6, type: 2}
+  m_Controller: {fileID: 9100000, guid: a8c079f2b8fe16f47838e9400cfddee2, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: eeb46b09c47b1dc4984ff310db9751cb, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 6d8362108f92f76458fcdbcc1023a0bc, type: 2}

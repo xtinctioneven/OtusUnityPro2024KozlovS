@@ -1,4 +1,6 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Game.Gameplay;
 using UnityEngine;
 
@@ -21,5 +23,10 @@ public class ViewComponent
     public void SetRotation(Quaternion rotation)
     {
         Value.transform.rotation = rotation;
+    }
+    
+    public async UniTask DoJump(Vector3 position)
+    {
+        await Value.transform.DOMove(position, .1f).ToUniTask();
     }
 }

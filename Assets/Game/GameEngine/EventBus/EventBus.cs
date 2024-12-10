@@ -6,7 +6,6 @@ public sealed class EventBus
 {
     private readonly Dictionary<Type, IEventHandlerCollection> _handlers = new ();
     private readonly Queue<IEvent> _eventsQueue = new();
-    private readonly Queue<IEvent> _priorityEventsQueue = new();
     private bool _isRunning;
     
     public void Subscribe<TEvent>(Action<TEvent> handler)
@@ -45,37 +44,7 @@ public sealed class EventBus
         }
         _isRunning = false;
 
-        TryRaiseNextEvent();
-    }
-    
-    public void RaiseEventWithPriority<TEvent>(TEvent evt) where TEvent : IEvent
-    {
-        if (_isRunning)
-        {
-            _priorityEventsQueue.Enqueue(evt);
-            return;
-        }
-        _isRunning = true;
-        var key = evt.GetType();
-        Debug.Log($"Priority event raised: {key}");
-        
-        if (_handlers.TryGetValue(key, out var handlers))
-        {
-            handlers.RaiseEvent(evt);
-        }
-        _isRunning = false;
-        
-        TryRaiseNextEvent();
-    }
-
-    private void TryRaiseNextEvent()
-    {
-        if (_priorityEventsQueue.TryDequeue(out var result))
-        {
-            RaiseEventWithPriority(result);
-        }
-        else
-        if (_eventsQueue.TryDequeue(out result))
+        if (_eventsQueue.TryDequeue(out var result))
         {
             RaiseEvent(result);
         }

@@ -34,3 +34,9 @@ MonoBehaviour:
           - {fileID: 11400000, guid: eaff9d55eb783444693a866ef8f4cd92, type: 2}
           StatusEffectsApplyToSelf: []
           EffectProbability: 1
+        <AbilityVisualData>k__BackingField:
+          CastType: 10
+          CollisionType: 20
+          SourceAnimationClip: 5
+          MeelePositionOffset: 2
+          CastCollisionDelay: 0.2
