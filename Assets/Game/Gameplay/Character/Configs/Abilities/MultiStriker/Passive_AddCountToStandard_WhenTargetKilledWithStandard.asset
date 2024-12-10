@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Passive_AddCountToStandard_WhenTargetKilledWithStandard
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 7c44ac67d9efa5f468f39f3841af823a, type: 3}
+  Name: Sneaky Freaky
+  Description: Stole a kill with a standard attack? No! This is an opportunity to
+    kill again! Maybe it will only get steeper from now on, watch the level!
   Abilities:
   - rid: 7750859990555688960
   references:
@@ -26,6 +30,12 @@ MonoBehaviour:
         <AddCountsOnTrigger>k__BackingField: 1
         <InteractionType>k__BackingField: 40
         <AbilityVisualData>k__BackingField:
+          AbilityVfxData:
+            Prefab: {fileID: 0}
+            CollisionDelay: 0.5
+            JumpPower: 0
+            AppearanceType: 0
           CastType: 20
+          CollisionType: 0
           SourceAnimationClip: 0
-          TargetAnimationClip: 0
+          MeelePositionOffset: 1

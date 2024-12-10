@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Trigger_AddCountToStandard_Static
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 36fe666edc3bcbc4985b887f8ea62659, type: 3}
+  Name: Greed Is Not A Sin
+  Description: Because two attacks are always better than one! Avarice grows with
+    each level!
   Abilities:
   - rid: 7750859990555688965
   references:
@@ -27,6 +31,12 @@ MonoBehaviour:
         <TargetPriority>k__BackingField: 100
         <TargetsCount>k__BackingField: 1
         <AbilityVisualData>k__BackingField:
+          AbilityVfxData:
+            Prefab: {fileID: 0}
+            CollisionDelay: 0.5
+            JumpPower: 0
+            AppearanceType: 10
           CastType: 20
+          CollisionType: 0
           SourceAnimationClip: 0
-          TargetAnimationClip: 0
+          MeelePositionOffset: 1

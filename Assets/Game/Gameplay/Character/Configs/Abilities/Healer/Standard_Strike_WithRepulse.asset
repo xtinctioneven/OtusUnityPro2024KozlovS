@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Standard_Strike_WithRepulse
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 29b9c0f72cad95642a6bd4a915f7b2f2, type: 3}
+  Name: Nature's Blow
+  Description: Mother Nature is called mother for a reason. Her punch is stronger
+    than Dad's belt. Wisdom and strength increase with age, as does skill with level
   Abilities:
   - rid: 2785875064133779470
   references:
@@ -32,8 +36,12 @@ MonoBehaviour:
           StatusEffectsApplyToSelf: []
           EffectProbability: 0.45
         <AbilityVisualData>k__BackingField:
+          AbilityVfxData:
+            Prefab: {fileID: 660604078598729712, guid: a0deec4ddb1966147a11772c5df7cda6, type: 3}
+            CollisionDelay: 0.3
+            JumpPower: 0
+            AppearanceType: 0
           CastType: 10
           CollisionType: 10
           SourceAnimationClip: 1
           MeelePositionOffset: 1
-          CastCollisionDelay: 0.6

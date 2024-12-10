@@ -295,6 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7237905522406044567}
+  - component: {fileID: 4892220042821287997}
   m_Layer: 0
   m_Name: VfxTarget
   m_TagString: Untagged
@@ -317,6 +318,18 @@ Transform:
   m_Father: {fileID: 2503612305729941300}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4892220042821287997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304023261038842482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6266680e6a46018d7cdc4b844058da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1557677601595741420
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6738255987907097555}
+  - component: {fileID: 499190857591824488}
   m_Layer: 0
   m_Name: VfxSource
   m_TagString: Untagged
@@ -746,6 +760,18 @@ Transform:
   m_Father: {fileID: 1484571426109759373}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &499190857591824488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111058794955326292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eddf53786d6e4a2c9bcd3517322bebc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3333730366270775928
 GameObject:
   m_ObjectHideFlags: 0

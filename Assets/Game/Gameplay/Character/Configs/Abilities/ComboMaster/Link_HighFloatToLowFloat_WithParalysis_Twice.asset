@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Link_HighFloatToLowFloat_WithParalysis_Twice
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: f45549251fca8ab43bb6523a77e83ae3, type: 3}
+  Name: Murderous Whirlwind
+  Description: Fragments of righteous souls will help the enemy find the way to the
+    grave. There are never too few souls, as the level increases, there will only
+    be more of them
   Abilities:
   - rid: 7750860057758924801
   references:
@@ -34,10 +39,12 @@ MonoBehaviour:
           StatusEffectsApplyToSelf: []
           EffectProbability: 1
         <AbilityVisualData>k__BackingField:
-          _targetFxDelay: 0
-          _casterFxDelay: 0
+          AbilityVfxData:
+            Prefab: {fileID: 1236453127613114, guid: bfbc37d0bc0e8ff4082a8b2894b3a486, type: 3}
+            CollisionDelay: 0.4
+            JumpPower: 0
+            AppearanceType: 0
           CastType: 10
           CollisionType: 20
           SourceAnimationClip: 6
           MeelePositionOffset: 2
-          CastCollisionDelay: 0.01

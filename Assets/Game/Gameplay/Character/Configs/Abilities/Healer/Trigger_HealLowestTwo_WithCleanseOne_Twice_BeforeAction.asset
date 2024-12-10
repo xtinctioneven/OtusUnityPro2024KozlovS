@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Trigger_HealLowestTwo_WithCleanseOne_Twice_BeforeAction
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 054d980125991ec45a0ceebf2abbc437, type: 3}
+  Name: No more boo boo
+  Description: A light wind will kiss your wounds, easing the pain and suffering.
+    The wind grows stronger with the level!
   Abilities:
   - rid: 7750859949551124493
   references:
@@ -34,8 +38,12 @@ MonoBehaviour:
           StatusEffectsApplyToSelf: []
           EffectProbability: 1
         <AbilityVisualData>k__BackingField:
+          AbilityVfxData:
+            Prefab: {fileID: 8434842591292709995, guid: 12c1bc4b21c3ca24bb5ed6e2758da356, type: 3}
+            CollisionDelay: 1.38
+            JumpPower: 0
+            AppearanceType: 0
           CastType: 20
           CollisionType: 20
           SourceAnimationClip: 7
-          MeelePositionOffset: 1
-          CastCollisionDelay: 0.6
+          MeelePositionOffset: 0

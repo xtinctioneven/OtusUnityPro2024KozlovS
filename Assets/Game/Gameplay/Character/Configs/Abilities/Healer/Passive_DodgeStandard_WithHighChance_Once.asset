@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Passive_DodgeStandard_WithHighChance_Once
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 96c5f70d465a2a841bbc20258de8478b, type: 3}
+  Name: Like a leaf in the wind
+  Description: This is a chance! A chance to dodge! Increase your ability to survive
+    with each level
   Abilities:
   - rid: 2785875064133779625
   references:
@@ -27,8 +31,12 @@ MonoBehaviour:
         <InitialUseCounts>k__BackingField: 1
         <MaxUseCounts>k__BackingField: 5
         <AbilityVisualData>k__BackingField:
-          CastType: 20
+          AbilityVfxData:
+            Prefab: {fileID: 0}
+            CollisionDelay: 0
+            JumpPower: 0
+            AppearanceType: 0
+          CastType: 10
           CollisionType: 0
           SourceAnimationClip: 9
           MeelePositionOffset: 1
-          CastCollisionDelay: 0.6

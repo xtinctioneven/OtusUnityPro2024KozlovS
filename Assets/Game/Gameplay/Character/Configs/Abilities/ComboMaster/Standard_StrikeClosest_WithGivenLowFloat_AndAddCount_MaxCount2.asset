@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Standard_StrikeClosest_WithGivenLowFloat_AndAddCount_MaxCount2
   m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: b5a8002b053c02f408e06c79c2e50312, type: 3}
+  Name: Gorgeous Strike
+  Description: Strke filled with greatness, that's all you need to know about it.
+    Increases the percentage of splendor with each level
   Abilities:
   - rid: 2785875064133779470
   references:
@@ -34,8 +38,12 @@ MonoBehaviour:
           - {fileID: 11400000, guid: 5530e02e6dfd12e45a7cdb5242f05011, type: 2}
           EffectProbability: 0.45
         <AbilityVisualData>k__BackingField:
+          AbilityVfxData:
+            Prefab: {fileID: 1996079926692674, guid: fb101b1453aec9747a5ed7244075b1a2, type: 3}
+            CollisionDelay: 0.4
+            JumpPower: 0
+            AppearanceType: 0
           CastType: 10
           CollisionType: 10
           SourceAnimationClip: 1
           MeelePositionOffset: 1
-          CastCollisionDelay: 0.6
