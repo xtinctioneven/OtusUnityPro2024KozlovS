@@ -11,9 +11,11 @@ public class AnimateAbilityVisualTask : EventTask
     private IEntity _targetEntity;
     private AnimatorComponent _sourceAnimatorComponent;
     private AnimatorComponent _targetAnimatorComponent;
+    private EventBus _eventBus;
 
-    public AnimateAbilityVisualTask(EntityInteractionData interactionData)
+    public AnimateAbilityVisualTask(EntityInteractionData interactionData, EventBus eventBus)
     {
+        _eventBus = eventBus;
         _interactionData = interactionData;
         _sourceEntity = interactionData.SourceEntity;
         _targetEntity = interactionData.TargetEntity != null ? interactionData.TargetEntity : null;
@@ -36,22 +38,24 @@ public class AnimateAbilityVisualTask : EventTask
 
         switch (_abilityVisualData.CollisionType)
         {
-            case (AbilityVisualData.AbilityCollisionType.None):
+            case (AbilityCollisionType.None):
             {
                 Finish();
                 return;
             }
-            case (AbilityVisualData.AbilityCollisionType.Strike):
+            case (AbilityCollisionType.Strike):
             {
-                //TODO: Fire VFX!
                 _sourceAnimatorComponent.OnAnimationEnd += OnAnimationEnd;
                 _sourceAnimatorComponent.OnStrike += OnAttackConnected;
                 _sourceAnimatorComponent.PlayAnimation(animationTrigger);
                 break;
             }
-            case (AbilityVisualData.AbilityCollisionType.Cast):
+            case (AbilityCollisionType.Cast):
             {
-                //TODO: Fire VFX!
+                if (_abilityVisualData.AbilityVfxData.Prefab != null)
+                {
+                    _eventBus.RaiseEvent(new PlayVfxEvent(_interactionData));
+                }
                 _sourceAnimatorComponent.OnAnimationEnd += OnAnimationEnd;
                 _sourceAnimatorComponent.OnCast += OnCast;
                 _sourceAnimatorComponent.PlayAnimation(animationTrigger);
@@ -67,12 +71,15 @@ public class AnimateAbilityVisualTask : EventTask
 
     private void OnAttackConnected()
     {
-        //TODO: Fire VFX!
+        if (_abilityVisualData.AbilityVfxData.Prefab != null && _abilityVisualData.CollisionType != AbilityCollisionType.Cast)
+        {
+            _eventBus.RaiseEvent(new PlayVfxEvent(_interactionData));
+        }
         _sourceAnimatorComponent.OnStrike -= OnAttackConnected;
         var interactionResult = _interactionData.InteractionResult;
         if (interactionResult == InteractionResult.Dodge)
         {
-            _targetAnimatorComponent.PlayAnimation(AbilityVisualData.AnimationClipType.Dodge.ToString());
+            _targetAnimatorComponent.PlayAnimation(AnimationClipType.Dodge.ToString());
             return;
         }
 
@@ -95,7 +102,7 @@ public class AnimateAbilityVisualTask : EventTask
         {
             case (LinkStatusType.None):
             {
-                _targetAnimatorComponent.PlayAnimation(AbilityVisualData.AnimationClipType.Hit.ToString());
+                _targetAnimatorComponent.PlayAnimation(AnimationClipType.Hit.ToString());
                 _targetEntity.GetEntityComponent<EntityViewComponent>().Value.transform.
                     DOPunchPosition(Vector3.up * Helper.Instance.NoLinkWigglePower, Helper.Instance.NoLinkWiggleDuration);
                 break;
@@ -134,8 +141,8 @@ public class AnimateAbilityVisualTask : EventTask
     private async void OnCast()
     {
         //TODO: Fire VFX!
-        _sourceAnimatorComponent.OnCast -= OnCast;
-        await UniTask.WaitForSeconds(_abilityVisualData.CastCollisionDelay);
+        _sourceAnimatorComponent.OnCast -= OnCast; 
+        await UniTask.WaitForSeconds(_abilityVisualData.AbilityVfxData.CollisionDelay);
         OnAttackConnected();
     }
 

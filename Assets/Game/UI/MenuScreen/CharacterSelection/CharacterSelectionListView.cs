@@ -13,16 +13,16 @@ public class CharacterSelectionListView : MonoBehaviour
     private TeamConfig _teamConfig;
     private CharacterSelectionView[] _characterSelectionViews = new CharacterSelectionView[5];
     private int _selectedCharactersCount = 0;
-    private CharacterSelectionService _characterSelectionService; 
+    private PlayerSelectionService _playerSelectionService; 
 
     [Inject]
     public void Construct(
         [Inject(Id = "AvailableHeroes")] TeamConfig teamConfig,
-        CharacterSelectionService characterSelectionService
+        PlayerSelectionService playerSelectionService
     )
     {
         _teamConfig = teamConfig;
-        _characterSelectionService = characterSelectionService;
+        _playerSelectionService = playerSelectionService;
     }
     
     private void Start()
@@ -47,18 +47,18 @@ public class CharacterSelectionListView : MonoBehaviour
     private void OnCharacterDeselected(CharacterConfig deselectedCharacter)
     {
         _selectedCharactersCount--;
-        _characterSelectionService.DeselectCharacter(deselectedCharacter);
+        _playerSelectionService.DeselectCharacter(deselectedCharacter);
     }
 
     private void OnCharacterPositionChanged(CharacterConfig characterConfig, Vector2 newPostion)
     {
-        _characterSelectionService.ChangePosition(characterConfig, newPostion);
+        _playerSelectionService.ChangePosition(characterConfig, newPostion);
     }
 
     private void OnCharacterSelected(CharacterConfig selectedCharacter, CharacterSelectionView characterSelectionView)
     {
         _selectedCharactersCount++;
-        _characterSelectionService.SelectCharacter(selectedCharacter);
+        _playerSelectionService.SelectCharacter(selectedCharacter);
         if (_selectedCharactersCount <= 3)
         {
             return;

@@ -12,10 +12,6 @@ public class DeathVisualHandler: BaseHandler<DeathEvent>
     protected override void OnHandleEvent(DeathEvent evt)
     { 
         IEntity entity = evt.Entity;
-        // foreach (var abilityVfxPair in entity.GetHeroComponent<VfxComponent>().AbilityVfxDictionary)
-        // {
-        //     _visualPipeline.AddTask(new DestoryVfxTask(abilityVfxPair.Value));
-        // }
         _visualPipeline.AddTask(new EntityDeathVisualTask(entity));
     }
 }

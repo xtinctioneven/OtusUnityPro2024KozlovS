@@ -54,9 +54,11 @@ namespace Game.Gameplay
         {
             EntityViewComponent entityViewComponent = new EntityViewComponent(entityView);
             AnimatorComponent animatorComponent = new AnimatorComponent(entityView);
+            VfxAnchorComponent vfxAnchorComponent = new VfxAnchorComponent(entityView);
             
             _components.Add(typeof(EntityViewComponent), entityViewComponent);
             _components.Add(typeof(AnimatorComponent), animatorComponent);
+            _components.Add(typeof(VfxAnchorComponent), vfxAnchorComponent);
             
             if (entityView.HealthView != null)
             {

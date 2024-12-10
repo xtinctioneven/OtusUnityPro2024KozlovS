@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10820676d3a4489ba6466756e92bd8d, type: 3}
   m_Name: Link_LowFloatToRepulse_WithBurning
   m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  Name: 
+  Description: 
   Abilities:
   - rid: 7750860057758924801
   references:
@@ -35,8 +38,12 @@ MonoBehaviour:
           StatusEffectsApplyToSelf: []
           EffectProbability: 1
         <AbilityVisualData>k__BackingField:
+          AbilityVfxData:
+            Prefab: {fileID: 179617693071064624, guid: 76557be7663b50b4b9e3239617c76343, type: 3}
+            CollisionDelay: 1
+            JumpPower: 0
+            AppearanceType: 0
           CastType: 10
           CollisionType: 20
           SourceAnimationClip: 5
           MeelePositionOffset: 2
-          CastCollisionDelay: 0.2

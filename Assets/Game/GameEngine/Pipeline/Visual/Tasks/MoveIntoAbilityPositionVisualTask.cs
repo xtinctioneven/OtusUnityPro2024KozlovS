@@ -24,7 +24,7 @@ public class MoveIntoAbilityPositionVisualTask : EventTask
         var sourceAnimatorComponent = _sourceEntity.GetEntityComponent<AnimatorComponent>();
         switch (_abilityVisualData.CastType)
         {
-            case (AbilityVisualData.AbilityCastType.Melee):
+            case (AbilityCastType.Melee):
             {
                 IEntity target = _targetEntities[0];
                 GridPositionComponent targetGridPositionComponent = target.GetEntityComponent<GridPositionComponent>();
@@ -49,17 +49,17 @@ public class MoveIntoAbilityPositionVisualTask : EventTask
                 }
                 break;
             }
-            case (AbilityVisualData.AbilityCastType.FromPlace):
+            case (AbilityCastType.FromPlace):
             {
                 Finish();
                 break;
             }
-            case (AbilityVisualData.AbilityCastType.SameRowMelee):
+            case (AbilityCastType.SameRowMelee):
             {
                 //TODO: Extension
                 break;
             }
-            case (AbilityVisualData.AbilityCastType.SameRowRanged):
+            case (AbilityCastType.SameRowRanged):
             {
                 //TODO: Extension
                 break;
