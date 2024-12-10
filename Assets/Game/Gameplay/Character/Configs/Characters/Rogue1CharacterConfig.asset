@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443036e8b52447009cd2270532cbba85, type: 3}
   m_Name: Rogue1CharacterConfig
   m_EditorClassIdentifier: 
+  CharacterIcon: {fileID: 21300000, guid: 34ff395c538405448a0974fade679c90, type: 3}
   CharacterName: Rogue 1
   StatsData:
   - StatType: 0

@@ -11,6 +11,7 @@ namespace Game.Gameplay
     )]
     public class CharacterConfig : ScriptableObject
     {
+        [PreviewField(Alignment = ObjectFieldAlignment.Left), HideLabel] public Sprite CharacterIcon;
         public string CharacterName = "New Character";
         public Stat.StatData[] StatsData;
         public EntityView EntityViewPrefab;
