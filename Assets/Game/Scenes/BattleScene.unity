@@ -6514,17 +6514,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Skip
+  m_text: Skip!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4290955727
+  m_fontColor: {r: 0.8113208, g: 0.78828895, b: 0.76157, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6541,8 +6541,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -13827,7 +13827,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655525185}
   m_LocalRotation: {x: 0.13241762, y: -0.69803244, z: 0.13378824, w: 0.6908813}
-  m_LocalPosition: {x: 31.78, y: 8.8, z: 2}
+  m_LocalPosition: {x: 31.5, y: 9, z: 1.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20533,20 +20533,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsSkipVisual: 0
   IsGameOver: 0
-  ForwardJumpPower: 2
-  ForwardJumpDuration: 0.3
+  ForwardJumpPower: 1.7
+  ForwardJumpDuration: 0.6
+  ForwardJumpEase: 2
   BackJumpPower: 2
-  BackJumpDuration: 0.3
-  LinkNoneVar1: 0.4
-  LinkNoneVar2: 0.4
-  LinkRepulseVar1: 0.7
-  LinkRepulseVar2: 0.4
-  LinkHighFloatVar1: 1.5
-  LinkHighFloatVar2: 0.6
-  LinkLowFloatVar1: 1
-  LinkLowFloatVar2: 0.5
-  RepulseLeftZ: -5.3
-  RepulseRightZ: 8.3
+  BackJumpDuration: 0.5
+  BackJumpEase: 3
+  NoLinkWigglePower: 0.3
+  NoLinkWiggleDuration: 0.2
+  LinkHighFloatAltitude: 1.6
+  LinkHighFloatDuration: 0.4
+  HighFloatEase: 18
+  LinkLowFloatAltitude: 0.8
+  LinkLowFloatDuration: 0.3
+  LowFloatEase: 18
+  LinkRepulseDuration: 0.4
+  RepulseLeftTeamZ: -5.1
+  RepulseRightTeamZ: 8.5
+  RepulseEase: 19
   Log: 
 --- !u!1 &1004961824
 GameObject:
@@ -27918,11 +27922,11 @@ RectTransform:
   m_Father: {fileID: 1572800533}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -133.34, y: -110.20001}
-  m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 34.45}
+  m_SizeDelta: {x: 280, y: 130}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1337270620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27955,7 +27959,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -27965,10 +27969,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300050, guid: 72f7ab1b0affe344cbe14e7f911ff651, type: 3}
+    m_PressedSprite: {fileID: 21300060, guid: 72f7ab1b0affe344cbe14e7f911ff651, type: 3}
+    m_SelectedSprite: {fileID: 21300050, guid: 72f7ab1b0affe344cbe14e7f911ff651, type: 3}
+    m_DisabledSprite: {fileID: 21300062, guid: 72f7ab1b0affe344cbe14e7f911ff651, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -28000,7 +28004,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 72f7ab1b0affe344cbe14e7f911ff651, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
